@@ -7,7 +7,7 @@ slug: about
 title: About
 status: 已发布
 urlname: f0f8c568-465d-4edc-ae12-c2069f77c496
-updated: '2024-04-13 22:59:00'
+updated: '2025-04-06 00:39:00'
 ---
 
 ### 关于我😎：
@@ -28,6 +28,9 @@ Plan Study- Python | Java | Golang | Node | Flutter or maybe C++
 ### 编程之外🎉：
 
 
+2023 ver:
+
+
 最喜欢的歌手：金泰妍（韩），Fromis_9（韩），NineOne乃万（中）
 
 
@@ -38,6 +41,18 @@ Plan Study- Python | Java | Golang | Node | Flutter or maybe C++
 
 
 最最最最喜欢的科幻剧：《[**苍穹浩瀚  The Expanse Season》/ 太空无垠** ](https://movie.douban.com/subject/25926851/) 
+
+
+2025 ver:
+
+
+喜欢的歌手：ITZY ，IVE
+
+
+喜欢的电影：《疾速追杀John Wick》
+
+
+喜欢的电视剧：《行尸走肉 S1-S4 》 《暗黑》
 
 
 ### 互联网 de 友链 🏃:
@@ -67,8 +82,8 @@ Plan Study- Python | Java | Golang | Node | Flutter or maybe C++
 ### 联系我📱：
 
 
-Email : lightyisux@yandex.com
+Email : lightyisu@qq.com/
 
 
-Github: github.com/lightyisu
+github.com/lightyisu
 
