@@ -13,10 +13,8 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '首页', link: '/' },
-      { text: '博客', link: '/介绍页' },{
-        text:'周刊',link:firstZK
-      },
-      { text: 'Photos', link: '/photos' }
+      { text: '博客', link: '/介绍页' },
+      { text: '日常', link: '/timeline' }
     ],
 
   

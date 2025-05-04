@@ -22,7 +22,7 @@ var zhoukanbar
         }
       ]
       let blogbar_temp=jsonObj['docs'].filter((item)=>{
-        return item['properties']['catalog'][0]!='zhoukan'
+        return item['properties']['catalog'][0]!='zhoukan' && item['properties']['catalog'][0]!='timeline'
       })
       
     let blogbarYear=new Set([])

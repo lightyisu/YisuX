@@ -13,12 +13,10 @@ hero:
     - theme: brand
       text: 博客
       link: /介绍页
+    
     - theme: alt
-      text: 好玩周刊
-      link: /#
-    - theme: alt
-      text: Photos
-      link: /photos
+      text: 日常
+      link: /
 
 features:
   - title: 前端

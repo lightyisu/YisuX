@@ -5,7 +5,8 @@ const path = require('path');
 const foldersToDelete = [
     './docs/2023',
     './docs/2024',
-    './docs/zhoukan'
+    './docs/zhoukan',
+    './docs/timeline'
 ];
 const filesToDelete = [
     'elog.cache.json'
