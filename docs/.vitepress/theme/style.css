@@ -150,6 +150,6 @@ pre{
   background-image: url('/logo.png');
   background-repeat: no-repeat;
   background-size: contain;
-  min-width: 70px;
+  min-width: 100px;
   text-indent: -9999px; /* 将文字移出可视区域 */
 }
