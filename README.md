@@ -1,4 +1,21 @@
+<p align="center">
+  <picture>
+    <img alt="LOGO" src="https://www.yisux.com/logo.png" width="352"  style="max-width: 100%;">
+  </picture>
+  <br/>
+  <br/>
+</p> 
+<p align="center">
+    <i>The official Blog Site for lightyisu NOW.</i>
+</p>
+
+![Static Badge](https://img.shields.io/badge/vitepress-elog-blue?style=flat)
+![Static Badge](https://img.shields.io/badge/From-2024-blue?style=flat)
+![Static Badge](https://img.shields.io/badge/VercelEnhanced-black?style=flat)
+
+
 # YisuX Blog from 2024
+
 ### 介绍 Intro
 在2024年构建的基于 VitePress + [Elog](https://elog.1874.cool/) 的新一代个人博客
 
