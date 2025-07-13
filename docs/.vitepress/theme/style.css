@@ -184,7 +184,7 @@ pre{
 .VPFeatures {
   z-index: 999 !important;
 }
-.VPLink {
+.VPFeatures .VPLink   {
   background: rgba(255, 255, 255, .6) !important;
 }
 .box {
