@@ -28,7 +28,7 @@ export default defineConfig({
     ],
     footer: {
       message: 'YisuX.com ',
-      copyright: 'Copyright © 2020-2025 lightyisu'
+      copyright: 'Copyright © 2020-2025 lightyisu | Video From F1 The Movie'
     }
   },
   markdown:{

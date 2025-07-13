@@ -20,7 +20,7 @@ export default {
     console.log("Timeline Modules:", timelineModules);
 
     // 处理模块
-    const timelineData = Object.keys(timelineModules).map((filePath) => {
+    let timelineData = Object.keys(timelineModules).map((filePath) => { // 注意这里使用 let，因为后面要重新赋值
       const module = timelineModules[filePath];
       console.log("File Path:", filePath);
       console.log("Module:", module);
@@ -63,8 +63,17 @@ export default {
       };
     }).filter((item) => item.frontmatter.title); // 保留有 title 的项
 
+    // ⭐ 新增：按日期排序 timelineData
+    timelineData.sort((a, b) => {
+      const dateA = a.frontmatter && a.frontmatter.date ? new Date(a.frontmatter.date.replace(/'/g, '')) : new Date(0); // 处理日期不存在或格式错误的情况
+      const dateB = b.frontmatter && b.frontmatter.date ? new Date(b.frontmatter.date.replace(/'/g, '')) : new Date(0); // 如果日期不存在，视为很早的日期
+
+      // 默认按升序排序 (从早到晚)。如果需要降序 (从新到旧)，则改为 dateB - dateA
+      return dateA - dateB;
+    });
+
     // 打印最终数据
-    console.log("Timeline Data:", timelineData);
+    console.log("Timeline Data (Sorted):", timelineData);
 
     return {
       timelineData,
@@ -73,7 +82,6 @@ export default {
   methods: {
     formatDate(dateStr) {
       if (!dateStr) return null;
-      // 假设日期格式为 '2025-05-04 00:00:00' 或类似
       try {
         const date = new Date(dateStr.replace(/'/g, "")); // 移除单引号
         if (isNaN(date)) return null;
