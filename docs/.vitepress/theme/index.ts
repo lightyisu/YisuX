@@ -5,7 +5,7 @@ import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import Timeline from "./components/Timeline.vue";
 import MyLayout from './components/MyHome.vue';
-import Nav2web from './components/nav2web.vue';
+import Nav2web from './components/Nav2web.vue';
 export default {
   extends: DefaultTheme,
 
