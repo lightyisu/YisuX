@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
 import { set_sidebar } from "./set_sidebar.mjs";
 // import {set_nav} from './set_nav.mjs'
-
+import AutoImport from 'unplugin-auto-import/vite'
 import { fileURLToPath, URL } from "node:url";
 
 // https://vitepress.dev/reference/site-config
@@ -9,6 +9,20 @@ export default defineConfig({
   title: "YisuX-lightyisu的个人博客",
   description: "blog",
   vite: {
+    plugins: [
+      AutoImport({
+        imports: [
+          'vue',
+          {
+            'naive-ui': ['NCard', 'NSkeleton'] // 自动导入并处理 CommonJS 兼容
+          }
+        ],
+        dts: 'src/auto-imports.d.ts', // 可选：生成类型声明
+        eslintrc: {
+          enabled: true
+        }
+      })
+    ],
     resolve: {
       alias: [
         {
