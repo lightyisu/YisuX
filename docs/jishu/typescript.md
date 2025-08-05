@@ -1,7 +1,7 @@
 ---
 catalog:
   - jishu
-date: '2025-08-05 00:00:00'
+date: '2025-08-05 08:00:00'
 type: Post
 slug: ts
 title: typescript

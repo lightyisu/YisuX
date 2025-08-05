@@ -1,7 +1,7 @@
 ---
 catalog:
   - '2025'
-date: '2025-06-13 00:00:00'
+date: '2025-06-13 08:00:00'
 type: Post
 slug: emby
 title: emby与mac
