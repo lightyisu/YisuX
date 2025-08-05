@@ -9,20 +9,10 @@ export default defineConfig({
   title: "YisuX-lightyisu的个人博客",
   description: "blog",
   vite: {
-    plugins: [
-      AutoImport({
-        imports: [
-          'vue',
-          {
-            'naive-ui': ['NCard', 'NSkeleton'] // 自动导入并处理 CommonJS 兼容
-          }
-        ],
-        dts: 'src/auto-imports.d.ts', // 可选：生成类型声明
-        eslintrc: {
-          enabled: true
-        }
-      })
-    ],
+   ssr: {
+      // 将 naive-ui 添加到 noExternal 列表
+      noExternal: ['naive-ui']
+    },
     resolve: {
       alias: [
         {
