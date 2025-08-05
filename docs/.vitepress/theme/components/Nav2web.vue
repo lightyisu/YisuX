@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { NCard, NSkeleton } from "naive-ui";
+
 let websites = ref([
   {
     title: "GSAP 动画库",
