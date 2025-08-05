@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "naive-ui": "^2.42.0",
+    "sass-embedded": "^1.89.2",
     "vue": "^3.4.21"
   },
   "scripts": {
@@ -14,6 +16,7 @@
   },
   "dependencies": {
     "@elog/cli": "^0.13.3",
+    "gsap": "^3.13.0",
     "vitepress": "^1.5.0"
   }
 }
