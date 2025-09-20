@@ -7,7 +7,7 @@ slug: ts
 title: typescript
 status: 已发布
 urlname: 23ce9dc9-c245-80d3-b76a-fb29346179a7
-updated: '2025-09-20 22:22:00'
+updated: '2025-09-20 22:23:00'
 ---
 
 # Tips For TS.
@@ -41,7 +41,7 @@ typings与xxx.d.ts文件
 ### 开发场景 1：遇到全局变量报错
 
 
-> 💡 引了一个第三方库 可能特别是/<script>引入的 导致TS报错找不到库的变量
+> 💡 引了一个第三方库 可能特别是`<script>` 引入的 导致TS报错找不到库的变量
 
 
 此时报错TS2304: Cannot find name 'mylib'.
