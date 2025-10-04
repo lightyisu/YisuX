@@ -4,10 +4,10 @@ catalog:
 date: '2023-08-06 08:00:00'
 type: Page
 slug: about
-title: About
+title: About Me
 status: 已发布
 urlname: f0f8c568-465d-4edc-ae12-c2069f77c496
-updated: '2025-04-06 00:39:00'
+updated: '2025-10-04 11:43:00'
 ---
 
 ### 关于我😎：
@@ -46,7 +46,7 @@ Plan Study- Python | Java | Golang | Node | Flutter or maybe C++
 2025 ver:
 
 
-喜欢的歌手：ITZY ，IVE
+喜欢的歌手：KPOP博爱粉
 
 
 喜欢的电影：《疾速追杀John Wick》
