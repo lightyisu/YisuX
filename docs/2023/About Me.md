@@ -7,10 +7,10 @@ slug: about
 title: About Me
 status: 已发布
 urlname: f0f8c568-465d-4edc-ae12-c2069f77c496
-updated: '2025-10-04 11:43:00'
+updated: '2025-10-14 00:33:00'
 ---
 
-### 关于我😎：
+### 关于我：
 
 
 一名数字媒体出身的前端程序员 | 喜欢 Vue.js ，React ，小程序编程等前端技术。
@@ -46,7 +46,7 @@ Plan Study- Python | Java | Golang | Node | Flutter or maybe C++
 2025 ver:
 
 
-喜欢的歌手：KPOP博爱粉
+喜欢的歌手：KPOP博爱粉（itzy/twice/fromis_9/ive/lesserafim/apink/nmixx/yeji and more）
 
 
 喜欢的电影：《疾速追杀John Wick》
