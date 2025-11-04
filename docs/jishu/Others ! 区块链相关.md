@@ -5,9 +5,9 @@ date: '2025-10-13 08:00:00'
 type: Post
 slug: blockchain
 title: Others | 区块链相关
-status: Draft
+status: 已发布
 urlname: 28be9dc9-c245-802a-9356-c3d59739302a
-updated: '2025-10-13 14:42:00'
+updated: '2025-11-04 16:18:00'
 ---
 
 区块链，Web3一直没接触过，感觉没事儿看看解闷也挺好的。
