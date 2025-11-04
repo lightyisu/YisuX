@@ -7,13 +7,13 @@ slug: htmltip
 title: HTML | Tips Collection
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-11-03 20:15:00'
+updated: '2025-11-03 20:42:00'
 ---
 
 # Tips For HTML.
 
 
-### 🍉SVG的使用
+### 🍉 SVG的使用
 
 
 Svg图片在矢量领域挺受欢迎的，但是我之前一直老是用img去加载而大部分Web其实都是原生载入Svg。也就是说审查元素的时候是原生有Svg嵌入的，但是我img src的话基本就是直接引入，无法控制内部的元素。
@@ -96,7 +96,7 @@ import SvgIcon from '@/components/SvgIcon.vue';
 ```
 
 
-### 🍉盒子模型
+### 🍉 盒子模型
 
 
 盒模型
@@ -130,7 +130,7 @@ width是整个盒子模型的宽度
 **总结：不同盒模型的width计算不一样**
 
 
-### 🍉盒模型下的边距margin重叠-BFC / IFC
+### 🍉 盒模型下的边距margin重叠-BFC / IFC
 
 
 两个div上下都有一定的margin 遇到的时候不会单纯的相加 比如上div margin 20px 下div margin 10px 他俩之间不会产生30px的margin而是合并为20px的margin
@@ -167,4 +167,26 @@ Block Fomatting Context 和Inline Formatting Context
 
 
 **3. 防止文字环绕浮动元素（实现多栏布局）**
+
+
+### 🍉 堆叠上下文下的z-index
+
+
+一个元素会创建自己的叠放上下文，比如当它满足以下条件之一时：
+
+
+| 条件                                                          | 示例                                |
+| ----------------------------------------------------------- | --------------------------------- |
+| position 为 `absolute`/`relative`/`fixed` 且 `z-index` 非 auto | `position: relative; z-index: 1;` |
+| `position: sticky` 时                                        | `position: sticky;`               |
+| 元素 `opacity < 1`                                            | `opacity: 0.8;`                   |
+| 元素使用了 `transform`                                           | `transform: translateX(10px);`    |
+| `filter`, `perspective`, `mix-blend-mode` 等                 | `filter: blur(5px);`              |
+| `isolation: isolate`                                        | `isolation: isolate;`             |
+
+
+如果某个父元素创建了一个独立 stacking context，则其内部元素的 z-index 再高，也**无法越过**这个父上下文之外的元素。
+
+
+**总结：z-index不是全局的有时候会被父元素的z-index束缚 导致实际上的提升z-index不起效果**
 
