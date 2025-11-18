@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| Tips Collection
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-11-14 11:44:00'
+updated: '2025-11-18 20:53:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -648,4 +648,107 @@ vue的底层响应式不是proxy为什么看起来只有reactive用了？
 
 
 **`reactive`** **是直接使用 Proxy API 的暴露层，而** **`ref`** **是一个为了处理基本类型而设计的“包装器”，当它包装对象时，内部会调用** **`reactive`****。**
+
+
+## 🍉 **`async`** **函数总是返回一个 Promise**
+
+
+**任何一个函数，只要在它前面加上了** **`async`** **关键字，那么这个函数的返回值就自动被包装成一个 Promise 对象。**
+
+
+```typescript
+// 一个简单的 async 函数，它返回一个数字
+async function getNumberAfterDelay(num) {
+  await new Promise(resolve => setTimeout(resolve, 1000)); // 模拟1秒延迟
+  return num;
+}
+
+const numbers = [10, 20, 30];
+
+// 使用 map 和 async 函数
+const promises = numbers.map(getNumberAfterDelay);
+
+console.log(promises);
+// 立即输出：
+// [
+//   Promise { <pending> },
+//   Promise { <pending> },
+//   Promise { <pending> }
+// ]
+
+// 等待所有 Promise 完成
+setTimeout(() => {
+  console.log(promises);
+  // 1秒后输出：
+  // [
+  //   Promise { <fulfilled>: 10 },
+  //   Promise { <fulfilled>: 20 },
+  //   Promise { <fulfilled>: 30 }
+  // ]
+}, 1500);
+```
+
+
+## 🍉 大文件切片上传
+
+
+问题：大文件一次性传输不太好 需要断点续传，秒传，不阻塞
+
+
+要点：blob.slice/chunks[]/sparkMD5/webworker
+
+
+流程：用input拿到文件，然后把文件在前端用blob的api去做二进制切分，切分后存入数组得到分片，对每个分片进行单独的上传，上传完之后后端进行合并返回最后的上传成功信息。进度（用切片上传进度）
+
+
+```typescript
+ <input type="file" id="file_upload" />
+ <button id="upload_btn">upload now</button>  
+  
+  const file_upload = document.querySelector("#file_upload");
+    let chunksList = [];
+    const chunkSize = 2 * 1024 * 1024;
+
+    let createChunks = (file) => {
+      let curSize = 0;
+      while (curSize < file.size) {
+        //slice 越界也不会报错，它只返回剩余的数据部分
+        chunksList.push(file.slice(curSize, curSize + chunkSize));
+        curSize += chunkSize;
+      }
+    };
+
+    document
+      .querySelector("#upload_btn")
+      .addEventListener("click", async () => {
+        const file = file_upload.files[0];
+        const file_name = file.name;
+        createChunks(file);
+        //封装成一个对象包装一下
+        const uploadList = chunksList.map((item, index) => {
+          return {
+            blob_file: item,
+            chunk_index: index,
+            chunk_name: `${file_name}-${index}`,
+            fileName: file_name,
+          };
+        });
+        //包装我的请求
+        const requestList = uploadList.map(
+          ({ blob_file, chunk_index, chunk_name, fileName }) => {
+            const formdata = new FormData();
+            formdata.append("blob_file", blob_file);
+            formdata.append("chunk_index", chunk_index);
+            formdata.append("chunk_name", chunk_name);
+            formdata.append("file_name", fileName);
+            return axios({
+              method: "POST",
+              url: "https://localhost:3000/chunk_upload",
+              data: formdata,
+            });
+          }
+        );
+        await Promise.all(requestList);
+      });
+```
 
