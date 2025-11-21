@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| Tips Collection
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-11-19 11:12:00'
+updated: '2025-11-21 22:31:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -481,6 +481,92 @@ class Dog extends Animal {
   4.   返回这个对象 { }
 
 
+## 🍉_**proto_**、prototype、constructor 的关系
+
+
+prototype（核心）: 原型，可以放一些用于子类继承的方法和属性 | 图纸
+
+
+_proto_:原型链，用以指向自己的父原型（指向prototype）| 标签指向图纸
+
+
+constructor **:**指回创建这个原型对象的那个构造函数 （实例对象找构造函数用）
+
+
+我觉得用三个层级来表示可以很清晰（ 父类 -> 子类 -> 实例 ）
+
+
+```typescript
+// === 层级1：父类 (父构造函数) ===
+function Animal(name) {
+  this.name = name;
+}
+Animal.prototype.eat = function() {
+  console.log(`${this.name} is eating.`);
+};
+
+
+// === 层级2：子类 (子构造函数) ===
+function Dog(name, breed) {
+  // 1. 调用父类构造函数，继承属性
+  Animal.call(this, name);
+  this.breed = breed;
+}
+
+// 2. 继承父类的方法 (这是关键！)这样指向原型链就可以继承上方法了
+Dog.prototype = Object.create(Animal.prototype);
+
+// 3. 修复因为上一步操作而丢失的 constructor 指向
+Dog.prototype.constructor = Dog;
+
+// 4. 给子类添加自己的方法
+Dog.prototype.bark = function() {
+  console.log(`${this.name} is barking.`);
+};
+
+
+// === 层级3：实例 ===
+const myDog = new Dog('旺财', '柯基');
+```
+
+
+
+• **`Animal.prototype`**：这是父类的**原型对象**，是所有 **`Animal`** 实例共享的“设计图纸”。上面定义了 **`eat`** 方法。
+• **`Animal.prototype.constructor`**：这张“图纸”上有一个 **`constructor`** 属性，它**指回**了它的设计者**`Animal`** 函数本身。
+
+
+• **`Dog.prototype`**：这是子类的**原型对象。**
+• **`Dog.prototype.__proto__`**：**`Dog.prototype`** 的原型 (**`__proto__`**) **指向了父类的原型** **`Animal.prototype`**。这就是**原型链**的精髓！
+• **`myDog.__proto__`**：根据基本规则，实例的 **`__proto__`** 指向创建它的构造函数的 **`prototype`**。所以，**`myDog.__proto__`** 指向了 **`Dog.prototype`**。
+
+
+## 🍉在类里，为什么将属性放在 this 上，方法放在 prototype 上
+
+
+可以看到好像所有的属性都定义在this上，所有的共享方法都在链上这是为什么呢？
+
+
+1.咋不把属性写到链上？
+
+
+其实是个大聪明想法，极其容易重名，一改动全身。
+
+
+**大部分要继承的属性都是私有的更好 私有属性必须放在 this 上。**
+
+
+2.咋不把方法写到this上？
+
+
+**非常占用内存 而且好像不好继承吧（理论上也可以用super or call）。**
+
+
+3.class是语法糖 实际上咱们的方法还是和属性分开了写到链上的
+
+
+**总结：所有属性在 this 上，所有共享方法在链上。**
+
+
 ## 🍉 事件循环
 
 
@@ -770,4 +856,420 @@ setTimeout(() => {
         await Promise.all(requestList);
       });
 ```
+
+
+## 🍉  js的内存泄漏
+
+
+JS 的内存管理机制。JavaScript 具有自动垃圾回收（GC）机制，GC 会定期（或在特定时机）扫描内存，找出那些“不再被使用”的变量，然后释放它们占用的内存。判断“不再被使用”的标准通常是“可达性”——即从根对象（如 **`window`**、**`global`**）出发，能否访问到这个对象（从根对象，沿着引用链，能否找到它，只要有引用就不销毁）。如果访问不到，GC 就会回收它。
+
+
+本应被回收的内存，因为某种原因被无意中持有了引用，导致它一直“可达”，无法被 GC 释放。只要有一点联系就不会被垃圾回收机制所回收，例如闭包。
+
+
+**1. 意外的全局变量**
+
+
+在非严格模式下，如果一个变量在声明时没有使用 **`var`**、**`let`** 或 **`const`**，它会被自动挂载到全局对象（浏览器中的 **`window`**）上。全局对象的生命周期与页面一致，只要页面不关闭，它上面的变量就永远不会被回收。
+
+
+```javascript
+function createLeak() {
+  // "leakyData" 没有被声明，它会成为 window.leakyData
+  leakyData = new Array(1000000).fill('*'); 
+}
+
+createLeak(); // leakyData 现在是一个全局变量，无法被回收
+console.log(window.createLeak) //现在createLeak被挂到了window上
+
+
+let cl2=function createLeak2() {
+  // "leakyData" 没有被声明，它会成为 window.leakyData
+  leakyData = new Array(1000000).fill('*'); 
+}
+console.log(window.cl2) //undefined 现在挂不上了 会自动被回收
+
+
+x=1;
+=>1
+window.x
+=>1
+```
+
+
+**不用变量声明就会内存泄漏 自动挂window上（window只要不关闭就不销毁）**
+
+
+**2.未清理的定时器或回调**
+
+
+**`setInterval`** 或 **`setTimeout`** 的回调函数，如果被无限期地执行且没有被清理，那么它引用的所有外部变量都将无法被释放
+
+
+```javascript
+let largeObject = { data: new Array(1000000) };
+
+setInterval(() => {
+  // 这个回调函数引用了外部的 largeObject
+  // 只要定时器在运行，largeObject 就不会被回收
+  console.log(largeObject.data.length); 
+}, 1000);
+
+// 即使后续不再需要 largeObject，它也无法被回收
+largeObject = null; // 无效！定时器回调仍持有引用
+```
+
+
+在不需要定时器时，务必使用 **`clearInterval()`** 或 **`clearTimeout()`** 来清除它
+
+
+**3.闭包**
+
+
+一个内部函数可以访问其外部函数的变量。如果这个内部函数被长期引用（例如，作为事件回调），那么即使外部函数已经执行完毕，其作用域链上的变量也不会被销毁。
+
+
+解决方法：使用完后将其设为 **`null`**
+
+
+**4.DOM 引用和 JS 对象相互引用**
+
+
+DOM 被删除了，但 JS 中仍有引用 → 不能回收。
+
+
+或者 JS 对象被 DOM 属性绑定着 → 不能回收。
+
+
+```javascript
+let detachedElement = document.getElementById('my-element');
+
+// 从 DOM 中移除了这个元素
+detachedElement.remove(); 
+
+// 但是，JS 变量 detachedElement 仍然持有对它的引用
+// 这个 DOM 元素及其关联的所有资源都无法被 GC 回收
+console.log(detachedElement); // 依然可以访问到
+```
+
+
+**5.被遗忘的事件监听器**
+
+
+在单页应用（SPA）中，这个问题尤为突出。当页面切换或组件销毁时，如果忘记移除绑定在 DOM 元素或 **`window`**/**`document`** 上的事件监听器，这些监听器的回调函数及其闭包引用的变量都无法被释放。
+
+
+毕竟组件化了以后挂在window是真的挂上去了而销毁组件只是window下的一小部分。
+
+
+**6.忘记清理大型数据结构（Map / Set / WeakMap 不当使用）**
+
+
+因为这些大型数据结构通常引用永远存在 永远可达。
+
+
+WeakMap / WeakSet 的键是弱引用，不会阻止垃圾回收。
+
+
+**（使用** **`Map`** **- 强引用）**
+
+
+```javascript
+const userInfo = new Map();
+let user1 = { name: '张三' };
+userInfo.set(user1, 'VIP用户');
+
+// ... 后来，user1 不再需要了
+user1 = null;
+
+// 问题：{ name: '张三' } 对象无法被回收，因为 userInfo 还强引用着它！
+// 这就是内存泄漏。
+```
+
+
+**（使用** **`WeakMap`** **- 弱引用）**
+
+
+```javascript
+const userInfo = new WeakMap();
+let user1 = { name: '李四' };
+userInfo.set(user1, 'VIP用户');
+
+// ... 后来，user1 不再需要了
+user1 = null;
+
+// 结果：{ name: '李四' } 对象可以被正常回收！
+// WeakMap 中关于 user1 的条目也会随之自动消失。
+// 没有内存泄漏！
+```
+
+
+| 泄漏类型           | 核心原因                            | 关键解决方案                              |
+| -------------- | ------------------------------- | ----------------------------------- |
+| **意外的全局变量**    | 变量未声明，被挂到 `window` 上            | 使用 `'use strict'` 和 `let`/`const`   |
+| **被遗忘的定时器**    | `setInterval`/`setTimeout` 未被清除 | 及时调用 `clearInterval`/`clearTimeout` |
+| **闭包**         | 长期存在的内部函数引用了外部变量                | 理解闭包生命周期，手动解除引用                     |
+| **分离的 DOM 节点** | DOM 已移除，但 JS 变量仍持有引用            | 移除 DOM 后，将 JS 引用设为 `null`           |
+| **被遗忘的事件监听器**  | 组件销毁时未移除监听器                     | 在组件销毁生命周期中移除监听器                     |
+| **不当的缓存**      | `Map`/`Set` 强引用了缓存对象            | 对于对象**键**，优先使用 `WeakMap`/`WeakSet`  |
+
+
+## 🍉 弱引用 and 强引用
+
+
+**强引用**
+
+
+```javascript
+let book = { title: 'JavaScript高级程序设计' }; // 你把书借出来了
+// ... 你一直持有 book 这个引用
+// 只要 book 变量还存在且不为 null，这本书就不会被回收
+```
+
+
+**弱引用 (ES6)**
+
+
+弱引用是一种不“拥有”对象的引用。它不会阻止垃圾回收器回收对象。这是ES6的新特性，ES5之前不存在这个特性。
+
+- **WeakMap / WeakSet** 是 ES6 新增的内置数据结构
+- 它们内部持有 **弱引用（weak reference）**
+- 允许做缓存或附加元数据，而不用担心泄漏
+
+```javascript
+let book = { title: '你不知道的JavaScript' };
+const bookMetadata = new WeakMap(); // 这是一个特殊的目录系统
+
+// 你把这本书的信息登记到了目录系统里，但这不是“借出”
+bookMetadata.set(book, { category: 'Front-end', popular: true });
+
+// 现在，你把书还了，不再持有它
+book = null; // 所有的强引用都消失了
+
+// 此时，GC 会发生什么？
+// GC 发现没有任何强引用指向那本书了，于是把它回收了。
+// 同时，WeakMap 里的那个条目也会自动消失！
+// 因为 WeakMap 的机制就是：“如果键（那本书）没了，我这条记录也没用了”。
+```
+
+
+总结：其实就是对象键回收的问题
+
+
+## 🍉 判断数据类型的方式有哪些
+
+
+**1.****`typeof`** **- 最基础但最“坑”的方法 判断基本类型很方便**
+
+
+```javascript
+typeof "hello";        // "string"
+typeof 123;            // "number"
+typeof true;           // "boolean"
+typeof undefined;      // "undefined"
+typeof Symbol();       // "symbol"
+typeof 123n;           // "bigint"
+typeof function() {};  // "function"
+
+// --- 以下是 typeof 的“坑” ---
+typeof null;           // "object"  (这是一个历史遗留的 bug)
+typeof [];             // "object"
+typeof {};             // "object"
+typeof new Date();     // "object"
+typeof /regex/;        // "object"
+```
+
+- **最大的问题**：**`typeof null`** 返回 **`"object"`**，这是 JS 早期设计的一个错误。
+- 无法区分具体的对象类型，比如数组、日期、正则表达式等，它们都返回 **`"object"`**
+
+**2.****`instanceof`** **- 检查原型链**
+
+
+```javascript
+[] instanceof Array;        // true
+[] instanceof Object;       // true (Array.prototype.__proto__ === Object.prototype)
+new Date() instanceof Date; // true
+new Date() instanceof Object; // true
+
+function Person() {}
+let p = new Person();
+p instanceof Person;        // true
+p instanceof Object;        // true
+
+123 instanceof Number;      // false (基本类型不是对象实例)
+"hello" instanceof String;  // false
+```
+
+
+专属于对象引用类型的判断方法
+
+
+**不能用于判断基本类型（因为JS里的看起来像基本类型的引用对象是包装对象）**
+
+
+**3.****`Object.prototype.toString.call()`** **- 最准确、最通用的“终极”方法**
+
+
+看起来是我们的大Object上的原型方法toString
+
+
+这是目前判断数据类型最可靠、最精准的方法。所有内置对象都重写了 **`toString`** 方法，但 **`Object.prototype`** 上的原始 **`toString`** 方法会返回一个由 **`[object Type]`** 格式组成的字符串，其中 **`Type`** 就是对象的类型。
+
+
+**为什么用** **`.call()`****？**
+
+
+因为很多对象自身有 **`toString`** 方法，会覆盖 **`Object`** 上的。我们想借用 **`Object`** 上的 **`toString`** 方法，并让它在 **`variable`** 这个对象上执行。
+
+
+```javascript
+Object.prototype.toString.call("hello");        // "[object String]"
+Object.prototype.toString.call(123);            // "[object Number]"
+Object.prototype.toString.call(true);           // "[object Boolean]"
+Object.prototype.toString.call(undefined);      // "[object Undefined]"
+Object.prototype.toString.call(null);           // "[object Null]"  <-- 唯一能准确判断 null 的方法！
+Object.prototype.toString.call(Symbol());       // "[object Symbol]"
+Object.prototype.toString.call(123n);           // "[object BigInt]"
+Object.prototype.toString.call(function() {});  // "[object Function]"
+
+Object.prototype.toString.call([]);             // "[object Array]"
+Object.prototype.toString.call({});             // "[object Object]"
+Object.prototype.toString.call(new Date());     // "[object Date]"
+Object.prototype.toString.call(/regex/);        // "[object RegExp]"
+```
+
+
+4.**`Array.isArray()`** **- 数组的专属方法**
+
+
+| 方法                                     | 优点          | 缺点                           | 推荐场景                                                           |
+| -------------------------------------- | ----------- | ---------------------------- | -------------------------------------------------------------- |
+| **`typeof`**                           | 简单、快速       | `null` 误判为 `object`，无法区分对象类型 | 判断基本类型（`string`, `number`, `boolean`, `undefined`, `function`） |
+| **`instanceof`**                       | 可区分对象类型     | 无法判断基本类型，有跨域问题               | 判断自定义类实例，在同一全局域内判断内置对象                                         |
+| **`Object.prototype.toString.call()`** | **最准确、最通用** | 写法繁琐                         | **构建通用类型判断工具函数**                                               |
+| **`Array.isArray()`**                  | **判断数组最可靠** | 只能判断数组                       | **任何需要判断数组的场景**                                                |
+
+
+## 🍉 Number.isNaN 和 isNaN 的区别
+
+
+`Number.isNaN` 只判断是否为真正的 NaN；(推荐）
+
+
+`isNaN` 会先做类型转换，判断“转换后是否为 NaN”;（有坑）
+
+
+## 🍉 js获取属性（对象方法）
+
+
+| 方式           | 示例                               | 说明        |
+| ------------ | -------------------------------- | --------- |
+| 点访问          | `obj.name`                       | 最常用       |
+| 方括号          | `obj["name"]`                    | 动态属性名     |
+| 获取 key       | `Object.keys()`                  | 可枚举属性     |
+| 获取 value     | `Object.values()`                | 可枚举值      |
+| 获取 entries   | `Object.entries()`               | key-value |
+| 获取所有属性名      | `Object.getOwnPropertyNames()`   | 包含不可枚举    |
+| 获取 Symbol 属性 | `Object.getOwnPropertySymbols()` | 符号属性      |
+| 解构           | `const {a} = obj`                | 语法糖       |
+| 可选链          | `obj?.a?.b`                      | 防报错       |
+| Reflect      | `Reflect.get(obj, key)`          | 更规范的 API  |
+| Proxy 拦截     | `new Proxy(obj,{get(){}})`       | 底层机制      |
+
+
+## 🍉 为什么需要reflect和proxy
+
+- **Proxy（代理）**：让你可以**拦截并自定义**对象的基本操作（如属性查找、赋值、枚举、函数调用等）。
+- **Reflect（反射）**：提供了一套**统一的、函数式的默认操作**，与 Proxy 的拦截方法一一对应。
+
+**为什么需要 Proxy？—— 为了“拦截”与“控制”**
+
+
+Proxy 可以拦截多达 13 种操作，几乎涵盖了对象的所有行为
+
+
+**为什么需要 Reflect？—— 为了“统一”与“规范”**
+
+
+Reflect 将所有对象操作都变成了函数形式，与 Proxy 的拦截器一一对应。
+
+
+总结：这两个搭配使用，Proxy本来就是小幅度的改动式的拦截，配合Reflect默认行为搭配出一套拦截的逻辑。**`Proxy`** **赋予了“拦截”和“重定义”对象行为的权力，而** **`Reflect`** **提供了一个干净、统一的工具来执行那些被你拦截的“默认行为”。 JavaScript 元编程领域里相辅相成的两大利器。**
+
+
+## 🍉 js 是面向对象语言吗
+
+
+不是我觉着算不上，有面向对象逻辑的基于原型链的语言。ES6的class只是语法糖。
+
+
+完全支持 OOP 的三大特性
+
+
+| OOP特性             | JS 是否支持 | 示例        |
+| ----------------- | ------- | --------- |
+| 封装（Encapsulation） | ✔       | 对象、闭包     |
+| 继承（Inheritance）   | ✔       | 原型链       |
+| 多态（Polymorphism）  | ✔       | 方法重写、鸭子类型 |
+
+
+JavaScript 不是传统类式的面向对象语言，而是基于原型（prototype）的面向对象语言。
+
+
+## 🍉  面向对象特性
+
+
+**封装“隐藏细节，提供接口”：**
+
+
+封装，顾名思义，就是**将数据和操作数据的方法捆绑在一起，形成一个独立的“对象”，并对外部隐藏对象的内部实现细节**。
+
+
+它就像一个黑盒子：
+
+- **内部**：包含了对象的状态（属性/数据）和行为（方法/函数）。
+- **外部**：只能通过盒子提供的特定接口（公共方法）来与它交互，而不能直接伸手进去乱动。
+
+**继承  “代码复用，建立层次”**
+
+
+继承允许我们创建一个新类（**子类/派生类**），这个新类可以**获取**另一个已存在的类（**父类/基类**）的所有属性和方法。这是一种 "is-a"（是一个）的关系。
+
+- **代码复用**：避免编写重复的代码，是 DRY (Don't Repeat Yourself) 原则的体现。
+- **逻辑清晰**：建立了一个从一般到特殊的类层次结构，符合人类的认知习惯。
+- **为多态奠定基础**：没有继承，多态就无从谈起。
+
+**多态  “同一接口，多种状态，不同实现”**
+
+
+在面向对象中，它指的是**同一个行为（方法调用），作用于不同的对象，会产生不同的执行结果**。
+
+- **灵活性**：允许我们将不同类型的对象视为同一类型来处理，大大降低了代码的耦合度。
+- **可扩展性**：当需要增加一种新的动物（比如 **`Pig`**）时，我们只需要创建一个新的 **`Pig`** 类并实现“叫”的方法，而不需要修改调用“叫”这个动作的代码。这完美符合“开闭原则”。
+
+**抽象**
+
+
+核心思想：只关注对象必要的本质特征和行为，而忽略与当前目标无关的、非本质的细节。先不去实现具体的细节，是一种更高层更通用共享的实现。
+
+
+[鸭子类型](https://zhida.zhihu.com/search?content_id=118496224&content_type=Article&match_order=1&q=%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NjM5MDgxNTQsInEiOiLpuK3lrZDnsbvlnosiLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoxMTg0OTYyMjQsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.toRoeGMvbvXDlPVJx_rsZUMm_n9hrGt43krirP-KP9k&zhida_source=entity)
+
+
+**抽象 vs. 封装：抽象是目标，封装是实现手段**
+
+
+**封装是实现抽象的一种具体技术**。通过访问修饰符（**`public`**, **`private`**），我们把抽象出的“接口”和隐藏的“实现细节”分离开。
+
+
+**抽象 vs. 继承：继承建立了抽象的层次结构**
+
+
+继承本身就是一种抽象。我们通过提取多个子类的共同特征，来创建一个更抽象的父类。
+
+
+**抽象 vs. 多态：多态是抽象的体现和结果**
+
+
+正是因为我们可以将 **`Dog`**、**`Cat`** 等具体对象**抽象**地看作 **`Animal`** 类型，我们才能使用多态。
 
