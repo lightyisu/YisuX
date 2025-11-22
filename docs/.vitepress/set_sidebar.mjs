@@ -79,8 +79,11 @@ let handleJishuBar = () => {
   let JishuBar_temp = jsonObj["docs"].filter((item) => {
     return item["properties"]["catalog"][0] == "jishu";
   });
+  console.log(JishuBar_temp);
+  JishuBar_temp.sort((a, b) => {
+    return new Date(b.properties.updated) - new Date(a.properties.updated);
+  });
   jishubar.items = [...transformArrayToTextLinkObjects(JishuBar_temp)];
-  console.log(jishubar);
 };
 
 let data = fs.readFileSync(filePath, "utf8");
