@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| 前端基础问题集合
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-11-23 22:07:00'
+updated: '2025-11-29 12:40:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -702,6 +702,9 @@ JavaScript 作为一门高级语言，为了提升开发效率和程序稳定性
 | **适用场景**          | 极少使用，除非脚本必须立即执行并影响后续HTML渲染 | **独立的第三方脚本**，如统计、广告 | **有依赖关系的应用主脚本**，如JS框架、应用逻辑      |
 
 
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466RK5SSRGA%2F20251129%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251129T044132Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEPr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIEbI0uoW36jTVnnMZkqob1GPodhu7QKgEzJmbwfO5LGaAiBM4O2i9uuzXZtPihV1DYEKNkLHim3xDMBMaQBAdwdtgCqIBAjD%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMgXQbI9x8I%2BgdpGbSKtwD2Pdi0gQKyT68lfWe%2FTDDrG4Ke5Rp2XvxCtTFJ0rulzzvPoKCyI9b1lAfz%2F7xCGz3jEfjturpBhHoObt3iiLpszaTy08Gl5OtgCzh5bWB3x1IlXv226NzVayZYwhm0qtVkNNpA8GjK4a4RDVybb4TpVhGiaf3KxYHuIycmq4KnlYvy6Jfdzq8B7X5l%2FDPmrO1GLVPBXQq58wMtl6zGjFKH0wcDrnAvmSY1pZKzvv7bdGL%2F0lPG4zrbFr%2FMNVf5YFB3GDlCAzypsBXez4FivEzWGkgN8t9vE1gNMDeEW7Yu3FWhYEB3i9LAMzkwo0rOBrWw3WtMw3hHC7NKan1SZvWAIfmYwiwmktws%2FLOEBX%2B%2B3lofmVMna%2Bg0Hrv8ldm7iKDOBT5JFsSO3dAUG6DV%2By8WVCdtqB0PJLK2zci9jmPpHNA6ztdXLBDkSXVrku%2FHacKe56upIoxe4RX4jLI%2FD8BFjI%2F6u6BSbMJvb4rYXzo%2B5D0ulUXog2LfrjkPNDW2FWRQDmTIyqwA0V77ad6jk4RKaZS5x7evJmRFZwUw6Z%2F5vcDcklD0Bwg7O4RaxKS8IAbEGGNPwmN046jFBhsexXHi86kk7isaqNRB0t%2B0r%2FhqIedB61qUu0zFxGIaxAwzpepyQY6pgGOXY31vuV3m4cBprvVbQkIDuOIaFQH%2BvCz4nf2Bpf%2BVbN844ntLRTjsl6dHJU96MNgUmPOlrrSu2GJvdFKeW0e9M2nGlv9IjUPFl0jYC2MFzYeUxqQgTZR5nOKfEkgLSXWuz9jFTs49NlyS%2B8Gf3cO4g4odKYYxwVV0gO1PJjOG96TbyDKdAClJ95EKfawFKgWGWVTaw9XjzWkAgm6vuOniXU5HNSy&X-Amz-Signature=7480e076884628f7a4365bd37f652a4850fa6571cbbe04f4960f95d04c8db992&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+
+
 ## 🍉 回调/promise/**generator**/async
 
 
@@ -835,6 +838,11 @@ vue的底层响应式不是proxy为什么看起来只有reactive用了？
 
 1. 为了 Vue DevTools 的“时间旅行”调试 (vue3 更好的devtools)
 2. Vue 2 响应式系统的限制 （vue3 proxy了解决了）
+
+### vuex缺陷（重点是无proxy带来的缺陷+无ts）：
+
+1. **Mutations 的强制性**：
+为什么 Vuex 必须有 **`mutations`**？一个重要原因就是为了配合 Vue 2 的响应式系统。通过强制所有状态变更都必须经过 **`mutation`**，Vuex 可以在一个地方集中处理这些变更，并确保 Vue 的依赖收集和视图更新能正确触发。这是一种为了“绕过”**`Object.defineProperty`** 限制而设计的模式。你不能在组件里直接修改 **`store.state.xxx`**，因为 Vue 2 可能无法追踪到这个变更。由于 **`Proxy`** 可以直接追踪到任何属性的修改和添加，Pinia 不再需要一个专门的 **`mutation`** 机制来“通知” Vue 发生了变化。你可以在 **`actions`** 中直接修改 **`state`**。
 
 ## 🍉 vue组件的通信方式
 
@@ -2062,15 +2070,342 @@ function fn(a, ...rest) {
 | `Object.seal`        | 密封            |
 
 
-### Promise
+### **Promise 静态方法**
 
 
-| 方法                               | 作用               | 何时成功                 | 何时失败                           | 返回值结构                             | 常用场景                    |
-| -------------------------------- | ---------------- | -------------------- | ------------------------------ | --------------------------------- | ----------------------- |
-| **Promise.resolve(value)**       | 快速创建一个成功 Promise | 立即成功                 | ❌ 不会失败                         | `Promise<value>`                  | 把普通值转 Promise；快速测试 then |
-| **Promise.reject(reason)**       | 快速创建一个失败 Promise | ❌ 不会成功               | 立即失败                           | `Promise<never>`                  | 模拟错误、测试 catch           |
-| **Promise.all([p1,p2…])**        | 等全部成功才成功         | 所有 Promise fulfilled | _任何一个_ rejected                | `[v1, v2,...]`                    | **同时并发请求**（全成功才继续）      |
-| **Promise.race([p1,p2…])**       | 谁先结束就用谁（成功/失败都算） | 第一个 fulfilled        | 第一个 rejected                   | 单个结果                              | **超时控制**（谁先跑完）          |
-| **Promise.allSettled([p1,p2…])** | 等全部执行结束，不管成败     | 所有 promise 已 settle  | ❌ 永远不会失败                       | `[{ status, value/reason }, ...]` | **多个接口都要结果**，不能被中断      |
-| **Promise.any([p1,p2…])**        | 只要一个成功就成功        | 第一个 fulfilled        | 全部 rejected → 抛 AggregateError | 成功值                               | **最快成功即可**（兜底容错）        |
+### **1.** **`Promise.resolve(value)`**
+
+
+返回一个以给定值 **`value`** 成功的 Promise 对象。
+
+- 如果 **`value`** 是一个普通值，它返回一个立即成功的 Promise。
+- 如果 **`value`** 是一个 Promise 对象，它直接返回这个 Promise。
+- 如果 **`value`** 是一个 **`thenable`** 对象（即有 **`then`** 方法的对象），它会将这个对象“包装”成一个真正的 Promise。
+
+```typescript
+const p1 = Promise.resolve('成功');
+const p2 = Promise.resolve(p1);
+
+console.log(p1 === p2); // true, 如果传入的是 Promise，则直接返回
+
+const thenable = {
+  then: (resolve) => resolve('我是一个 thenable')
+};
+const p3 = Promise.resolve(thenable);
+p3.then(console.log); // 输出: 我是一个 thenable
+```
+
+
+### **2.** **`Promise.reject(reason)`**
+
+
+返回一个以给定原因 **`reason`** 失败的 Promise 对象。
+
+
+
+```typescript
+const p = Promise.reject(new Error('失败了'));
+p.catch(error => console.error(error.message)); // 输出: 失败了
+```
+
+
+### 成功型promise
+
+
+### **3.** **`Promise.all(iterable)`**
+
+- **当所有 Promise 都成功时**，新的 Promise 才会成功。其成功结果是一个数组，包含了所有 Promise 的成功结果，顺序与传入的 Promise 顺序一致。
+- **只要有任何一个 Promise 失败**，新的 Promise 就会立即失败，其失败原因是第一个失败的 Promise 的失败原因。
+
+```typescript
+const p1 = Promise.resolve(3);
+const p2 = new Promise(resolve => setTimeout(() => resolve('foo'), 1000));
+const p3 = Promise.resolve(42);
+
+Promise.all([p1, p2, p3]).then(values => {
+  console.log(values); // 1秒后输出: [3, 'foo', 42]
+});
+
+const p4 = Promise.reject('失败了');
+Promise.all([p1, p4, p3]).catch(error => {
+  console.error(error); // 立即输出: 失败了
+});
+```
+
+
+### **6.** **`Promise.any(iterable)`**
+
+
+接收一个 Promise 的可迭代对象，返回一个**新的 Promise**。
+
+- 一旦**任何一个**传入的 Promise 成功，新的 Promise 就会立即成功，其结果是那个成功的 Promise 的结果。
+- 如果**所有**传入的 Promise 都失败了，新的 Promise 才会失败，其失败原因是一个 **`AggregateError`** 对象，它包含了所有 Promise 的失败原因。
+
+```typescript
+const p1 = Promise.reject(new Error('失败 1'));
+const p2 = Promise.reject(new Error('失败 2'));
+const p3 = Promise.resolve('成功 3');
+
+Promise.any([p1, p2, p3]).then(value => {
+  console.log(value); // 输出: '成功 3'
+});
+
+Promise.any([p1, p2]).catch(error => {
+  console.error(error); // 输出: AggregateError: All promises were rejected
+  console.error(error.errors); // 输出: [Error: 失败 1, Error: 失败 2]
+});
+```
+
+
+### 不管成不成功的
+
+
+### **4.** **`Promise.race(iterable)`**
+
+
+接收一个 Promise 的可迭代对象，返回一个**新的 Promise**。
+
+- 这个新的 Promise 会在**任何一个**传入的 Promise 完成（成功或失败）时，立即采用其状态和结果。就像一场赛跑，谁先完成就听谁的。
+
+### **5.** **`Promise.allSettled(iterable)`**
+
+
+接收一个 Promise 的可迭代对象，返回一个**新的 Promise**。
+
+- 这个新的 Promise 会等到**所有**传入的 Promise 都完成（无论成功还是失败）后才会成功。
+- 其成功结果是一个数组，每个对象都对应一个传入的 Promise，并描述了其最终状态。
+	- **`{ status: 'fulfilled', value: ... }`** 表示成功。
+	- **`{ status: 'rejected', reason: ... }`** 表示失败。
+
+这对于需要知道所有异步操作最终结果，而不关心是否有失败的场景非常有用。
+
+
+## 🍉  数组splice/slice
+
+
+| 特性       | `splice()`                    | `slice()`      |
+| -------- | ----------------------------- | -------------- |
+| **功能**   | 增删改数组元素                       | 提取数组片段         |
+| **原数组**  | 直接修改                          | 不修改            |
+| **返回值**  | 被删除的元素组成的新数组                  | 提取的元素组成的新数组    |
+| **参数**   | `(start, deleteCount, items)` | `(start, end)` |
+| **使用场景** | 动态修改数组内容                      | 安全获取子数组        |
+
+
+## 🍉  **什么是尾调用**
+
+
+尾调用就是在函数的**最后一步调用函数**
+
+
+```javascript
+function foo(x) {
+  return bar(x); // foo 的最后一个动作是调用 bar，并直接返回 bar 的结果
+}
+```
+
+
+**使用尾调用有什么好处？**
+
+
+尾调用的最大好处在于**性能优化**，具体来说是实现了 **尾调用优化**。
+
+
+前端貌似其实没有实现这个优化 也就是说理论优化吧。
+
+
+## 🍉  水平垂直居中方法
+
+
+1.**flexbox方法**
+
+
+将父容器设置为 Flex 布局，然后利用 **`justify-content`** 和 **`align-items`** 属性分别控制主轴和交叉轴的对齐方式。
+
+2.**Grid 方法**
+
+
+将父容器设置为 Grid 布局，使用 **`place-items`** 属性一步到位实现居中。
+
+
+
+3.**Position + Transform 方法**
+
+1. 将父容器设为相对定位。
+2. 将子元素设为绝对定位，并使用 **`top: 50%`** 和 **`left: 50%`** 使其左上角移动到父容器的中心。
+3. 使用 **`transform: translate(-50%, -50%)`** 将子元素向左和向上回拉自身宽度和高度的 50%，从而实现中心对齐。
+
+4.**Position + Margin 方法**
+
+
+**核心思想：** 与 **`transform`** 方法类似，但使用负 **`margin`** 来代替 **`transform`** 进行偏移
+
+
+
+5.**Table-cell 方法（特殊场景）**
+
+
+将父容器模拟成表格单元格（**`display: table-cell`**），然后利用表格的 **`vertical-align: middle`** 属性来实现垂直居中，再配合 **`text-align: center`** 实现水平居中。
+
+
+## 
+🍉**浏览器渲染一帧都做了什么？**
+
+
+**帧率** 就是每秒钟渲染的帧数，单位是 **fps (Frames Per Second)**。
+
+- **60fps** 是目前业界公认的“流畅”标准。它意味着浏览器需要在 **1000ms / 60 ≈ 16.67ms** 内完成**所有**工作来生成一帧。
+- 如果生成一帧的时间超过了 16.67ms，比如 33ms，那么帧率就会下降到 30fps，用户就会感觉到**卡顿（浏览器卡顿表现）**。
+- 如果生成一帧的时间更长，比如 100ms，那么用户会明显感觉到页面**延迟、不响应**。
+
+**核心目标：** 保证每一帧的渲染时间都控制在 **16.67ms** 以内，以达到流畅的 60fps 体验。
+
+
+浏览器生成一帧，就像工厂里的一条流水线，主要有以下几个关键步骤。这个过程也被称为**关键渲染路径**。
+
+1. **JavaScript:**
+	- **触发器**：通常是 JavaScript 代码。比如通过 **`requestAnimationFrame`** 执行动画、用户交互（点击、滚动）、或者网络请求完成（如 AJAX）。
+	- **作用**：修改 DOM 结构、修改 CSS 样式等，为后续步骤提供数据。
+2. **Style (样式计算):**
+	- **作用**：浏览器解析 CSS，结合 DOM，计算出每个节点最终的样式（CSSOM）。这个过程会确定每个元素最终应用了哪些 CSS 规则。
+	- **成本**：通常比较快，但如果 CSS 选择器非常复杂（如通配符、深层嵌套），计算成本会增加。
+3. **Layout (布局 / 重排):**
+	- **作用**：根据计算出的样式，确定每个元素在屏幕上的精确位置和大小（几何信息）。浏览器会从根节点开始，递归计算所有元素的坐标。
+	- **成本**：**非常昂贵！** 页面元素越多，布局越复杂，耗时就越长。**任何可能改变元素位置或大小的操作都会触发布局。**
+4. **Paint (绘制 / 重绘):**
+	- **作用**：布局完成后，浏览器知道了元素的位置和大小，接下来需要“填充”像素。比如绘制文本、颜色、边框、阴影等。这个过程通常在多个图层上完成。
+	- **成本**：**同样昂贵！** 绘制的区域越大、越复杂（如阴影），耗时就越长。
+5. **Composite (合成):**
+	- **作用**：浏览器将所有绘制好的图层按照正确的顺序合并成最终的图像，然后显示在屏幕上。
+	- **成本**：**相对最低！** 这个过程主要由 GPU（显卡）完成，速度非常快。**如果只触发合成，而不触发布局和绘制，性能开销是最小的。**
+
+**卡顿：**
+
+
+**1. 强制同步布局**
+
+
+这是最严重、最常见的一种性能问题。
+
+
+**定义**：JavaScript 强制浏览器在执行布局计算**之前**，就立刻去执行布局。
+
+
+**正常流程**：JS -> Style -> Layout -> Paint -> Composite
+**FSL 流程**：JS -> Layout -> JS -> Style -> Layout -> Paint -> Composite
+
+
+**2. 布局抖动**
+
+
+布局抖动是**强制同步布局的循环版本**。在循环中反复地“读-写”布局属性，会导致布局被反复触发。
+
+
+**优化策略：如何保证流畅的 60fps？**
+
+
+优化的核心思想是：**避免昂贵的 Layout 和 Paint，尽量只触发廉价的 Composite。**
+
+
+**1. 使用** **`requestAnimationFrame`** **(rAF)**
+
+
+永远不要用 **`setTimeout`** 或 **`setInterval`** 来做视觉动画。**`rAF`** 是浏览器专门为动画提供的 API，它会在每一帧开始时调用你的回调函数，保证你的动画逻辑与浏览器的刷新率同步，避免掉帧和卡顿。
+
+
+```javascript
+function animate() {
+  // 在这里执行动画逻辑
+  element.style.transform = 'translateX(' + x + 'px)';
+  x += 1;
+
+  // 请求下一帧继续执行
+  requestAnimationFrame(animate); 
+}
+
+requestAnimationFrame(animate);
+```
+
+
+**2. 批量 DOM 读写**
+
+
+解决“布局抖动”的关键。**先一次性读完所有需要的布局信息，再一次性写入所有样式更改。**
+
+
+```javascript
+function goodExample() {
+  // 1. 先批量读取所有布局信息
+  const tops = [];
+  for (let i = 0; i < elements.length; i++) {
+    tops.push(elements[i].offsetTop);
+  }
+
+  // 2. 再批量写入样式
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].style.top = (tops[i] + 10) + 'px';
+  }
+}
+```
+
+
+**3. 使用** **`transform`** **和** **`opacity`** **实现动画**
+
+
+这是现代前端性能优化的**黄金法则**。
+
+- **`transform`**（如 **`translate`**, **`scale`**, **`rotate`**）
+- **`opacity`**
+
+这两个属性有一个巨大的优势：**它们的改变只会触发 Composite（合成）阶段，而不会触发 Layout 和 Paint。**
+
+
+浏览器会为这些元素创建一个独立的图层，交由 GPU 直接处理，这个过程极快。因此，用 **`transform: translateX()`** 来移动元素，远比修改 **`left`** 属性性能要好得多。
+
+
+**4. 使用** **`will-change`** **或** **`transform: translateZ(0)`** **提示创建新图层**
+
+
+如果你知道某个元素将要被频繁地独立动画（如一个弹窗、一个旋转的图标），你可以使用 CSS 属性提前告知浏览器，让它为这个元素创建一个新的图层，从而优化合成性能。
+
+
+```javascript
+.animated-element {
+  will-change: transform, opacity;
+  /* 或者旧版 hack */
+  /* transform: translateZ(0); */
+}
+```
+
+
+## 🍉 **事件委托**
+
+
+ 事件委托是一种利用事件冒泡机制，将事件监听器添加到父元素上，而不是其每个子元素上的技术
+
+
+**1. 性能优化（减少内存占用）**
+
+
+对于需要处理大量相似元素的页面，事件委托能极大地**减少内存消耗**和**提高页面初始化速度**。
+
+**2. 动态元素支持（灵活性和可维护性）**
+
+
+事件委托让你的代码对 DOM 的动态变化“免疫”，大大提高了代码的**灵活性和可维护性**。
+
+**3. 代码简洁和集中管理**
+
+
+所有子元素的事件处理逻辑都集中在父元素的那个监听函数中。这使得代码结构更清晰，更容易统一管理和修改。
+
+
+**实现事件委托**
+
+
+实现事件委托的关键在于两点：**利用事件冒泡** 和 **使用** **`event.target`**
+
+
+**`event.target`**：指向**真正触发事件的那个元素**（比如被点击的那个 **`li`**）
+**`event.currentTarget`**：指向**绑定了事件监听器的那个元素**（比如 **`ul`**）
 
