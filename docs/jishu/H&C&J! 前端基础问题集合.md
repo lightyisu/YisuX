@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| 前端基础问题集合
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-11-29 12:40:00'
+updated: '2025-12-04 21:37:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -167,6 +167,35 @@ Block Fomatting Context 和Inline Formatting Context
 
 
 **3. 防止文字环绕浮动元素（实现多栏布局）**
+
+
+作用在？
+
+
+父元素子元素都行
+
+
+| 场景            | 解决方案                                      | 效果                      |
+| ------------- | ----------------------------------------- | ----------------------- |
+| **父元素高度塌陷**   | **给父元素**创建 BFC (e.g., `overflow: hidden`) | 父元素高度被撑开，包含住所有浮动子元素。    |
+| **需要并排的两栏布局** | **给其中一个非浮动的兄弟元素**创建 BFC                   | 该元素与浮动元素并排，形成两栏，内容不会环绕。 |
+
+
+## 🍉 Clear属性与浮动/BFC关系
+
+
+**`clear`** 是一个 CSS **属性**，它应用于一个元素本身，用来规定该元素的哪一侧不允许其他浮动元素。
+
+当一个元素设置了 **`clear: both`**，浏览器会确保这个元素的**上边框**位于所有在它之前出现的浮动元素的**下边框**之下。简单来说，就是把这个元素“推”到所有浮动元素的下方。
+
+
+
+| **特性**    | **`clear: both`**        | **BFC (Block Formatting Context)** |
+| --------- | ------------------------ | ---------------------------------- |
+| **本质**    | 一个 CSS **属性**            | 一个 CSS **布局概念/规则**                 |
+| **作用对象**  | 应用于**需要被清除的元素本身**        | 应用于**需要包含浮动元素的父容器**                |
+| **工作方式**  | 将自身“推”到浮动元素下方            | 创建一个独立的“结界”，自动“包裹”住内部浮动            |
+| **解决的问题** | 解决**后续元素**与**浮动元素**的并排问题 | 解决**父容器**因内部子元素浮动而导致的**高度塌陷**问题    |
 
 
 ## 🍉  堆叠上下文下的z-index
@@ -702,7 +731,7 @@ JavaScript 作为一门高级语言，为了提升开发效率和程序稳定性
 | **适用场景**          | 极少使用，除非脚本必须立即执行并影响后续HTML渲染 | **独立的第三方脚本**，如统计、广告 | **有依赖关系的应用主脚本**，如JS框架、应用逻辑      |
 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665BQDN6PF%2F20251129%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251129T140150Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEAMaCXVzLXdlc3QtMiJHMEUCIFL4QlKal0H6Z97Ox9vilShnX%2BKYGzt29iQPn7cvV8PrAiEAgWK4wf47MV9CsKj%2FMPFL9O691wg0pLUedwIAst7Vcd8qiAQIzP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDDiNqA25O1UhzgG6WSrcA1sUeVFrnEU9vjeMWli6UOCgqQ0Yz0jtIbVPhN%2B9YzuWxJXiiRNkY1%2Bis4iaX6Vj%2BrqLLzNqv5CWrsy9xXz58yAMZSeJNbO%2BiI80EnDmLtRKkpzSD2pyxsW9csiNWDkLXHulmrLJFvdP2%2BnIkE4Ao24Ki7EYG3jRNwZLea9oynPLHG6O6kkpBSDegx%2BWcnJocwryoz2c0ZVC%2BeBhAFN7uxkkhKoT6LpncymwThFRnijTtGZgIOXKyZyjTC2FpGbn54YAV7etjcYqNdTS3NVLrXKrMs3SstrKjU5iEOSOoytXK1qm%2FQNBletKhVtDlh23t68iee76ltLz6OzoIcC0U7Bv1fUkbkpslPYz2D%2F4JMYv7i8xnmk%2Ber5%2FTj1F5hz1EAkBPjhmsmmPAIOuVwyPK7X0mtyk3kByVGWy2E1jazBU3wy31PqT0zEn3m45%2B1B0OcVl1lZdAXy2IyNcORbXPVlfu4J1YVFCdRHWqobwti7jCyM%2FRV2ky2AWVkzQHO%2Bk9cekenuMC7jfmzN%2Bk%2B9GPSdi4HVaOD%2FSVSfXSV3Gsy8p4KboljL%2BE4TO3Ae3wpj%2BZk539X8rpnbMuTWh3NA5nlS%2FtqPEzOkeZNlRYtejLE1saC0YZO%2BvuKL9TZnNMNOUq8kGOqUBb8MG75KiJj2hKjZHhUxJE8LriDvTorjWLHm05U7jckd6A7NbRBGZZeDHv4VErx1Te95YXYAmFdXQ%2FIroRhTQj6u%2FDLvWxWVwlekTH7wnfjp6obxPzFA%2FQH6KHFJbwH8G3AqlV3C3nz4%2BHWdkU8PpluP%2FkUlwwgUPaBpCPPX0oo4UJiRndd%2BI1dmtzt2BHJZuaWCPpNIju%2Bb5LPM5QwWP2a8dtdpB&X-Amz-Signature=f9229120820feed2915da38a6d593b3e30370551b3f28eebac7de34f2ab2b6df&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4662MRCTIIY%2F20251204%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251204T133859Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEH0aCXVzLXdlc3QtMiJHMEUCIQCO9GwwQISnmVwHfZPpai17GQNxO4aBTZL6oc6DgjNk%2BQIgTZFuRAuHfYJHlcJjyFhgyBP8XSAe%2Bgk3RJxh%2FbYhqbUq%2FwMIRhAAGgw2Mzc0MjMxODM4MDUiDA2otv0A1grdqzbGsircA2R9ZACFGcsPaiTwjN7t6s4fxLasi4nltyGYCYs%2FAaYZM%2FenAC4WE7eqFOmLivEfwOMC7bOmzAeRBpDspdeJllpZbHRtokiHGFUCT4MzCCI7%2FH%2FZgAcQF7GkSZkq%2FAO7SxVhxinTSQOHb0OxMbo%2B9SP5ZaYN65geTvFGcwZPdCSVQsei93gA%2BbZGACB83DeV5WvF49PYXKKmkA2f6vfnVWlJli2dNc%2BIca28jQamuS7V2IV1Ecwg195B9uLvvABCYU0pUMiS2ETFBIcX1LD4ec3l3BOS6I%2BMPrmwRuhsQOMMuuNOTJcb5hcVdxhj35cdw%2Ba2clyQPKCgrnF1232uF0SR0YEA4Mo3R4%2FopAa76LtodxNGwtWImAEy7eNiJlxU69zHg0uYNmAgZAw92ns%2FB5r9Jb6gcMaC%2BXF1hTUQ1ghhsJm%2FPZyRuCG%2BVRfcVVXaMLmBnVVrt96kceqjxPr1V7AKwS4%2FPQj842KySOUvtr45GRBRMxDamLz12KGKXrR44JHSQu%2FtMTrdzJpOFb4VDpPvgjLTw8xF72%2BTUwpTKgUYXA2BksEoCV4m7llBjShjM%2BthBzHx5ZRov4n%2Fr1GpRQ8OzcKDh7PYHrmPY32vjAUV099L23VL7xoeGojFMMuDxskGOqUBg%2BVb3%2FX1FI8GF6NsIfo123eSD2xmpENwtiVSZLk8g1Spaful%2Bj6Attp5HIZ87R%2FGHm6fA0i6bYdlWaqeSbbeUao6pbL2YSNqaNTYRVZh42FE6WaD5qrnH2JyVpL7JnVabgLYkczLxNbYYkTWEjUNqVk4t1fnXH%2BUry0y6yHH6xpxys6I0aMzR13xO5KETnCeWTqXxYNLkecoIo7UEwHf1qHGl80h&X-Amz-Signature=b949cdfa86de729618767e9f9bc8f4f94b18f4ac81daaa3baae5f17d947df519&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 
 ## 🍉 回调/promise/**generator**/async
@@ -2408,4 +2437,219 @@ function goodExample() {
 
 **`event.target`**：指向**真正触发事件的那个元素**（比如被点击的那个 **`li`**）
 **`event.currentTarget`**：指向**绑定了事件监听器的那个元素**（比如 **`ul`**）
+
+
+## 🍉 CSS **伪类选择器（pseudo-classes）**
+
+
+**1. 状态类伪类**
+
+
+常用于按钮、链接、输入框等元素状态。
+
+
+| 伪类           | 说明        |
+| ------------ | --------- |
+| `:hover`     | 鼠标悬停      |
+| `:active`    | 鼠标按下      |
+| `:focus`     | 获得焦点      |
+| `:visited`   | 已访问链接     |
+| `:link`      | 未访问链接     |
+| `:checked`   | 复选框/单选框选中 |
+| `:enabled`   | 可用状态      |
+| `:disabled`  | 禁用状态      |
+| `:read-only` | 只读状态      |
+| `:valid`     | 表单字段验证通过  |
+| `:invalid`   | 表单字段验证失败  |
+
+
+**2. 结构伪类**
+
+
+用于根据元素在 DOM 中的位置选择。
+
+
+| 伪类                     | 匹配说明                   |
+| ---------------------- | ---------------------- |
+| `:first-child`         | 第一个孩子                  |
+| `:last-child`          | 最后一个孩子                 |
+| `:only-child`          | 唯一子元素                  |
+| `:nth-child(n)`        | 第 n 个孩子                |
+| `:nth-last-child(n)`   | 从后数第 n 个孩子             |
+| `:first-of-type`       | 某类型第一个                 |
+| `:last-of-type`        | 某类型最后一个                |
+| `:only-of-type`        | 某类型唯一                  |
+| `:nth-of-type(n)`      | 某类型第 n 个               |
+| `:nth-last-of-type(n)` | 某类型从后第 n 个             |
+| `:root`                | 根元素（HTML 中就是 `<html>`） |
+
+
+**3. 否定与组合伪类**
+
+
+| 伪类                         | 说明                           |
+| -------------------------- | ---------------------------- |
+| `:not(selector)`           | 选择不是某选择器的元素                  |
+| `:is(selector, selector…)` | 更简洁的匹配多选择器                   |
+| `:where(selector…)`        | 与 `:is` 类似，但权重为 0            |
+| `:has(selector)`           | 选择内部包含某选择器的元素（CSS 选择器的“父选子”） |
+
+
+还有一点但是基本不怎么用
+
+
+## 🍉 grid两轴布局
+
+
+**CSS Grid 布局中的“显式网格”和“隐式网格”**
+
+
+显式网格是你使用 **`grid-template-*`** 属性**明确定义**的网格结构。它构成了你布局的主要框架。
+隐式网格是当网格项目**超出了**你显式定义的范围时，浏览器**自动创建**的额外轨道（行或列）。
+
+这有个例子比较清楚：
+
+
+```html
+<div class="container">
+  <div class="item item-1">1</div>
+  <div class="item item-2">2</div>
+  <div class="item item-3">3</div>
+  <div class="item item-4">4</div>
+  <!-- 多出来的第5个项目 -->
+  <div class="item item-5">5</div>
+</div>
+```
+
+
+对应grid:
+
+
+```css
+ .container {
+        display: grid;
+        grid-template-columns: 100px 100px;
+        grid-template-rows: 200px 200px;
+        gap: 20px;
+        text-align: center;
+      }
+ .item {
+        background: rgb(211, 119, 119);
+      }
+```
+
+
+本来是看起来grid布了一个 2x2 的布局 但是很明显多了一个5 这时候就会自动产生额外轨道
+
+
+```css
+  .container {
+        display: grid;
+        grid-template-columns: 100px 100px;
+        grid-template-rows: 200px 200px;
+        gap: 20px;
+        grid-auto-rows: 160px; /*add only for 5*/
+        text-align: center;
+      }
+```
+
+
+这时候 `auto` 属性起作用了 可以独自控制这个多出来的元素
+
+
+| 方面        | 显式网格                                                                     | 隐式网格                                                        |
+| --------- | ------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| **定义方式**  | **有意定义**，使用 `grid-template-*` 属性。                                        | **自动创建**，当内容溢出显式网格时。                                        |
+| **使用属性**  | `grid-template-columns`<br>`grid-template-rows`<br>`grid-template-areas` | `grid-auto-columns`<br>`grid-auto-rows`<br>`grid-auto-flow` |
+| **创建时机**  | CSS 解析时，作为布局的**主要骨架**。                                                   | 运行时，作为**内容溢出的补充**。                                          |
+| **目的/作用** | 构建稳定、可预测的布局结构。                                                           | 提高布局的灵活性，处理动态或未知数量的内容。                                      |
+| **可预测性**  | **高**。你完全知道网格的样子。                                                        | **较低**。依赖于内容，但可以通过 `grid-auto-*` 控制其行为。                     |
+
+
+**Grid高度自定义的轴线模式**
+
+
+![1_diagram_numbered_grid_lines.png](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Guides/Grid_layout/Basic_concepts/1_diagram_numbered_grid_lines.png)
+
+
+通过grid可以对每一个item进行高度自定义的布局 一般通过轴线实现
+
+
+比如原始这个图的grid可能是
+
+
+```css
+.container {
+        display: grid;
+        grid-template-columns: 100px 100px 100px;
+        grid-template-rows: 60px 60px 60px;
+        gap: 10px;
+      }
+```
+
+
+如果我想要对one进行独占一行的布局怎么办呢 在grid实现较为简单 通过控制div的列向左轴位和右轴位来实现
+
+
+```css
+.item-1 {
+        grid-column-start: 1;
+        grid-column-end: 4;
+ }
+ //==
+ .item-1 {
+        grid-column:1/4;
+ }
+
+```
+
+
+通过自定义占据轴线可以很好的进行方块化布局 **Grid的魔法我觉得在于两轴+轴线设计**
+
+
+**Grid实现的看起来不可能的例子 这边我原以为必须复杂的盒模型以及float实现没想到grid不需要动html就可以**
+
+
+![grid1.png](https://ife.baidu.com/assets/img/cssimg/grid1.png)
+
+
+```html
+ <style>
+      dl {
+        display: grid;
+        grid-template-columns: 100px 200px;
+      }
+      dd {
+        margin: 0;
+      }
+      dt:nth-of-type(1) {
+        font-weight: bold;
+        grid-row: 1/4;
+      }
+      dt:nth-of-type(2) {
+        font-weight: bold;
+        grid-row: 4/6;
+      }
+      dt:nth-of-type(3) {
+        font-weight: bold;
+        grid-row: 6/9;
+      }
+    </style>
+  </head>
+  <body>
+    <dl>
+      <dt>恐龙类</dt>
+      <dd>尹氏芦沟龙</dd>
+      <dd>破碎中国虚骨龙</dd>
+      <dd>原始川东虚骨龙</dd>
+      <dt>鲨鱼类</dt>
+      <dd>六鳃鲨目</dd>
+      <dd>鼠鲨目</dd>
+      <dt>鸟类</dt>
+      <dd>雁形目</dd>
+      <dd>雨燕目</dd>
+      <dd>夜鹰目</dd>
+    </dl>
+  </body>
+```
 
