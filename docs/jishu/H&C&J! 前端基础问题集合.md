@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| 前端基础问题集合
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-12-04 21:37:00'
+updated: '2025-12-07 18:30:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -731,7 +731,7 @@ JavaScript 作为一门高级语言，为了提升开发效率和程序稳定性
 | **适用场景**          | 极少使用，除非脚本必须立即执行并影响后续HTML渲染 | **独立的第三方脚本**，如统计、广告 | **有依赖关系的应用主脚本**，如JS框架、应用逻辑      |
 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46673PXEXAL%2F20251205%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251205T120717Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEJL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQD1k90SqFGHQ6lGW37Dxe7sTtEr4rE5xS%2BfDe12azsiFAIgNNc8yTQJ1qGZI4%2Fi4GeYANEdLG%2B9XUfz6n9sHxh%2BU2gq%2FwMIWxAAGgw2Mzc0MjMxODM4MDUiDJhTNGqYhO5uJHpN%2BircA0lrd3Dnfa59iv3BX1wzoJWFwS61LBB%2Bu9EE5Qh%2FwhZzusLf9xbFj7jIPdHHF9ResXbSkhVReDVA6n74IAYhhg%2FHz%2BM29MM3R%2Fykep4e3bHIMaY35OGSELX9fGbaJDam2zr9scGn9fV6qzoswT2XrdvXKIQTWFjVFV8iEnyJrZfEVBbQ5mwuyLAx6RAq2KW%2BFa9iMeZdb%2BlJ5oqndVnfH0mla5ABcZy6aUoKsyWjhUpRbvOhPxybTwIU1E26XF%2BvrgCNNO0THajG%2BWG7AEusYnwneDn8v9H8229AgmsS4lAQCdVFVME87EJH%2Bd4%2FfyhNEiAVS7DffnAzK5n2%2FZU%2F2GICn%2B2r441lH9qEAEduLsvt56%2FzhMmvkzv7oBXn03BlTQqkzcx%2F4CuWkervCwklHN%2FvTnyS%2B7fCSG0JSQFpuYaYE46c05CU7UdIty%2F7fhOPzbs%2BrWuXJvKQGdXYdrlbPKMNd1iamy6%2F5sEoOwwC2YyN%2F14p3YFqiAPahAdWcTRFViLcUeQwYSlZK182Ddg0EDInqPgz3X7wpv2OoHLPCkUirZw7qNmuApFlLZ77a1WTvx8HWibTl38ACJgHn82mdJUZ2VazF9hLHkebkX1Mu5HGaZShlxRNr74bhgzfMM7LyskGOqUBVUseRkvSS6o4fLYFsggjqPSIe9MayE7cTFIlr%2BGf6jr%2BU2zIqki%2BOEc%2BhyiErjuZfnsc55l5t%2FJ34LKNbiJ5GKm%2B4e%2F9yCkwy7RnkwFFixauCamU4MygAPTX7izGibWdC5zCFkErHJ19mElx9UEQN3CY8Z8chYOXOBCU5cuhfiIC%2Bce8URdWvaJgmoXN7IgoDOpCSapLzECOCKY0ugYj98ZrI8IF&X-Amz-Signature=cb364d77238aa9edc1987e9039716c4f9e864d60e183a46f74962e67905ad499&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666CKLIPNS%2F20251207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251207T161146Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEMj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDIuOpxvsCdzMKqFAUGj8LOOsAASIvGU3kpOJyDqpWYEQIgb5agzsKoKJb3CS6OtxhL2Ou6ifpPuMT5eO8FxO4xYv8qiAQIkf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDPrqmzamhUQcGoUdNyrcA9pxUrjPBM6M6k8hWNDuqt2zfqRHbeOJZ6HB5rGc%2BgqqcvgUyneEGYxk3qmMGLNlq2KVHOq8rgpvbNAH8J739MlJThWShcq51kNoJrVE3arruZvzhuxxYOxFW%2BRDPaIhho6kk3Y%2BXof9uBzRTvsV0D0Pmh5lIIFsVCJpfIAWnUh1nevj3WxdGbr8Tp%2FBnV%2ByvijFackSEJWpwM5a8wuId6%2BMUkxBe2FMnmpzAk%2FKg39MFMJdI7TFyPHEoyxHnMSJGbHRZFwgICBG%2FU5Q2FUVidKIRACMTZ4Z%2FUapxMbWmuEORbokOD6yPIzhopFr1EAzXzmesL6iqXfnF%2FoTVjv8Dg7%2F8gyx8mZ3WBrIADk7gT1kSkwxaTjUi0S9JvKUIMkEhNoo4XZw8UoBPNzHEBes7%2FAoOw7Lc8klVDRBgh36DWhjtydJZh2I9%2BPXGLzmhS%2BOa09juQIRKj3P5tySaw3UjO%2F9mYZG2%2FBOTnP%2Bo%2Fjth2JXuAtmXTTFzisIF%2Fq0RIMQhIYQnOnhUekyomLabsKlenc1q6NGx%2BRp6dqoYbeAquiX41dNdLEVCnxQsiWfjwxKVIHUcpQPR9r%2FMoFNdYeEHY8bNbvUhar1d%2BysLc%2B3Egk3lugwmCXybiKcYpT4MI691skGOqUBEPVWC0oIwPpswY0CeDELLa03Eks8X2zSFoq10ZKzRHyXnLFZd9mmEZImHAUGhpa7KYAoZWmlFLnFKlkJ2Nr2FQL6beutAPHrbjvnJdNavGkfa8Oy1GVqj9K9LDWP1EneyPFdYiUfbjSXeahLfb6YlcQdzTsDO6%2Bq6znHxd0gMjmZWAGTGHYFo%2BUoHfg60Q%2B3mSeRiC0wX07MX%2BLL3LFDccaZ0h6M&X-Amz-Signature=d81a4115afd5dc478f6db991249d879b8a58bbac446037c46dc76bcd821a787e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 
 ## 🍉 回调/promise/**generator**/async
@@ -1190,7 +1190,7 @@ book = null; // 所有的强引用都消失了
 ## 🍉 判断数据类型的方式有哪些
 
 
-**1.****`typeof`** **- 最基础但最“坑”的方法 判断基本类型很方便**
+### **1.typeof - 最基础但最“坑”的方法 判断基本类型很方便**
 
 
 ```javascript
@@ -1212,8 +1212,9 @@ typeof /regex/;        // "object"
 
 - **最大的问题**：**`typeof null`** 返回 **`"object"`**，这是 JS 早期设计的一个错误。
 - 无法区分具体的对象类型，比如数组、日期、正则表达式等，它们都返回 **`"object"`**
+- **`typeof`**：**可以**用来准确判断 **`undefined`**，但**不能**用来判断 **`null`**
 
-**2.****`instanceof`** **- 检查原型链**
+### **2.instanceof - 检查原型链**
 
 
 ```javascript
@@ -1238,7 +1239,10 @@ p instanceof Object;        // true
 **不能用于判断基本类型（因为JS里的看起来像基本类型的引用对象是包装对象）**
 
 
-**3.****`Object.prototype.toString.call()`** **- 最准确、最通用的“终极”方法**
+**`instanceof`**：**完全不能**用来判断 **`undefined`** 和 **`null`**。
+
+
+### **3.Object.prototype.toString.call() - 最准确、最通用的“终极”方法**
 
 
 看起来是我们的大Object上的原型方法toString
@@ -1270,7 +1274,7 @@ Object.prototype.toString.call(/regex/);        // "[object RegExp]"
 ```
 
 
-4.**`Array.isArray()`** **- 数组的专属方法**
+### 4.**`Array.isArray()`** **- 数组的专属方法**
 
 
 | 方法                                     | 优点          | 缺点                           | 推荐场景                                                           |
@@ -1279,6 +1283,12 @@ Object.prototype.toString.call(/regex/);        // "[object RegExp]"
 | **`instanceof`**                       | 可区分对象类型     | 无法判断基本类型，有跨域问题               | 判断自定义类实例，在同一全局域内判断内置对象                                         |
 | **`Object.prototype.toString.call()`** | **最准确、最通用** | 写法繁琐                         | **构建通用类型判断工具函数**                                               |
 | **`Array.isArray()`**                  | **判断数组最可靠** | 只能判断数组                       | **任何需要判断数组的场景**                                                |
+
+
+5.判断undefined和null
+
+
+推荐严格相等**`=== null || === undefined`**
 
 
 ## 🍉 Number.isNaN 和 isNaN 的区别
@@ -2651,5 +2661,259 @@ function goodExample() {
       <dd>夜鹰目</dd>
     </dl>
   </body>
+```
+
+
+## 🍉 瀑布流布局（小红书布局）
+
+
+本质是宽度固定而高度不固定的卡片垂直布局
+
+
+1.传统
+
+
+`multi-column`实现 `瀑布流`主要依赖以下几个属性：
+
+- `column-count`: 设置共有几列
+- `column-width`: 设置每列宽度，列数由 `总宽度`与 `每列宽度`计算得出
+- `column-gap`: 设置列与列之间的间距
+
+2.grid布局
+
+
+需要根据图片高度手动设置栅格网格布局的占据比例
+
+
+目前使用 CSS Grid 做瀑布流，一定需要手动（或 JS 自动）设置元素跨多少行！
+
+
+3.flex布局
+
+
+先手动设置3列在列里面竖向布局
+
+
+再让每一列是一个纵向排列的 flex 容器。
+
+
+## 🍉变量提升
+
+
+**在代码执行前，JavaScript 引擎会先进行一个“编译”阶段，在这个阶段，它会找到所有的变量声明（****`var`****）和函数声明（****`function`****），并将它们“提升”到其所在作用域的顶部。**
+
+1. **只有声明被提升**：变量的赋值操作（初始化）不会被提升。
+2. **提升到作用域顶部**：
+	- **`var`** 声明的变量会被提升到**函数作用域**的顶部。
+	- **`let`** 和 **`const`** 声明的变量会被提升到**块级作用域**（**`{...}`**）的顶部，但它们处于一个“暂时性死区”，无法访问。
+
+### **不同类型声明的提升行为**
+
+
+### **1.** **`var`** **的提升（经典提升 数值不提升）**
+
+
+```javascript
+function myFunction() {
+  console.log(myVar); // 输出 undefined，而不是报错
+  var myVar = 5;
+  console.log(myVar); // 输出 5
+}
+
+myFunction();
+```
+
+
+### **2.** **`function`** **的提升（函数声明）**
+
+
+函数声明的提升非常“完整”，整个函数体都会被提升到作用域的顶部。这意味着你可以在函数声明之前调用它。
+
+
+```javascript
+function sayHello(name) { // 整个函数体被提升
+  console.log("Hello, " + name);
+}
+
+sayHello("World"); // 调用在声明之后执行
+```
+
+
+**注意：** 函数表达式（如 **`var myFunc = function() {}`**）的规则和 **`var`** 变量提升一样，只有变量声明 **`var myFunc`** 被提升，其值 **`undefined`**，函数体本身不会被提升。
+
+
+
+
+```javascript
+myFunc(); // TypeError: myFunc is not a function
+
+var myFunc = function() {
+  console.log("This will not be hoisted.");
+};
+```
+
+
+### **3.** **`let`** **和** **`const`** **的提升（现代提升）**
+
+
+**`let`** 和 **`const`** 是 ES6 引入的，它们也**存在提升**，但行为与 **`var`** 完全不同。
+
+- 它们的声明被提升到块级作用域（**`{...}`**）的顶部。
+- 但是，它们不会被初始化为 **`undefined`**。
+- 从作用域开始到声明语句之间的这段区域，被称为**暂时性死区**。在这个区域内访问这些变量会导致 **`ReferenceError`**。
+
+这种机制是为了强制开发者养成良好的编码习惯：**先声明，后使用**。
+
+
+**总结：** **忘记** **`var`** **的存在，拥抱** **`let`** **和** **`const`**。这不仅能让你完全规避变量提升带来的 **`undefined`** 问题，还能让你写出更安全、更易于维护的现代 JavaScript 代码。
+
+
+
+## 🍉**JS 转整数的方法**
+
+
+
+**1.** **`parseInt()`** **- 最常用、最推荐**
+
+
+**从左到右解析**：它会逐个字符解析字符串，直到遇到一个无法解析的字符为止，然后返回已解析的部分。
+
+
+无四舍五入直接返回整数
+
+
+**2.** **`Math`** **对象的取整方法**
+
+
+**a.** **`Math.floor()`** **- 向下取整**
+
+
+```javascript
+Math.floor(4.9);   // 4
+Math.floor(4.1);   // 4
+Math.floor(-4.1);  // -5 (比 -4.1 小的最大整数是 -5)
+Math.floor(-4.9);  // -5
+```
+
+
+**b.** **`Math.ceil()`** **- 向上取整**
+
+
+**c.** **`Math.round()`** **- 四舍五入**
+
+
+**d.** **`Math.trunc()`** **- 直接截断小数部分 (ES6)**
+
+
+**3. 位运算符 - 一种技巧性方法**
+
+
+| 方法                         | 描述       | `4.9` 的结果 | `-4.9` 的结果 | 备注                        |
+| -------------------------- | -------- | --------- | ---------- | ------------------------- |
+| **`parseInt(str)`**        | 解析字符串为整数 | `4`       | `-4`       | **最通用**，尤其用于处理从输入框获取的字符串。 |
+| **`Math.floor()`**         | 向下取整     | `4`       | `-5`       |                           |
+| **`Math.ceil()`**          | 向上取整     | `5`       | `-4`       |                           |
+| **`Math.round()`**         | 四舍五入     | `5`       | `-4`       |                           |
+| **`Math.trunc()`**         | 截断小数     | `4`       | `-4`       | **最纯粹的截断**，行为清晰。          |
+| **`~~x`** **/** **`x\|0`** | 位运算截断    | `4`       | `-4`       | 速度快，但可读性差，有范围限制。          |
+
+
+## 🍉 js的数学运算有哪些坑
+
+
+| 坑点                | 现象                                  | 解决方案 / 最佳实践                                             |
+| ----------------- | ----------------------------------- | ------------------------------------------------------- |
+| **浮点数精度**         | `0.1 + 0.2 !== 0.3`                 | 使用 `Number.EPSILON` 进行容差比较，或转为整数运算，或使用 `decimal.js` 等库。 |
+| **`+`** **运算符**   | `'5' + 5` 结果为 `"55"`                | 使用 `Number()` 或 `parseInt()` 进行显式类型转换。                  |
+| **`NaN`** **的特性** | `NaN === NaN` 结果为 `false`           | 使用 `Number.isNaN()` 来判断。                                |
+| **`Infinity`**    | `1 / 0` 结果为 `Infinity`              | 使用 `Number.isFinite()` 来检查是否为有限数字。                      |
+| **整数溢出**          | `Number.MAX_SAFE_INTEGER + 2` 结果不正确 | 对于超出安全范围的整数，使用 `BigInt` 类型。                             |
+| **`parseInt`**    | `parseInt('010')` 可能有歧义             | **总是提供第二个参数** **`radix`**，如 `parseInt(str, 10)`。        |
+
+
+## 🍉 js字符转数组 数组转字符串
+
+
+| 转换方向         | 推荐方法                           | 说明                                 | 注意事项                          |
+| ------------ | ------------------------------ | ---------------------------------- | ----------------------------- |
+| **字符串 → 数组** | `Array.from(str)` 或 `[...str]` | 现代、简洁，能正确处理所有 Unicode 字符（如 Emoji）。 | ES6+ 环境。                      |
+|              | `str.split('')`                | 经典方法，兼容性好。                         | 无法正确处理复合 Unicode 字符。          |
+|              | `str.split(separator)`         | 当你需要按特定分隔符（如逗号、空格）分割时，这是唯一选择。      | -                             |
+| **数组 → 字符串** | `arr.join(separator)`          | 最灵活、最常用的方法。可以自定义任意分隔符。             | -                             |
+|              | `arr.toString()`               | 简单快捷，但只能使用逗号作为分隔符。                 | 不够灵活，主要用于调试。                  |
+|              | `JSON.stringify(arr)`          | 用于生成标准的 JSON 格式字符串，适合数据传输和存储。      | 生成的字符串包含 `[]` 和 `""`，不是简单的拼接。 |
+
+
+## 🍉  js循环体
+
+
+| 循环类型             | 主要用途        | 遍历内容  | 推荐场景                     |
+| ---------------- | ----------- | ----- | ------------------------ |
+| **`for`**        | 已知循环次数      | 计数器索引 | 传统数组遍历，需要索引时             |
+| **`while`**      | 未知循环次数，基于条件 | 条件判断  | 游戏循环、读取文件直到末尾            |
+| **`do...while`** | 至少执行一次      | 条件判断  | 用户输入验证（至少问一次）            |
+| **`for...in`**   | 遍历对象属性      | 对象的键  | 遍历普通对象的属性                |
+| **`for...of`**   | 遍历可迭代对象     | 集合的值  | **遍历数组、字符串、Map、Set 的首选** |
+
+
+```javascript
+for (const key in object) {
+    // 循环体
+}
+const person = {
+    name: 'Alice',
+    age: 30,
+    job: 'Engineer'
+};
+
+for (const key in person) {
+    console.log(`${key}: ${person[key]}`);
+}
+// 输出:
+// name: Alice
+// age: 30
+// job: Engineer
+
+for (const value of iterable) {
+    // 循环体
+}
+// 遍历数组 (推荐)
+const fruits = ['apple', 'banana', 'orange'];
+for (const fruit of fruits) {
+    console.log(fruit);
+}
+// 输出: apple, banana, orange
+
+// 遍历字符串
+const str = "hello";
+for (const char of str) {
+    console.log(char);
+}
+// 输出: h, e, l, l, o
+```
+
+
+## 🍉 dom拿值
+
+
+```javascript
+<input type="text" class="name" onchange="changeName(this)" />
+
+<script>
+function changeName(el) {
+  console.log(el.value);
+}
+</script>
+```
+
+
+```javascript
+<input type="text" class="name" onchange="changeName(event)" />
+
+<script>
+function changeName(e) {
+  console.log(e.target.value);
+}
+</script>
 ```
 
