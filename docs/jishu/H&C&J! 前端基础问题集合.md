@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| 前端基础问题集合
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-12-07 18:30:00'
+updated: '2025-12-08 15:59:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -731,7 +731,7 @@ JavaScript 作为一门高级语言，为了提升开发效率和程序稳定性
 | **适用场景**          | 极少使用，除非脚本必须立即执行并影响后续HTML渲染 | **独立的第三方脚本**，如统计、广告 | **有依赖关系的应用主脚本**，如JS框架、应用逻辑      |
 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666CKLIPNS%2F20251207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251207T161146Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEMj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDIuOpxvsCdzMKqFAUGj8LOOsAASIvGU3kpOJyDqpWYEQIgb5agzsKoKJb3CS6OtxhL2Ou6ifpPuMT5eO8FxO4xYv8qiAQIkf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDPrqmzamhUQcGoUdNyrcA9pxUrjPBM6M6k8hWNDuqt2zfqRHbeOJZ6HB5rGc%2BgqqcvgUyneEGYxk3qmMGLNlq2KVHOq8rgpvbNAH8J739MlJThWShcq51kNoJrVE3arruZvzhuxxYOxFW%2BRDPaIhho6kk3Y%2BXof9uBzRTvsV0D0Pmh5lIIFsVCJpfIAWnUh1nevj3WxdGbr8Tp%2FBnV%2ByvijFackSEJWpwM5a8wuId6%2BMUkxBe2FMnmpzAk%2FKg39MFMJdI7TFyPHEoyxHnMSJGbHRZFwgICBG%2FU5Q2FUVidKIRACMTZ4Z%2FUapxMbWmuEORbokOD6yPIzhopFr1EAzXzmesL6iqXfnF%2FoTVjv8Dg7%2F8gyx8mZ3WBrIADk7gT1kSkwxaTjUi0S9JvKUIMkEhNoo4XZw8UoBPNzHEBes7%2FAoOw7Lc8klVDRBgh36DWhjtydJZh2I9%2BPXGLzmhS%2BOa09juQIRKj3P5tySaw3UjO%2F9mYZG2%2FBOTnP%2Bo%2Fjth2JXuAtmXTTFzisIF%2Fq0RIMQhIYQnOnhUekyomLabsKlenc1q6NGx%2BRp6dqoYbeAquiX41dNdLEVCnxQsiWfjwxKVIHUcpQPR9r%2FMoFNdYeEHY8bNbvUhar1d%2BysLc%2B3Egk3lugwmCXybiKcYpT4MI691skGOqUBEPVWC0oIwPpswY0CeDELLa03Eks8X2zSFoq10ZKzRHyXnLFZd9mmEZImHAUGhpa7KYAoZWmlFLnFKlkJ2Nr2FQL6beutAPHrbjvnJdNavGkfa8Oy1GVqj9K9LDWP1EneyPFdYiUfbjSXeahLfb6YlcQdzTsDO6%2Bq6znHxd0gMjmZWAGTGHYFo%2BUoHfg60Q%2B3mSeRiC0wX07MX%2BLL3LFDccaZ0h6M&X-Amz-Signature=d81a4115afd5dc478f6db991249d879b8a58bbac446037c46dc76bcd821a787e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XWNTLS4G%2F20251208%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251208T080036Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQCM9aLeoeUdXAbhIUyNaLHHyc44Ow8mGaT8Uf0rH7FDXwIgOcXRv%2BZRp6H1inHNouxWCBLm1VXK8n4gCAsGwt7oqjwqiAQIoP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDBcQhuImr%2BwVTyzpgircA4%2FtYz1UpCKpQQHeqK79H0Klm13kTrjqceLRF1GpsbA5wRQ9d1mmStas78ehN4E5oeVShaunwPZZIsWbsuqG1nM5mC%2FegwNpWzQXPzMHZxI%2BIvuYzC%2BkPF1TVrdDdNyH4%2FVX1NGXh9BXU1Xz%2F59zTTeCIPT%2BTJKZ97PhqRHDsKOYfpPNkyrB8CsXemYWOzlhMGKgjgrVcjo5fDxXix4UjE1a5pEAFFzqQLjzNaNQUkmJDwnAN%2FqTl%2BylaD4WpH5eaVfS31260nrdbI87NCyJkkjfHKD%2BD48g15I%2Fr6099aprkLUCzoKZXKF7VfpBAJcY7alJdasCPYU4cqVaXT7tYPUX3%2F6JSwL8V%2FOZGlXGm3Q8%2BuHnEE6d6zaLjhcnYs%2BY%2BNIZ96ZXZoTKdpgtM53%2BJ%2BYOOHpwlqDD7yswtmyyRiUQguzTWGTVprBfDq0PXHwBamRcO967wEWqTI6RYtFTQlJVwteSkhVnedrOrdE2hA7fRfcwayd0uBHpZJ9lmL6EyXwu9hUW1qGeDx49o2eTfQ8UOptGpVNU6leFZ73WDZ2aPp1086wA7JER9onCYGcsF3dhLoGKuPKwlTNeeFYCXxz%2Fsv%2F1gLmcWoHJhOhrN3L3MRWMUgC7zoJS3fz9MIXu2ckGOqUBP6BoNl1zAL31p3JEeemrilx8rz9gqzIKl45InvxNmAfOFk4ghHV6Ydllbu1swOQ3ndDYmFPt1rucFmk0iANtT%2B%2F236RSky1C0vC3oeqg9z6QksnBQ9er2TNdO%2FU6twmNvmcMtIZFInTesYzYarjGyYedZSzKQkWSxqVpIQKbALbsfQovJaSqiNgEtspREf6c6pu7n%2F65BXCm0VLKFnP2q6p4QNyR&X-Amz-Signature=ef7a7bfaf6fb0af92e60fdc89fe1a96233bf2c0299f712e3cb1f434d8255906d&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 
 ## 🍉 回调/promise/**generator**/async
@@ -2917,3 +2917,462 @@ function changeName(e) {
 </script>
 ```
 
+
+## 🍉**DOM 操作 API**
+
+
+**1. 获取元素**
+
+
+| API                                          | 描述                                                          | 示例                                                                        |
+| -------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **通过 ID/Class/Tag**                          |                                                             |                                                                           |
+| `document.getElementById(id)`                | 获取具有指定 ID 的**单个**元素。                                        | `const main = document.getElementById('main');`                           |
+| `document.getElementsByClassName(className)` | 获取包含指定类名的所有元素，返回 `HTMLCollection`。                          | `const warnings = document.getElementsByClassName('warning');`            |
+| `document.getElementsByTagName(tagName)`     | 获取具有指定标签名的所有元素，返回 `HTMLCollection`。                         | `const allImages = document.getElementsByTagName('img');`                 |
+| **通过 CSS 选择器 (推荐)**                          |                                                             |                                                                           |
+| `document.querySelector(selector)`           | 获取匹配 CSS 选择器的**第一个**元素。                                     | `const submitBtn = document.querySelector('form button[type="submit"]');` |
+| `document.querySelectorAll(selector)`        | 获取匹配 CSS 选择器的**所有**元素，返回 `NodeList`。                        | `const listItems = document.querySelectorAll('ul li > a');`               |
+| **获取特定集合**                                   |                                                             |                                                                           |
+| `document.forms`                             | 返回文档中所有 `<form>` 元素的 `HTMLCollection`。                      | `const loginForm = document.forms['login'];`                              |
+| `document.images`                            | 返回文档中所有 `<img>` 元素的 `HTMLCollection`。                       | `const firstImg = document.images[0];`                                    |
+| `document.links`                             | 返回文档中所有具有 `href` 属性的 `<area>` 和 `<a>` 元素的 `HTMLCollection`。 | `const firstLink = document.links[0];`                                    |
+| **直接访问文档根节点**                                |                                                             |                                                                           |
+| `document.documentElement`                   | 获取 `<html>` 元素。                                             | `const htmlEl = document.documentElement;`                                |
+| `document.head`                              | 获取 `<head>` 元素。                                             | `const headEl = document.head;`                                           |
+| `document.body`                              | 获取 `<body>` 元素。                                             | `const bodyEl = document.body;`                                           |
+
+
+**2. 修改元素内容**
+
+
+| API                   | 描述                                               | 示例                                                |
+| --------------------- | ------------------------------------------------ | ------------------------------------------------- |
+| `element.innerHTML`   | 获取或设置元素的 HTML 内容。**（强大但有 XSS 风险）**               | `div.innerHTML = '<p>新内容</p>';`                   |
+| `element.outerHTML`   | 获取或设置包含元素自身的 HTML。                               | `p.outerHTML = '<div>' + p.innerHTML + '</div>';` |
+| `element.textContent` | 获取或设置元素及其后代的**所有**文本内容（纯文本，忽略标签）。                | `p.textContent = '这段文本不会被解析为HTML';`               |
+| `element.innerText`   | 获取或设置元素“渲染后”的可见文本内容（受 CSS 影响，如 `display: none`）。 | `p.innerText = '这是可见的文本';`                        |
+
+
+**3. 修改元素属性**
+
+
+| API                                 | 描述                           | 示例                                                    |
+| ----------------------------------- | ---------------------------- | ----------------------------------------------------- |
+| **标准属性**                            |                              |                                                       |
+| `element.id` / `element.className`  | 直接获取或设置 `id` 和 `class` 属性。   | `div.className = 'container active';`                 |
+| `element.src` / `element.href`      | 直接获取或设置 `src` 和 `href` 等属性。  | `img.src = 'new-image.jpg';`                          |
+| **通用属性方法**                          |                              |                                                       |
+| `element.getAttribute(attr)`        | 获取属性值（包括自定义属性）。              | `const dataId = div.getAttribute('data-id');`         |
+| `element.setAttribute(attr, value)` | 设置属性值。                       | `div.setAttribute('role', 'button');`                 |
+| `element.hasAttribute(attr)`        | 检查是否拥有某属性。                   | `if (input.hasAttribute('required')) { ... }`         |
+| `element.removeAttribute(attr)`     | 移除属性。                        | `input.removeAttribute('disabled');`                  |
+| `element.attributes`                | 返回元素所有属性的 `NamedNodeMap` 集合。 | `const attrs = element.attributes;`                   |
+| **`data-*`** **自定义数据属性**            |                              |                                                       |
+| `element.dataset`                   | 一个对象，用于访问所有 `data-*` 属性。     | `div.dataset.userId = '123';`<br>`// 对应 data-user-id` |
+
+
+**4. 修改元素样式**
+
+
+| API                                             | 描述                         | 示例                                                                                   |
+| ----------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------ |
+| **操作内联样式**                                      |                            |                                                                                      |
+| `element.style.property`                        | 设置单个 CSS 样式，属性名用驼峰命名法。     | `div.style.backgroundColor = '#f0f0f0';`                                             |
+| `element.style.cssText`                         | 一次性设置多个内联样式字符串。            | `div.style.cssText = 'color: red; font-size: 20px;';`                                |
+| **操作 Class (推荐)**                               |                            |                                                                                      |
+| `element.classList.add(class1, ...)`            | 添加一个或多个类。                  | `div.classList.add('show', 'animated');`                                             |
+| `element.classList.remove(class1, ...)`         | 移除一个或多个类。                  | `div.classList.remove('hidden');`                                                    |
+| `element.classList.toggle(className)`           | 切换类（有则删，无则加）。              | `button.classList.toggle('active');`                                                 |
+| `element.classList.contains(className)`         | 检查是否包含某类。                  | `if (div.classList.contains('error')) { ... }`                                       |
+| **获取计算后的样式**                                    |                            |                                                                                      |
+| `window.getComputedStyle(element, [pseudoElt])` | 获取元素最终应用的、所有 CSS 属性值的只读对象。 | `const style = getComputedStyle(myDiv);`<br>`const bgColor = style.backgroundColor;` |
+
+
+**5. 创建、插入和删除节点**
+
+
+| API                                         | 描述                               | 示例                                                |
+| ------------------------------------------- | -------------------------------- | ------------------------------------------------- |
+| **创建节点**                                    |                                  |                                                   |
+| `document.createElement(tagName)`           | 创建一个元素节点。                        | `const newLi = document.createElement('li');`     |
+| `document.createTextNode(text)`             | 创建一个文本节点。                        | `const text = document.createTextNode('Item 4');` |
+| `document.createDocumentFragment()`         | 创建一个轻量级的文档片段，用于批量操作，可提升性能。       | `const frag = document.createDocumentFragment();` |
+| **插入节点**                                    |                                  |                                                   |
+| `parentNode.appendChild(childNode)`         | 将节点添加到父节点的子节点列表的**末尾**。          | `ul.appendChild(newLi);`                          |
+| `parentNode.insertBefore(newNode, refNode)` | 将节点插入到参考节点之前。                    | `ul.insertBefore(newLi, ul.firstChild);`          |
+| `element.prepend(...nodes)`                 | 将节点或字符串插入到元素内部的**开头**。           | `div.prepend(newHeading, 'Some text');`           |
+| `element.append(...nodes)`                  | 将节点或字符串插入到元素内部的**末尾**。           | `div.append(newParagraph);`                       |
+| `element.before(...nodes)`                  | 将节点或字符串插入到元素**之前**。              | `oldDiv.before(newDiv);`                          |
+| `element.after(...nodes)`                   | 将节点或字符串插入到元素**之后**。              | `oldDiv.after(newDiv);`                           |
+| `element.replaceWith(...nodes)`             | 用新节点替换当前元素。                      | `oldSpan.replaceWith(newSpan);`                   |
+| **删除与克隆**                                   |                                  |                                                   |
+| `node.remove()`                             | 从 DOM 中删除节点自身。                   | `myDiv.remove();`                                 |
+| `parentNode.removeChild(childNode)`         | 从父节点中删除子节点。                      | `ul.removeChild(ul.lastChild);`                   |
+| `node.cloneNode(deep)`                      | 克隆节点。`deep` 为 `true` 时，克隆所有后代节点。 | `const clonedDiv = originalDiv.cloneNode(true);`  |
+
+
+**6. 节点关系与遍历**
+
+
+| API                                                       | 描述                                         | 示例                                                   |
+| --------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------- |
+| **父子关系**                                                  |                                            |                                                      |
+| `node.parentNode`                                         | 获取父节点。                                     | `const parent = childNode.parentNode;`               |
+| `node.parentElement`                                      | 获取父元素节点。                                   | `const parentEl = childNode.parentElement;`          |
+| `node.childNodes`                                         | 获取所有子节点（包括文本、注释等），返回 `NodeList`。           | `const kids = parentDiv.childNodes;`                 |
+| `node.children`                                           | 获取所有子**元素**节点，返回 `HTMLCollection`。         | `const kidEls = parentDiv.children;`                 |
+| `node.firstChild` / `node.lastChild`                      | 获取第一个/最后一个子节点（可能不是元素）。                     | `const first = parentDiv.firstChild;`                |
+| `node.firstElementChild` / `node.lastElementChild`        | 获取第一个/最后一个子**元素**节点。                       | `const firstEl = parentDiv.firstElementChild;`       |
+| **兄弟关系**                                                  |                                            |                                                      |
+| `node.previousSibling` / `node.nextSibling`               | 获取前一个/后一个兄弟节点（可能不是元素）。                     | `const prev = currentNode.nextSibling;`              |
+| `node.previousElementSibling` / `node.nextElementSibling` | 获取前一个/后一个兄弟**元素**节点。                       | `const prevEl = currentNode.previousElementSibling;` |
+| **节点信息**                                                  |                                            |                                                      |
+| `node.nodeType`                                           | 获取节点类型（1: Element, 3: Text, 8: Comment 等）。 | `if (node.nodeType === 1) { /* it's an element */ }` |
+| `node.nodeName` / `node.tagName`                          | 获取节点名称（大写，如 'DIV'）。`tagName` 只对元素有效。       | `console.log(element.tagName); // "DIV"`             |
+| `node.contains(otherNode)`                                | 检查 `otherNode` 是否是 `node` 的后代节点。           | `if (document.body.contains(myDiv)) { ... }`         |
+
+
+**7. 元素尺寸与位置**
+
+
+| API                                    | 描述                                                                                                     | 示例                                                                                    |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| **元素尺寸**                               |                                                                                                        |                                                                                       |
+| `element.offsetWidth` / `offsetHeight` | 元素的**布局宽高**，包括 `width`/`height`、`padding`、`border` 和滚动条（整数）。                                           | `const width = div.offsetWidth;`                                                      |
+| `element.clientWidth` / `clientHeight` | 元素的**可视宽高**，包括 `width`/`height` 和 `padding`，不包括 `border` 和滚动条（整数）。                                     | `const height = div.clientHeight;`                                                    |
+| `element.scrollWidth` / `scrollHeight` | 元素的**总内容宽高**，包括因溢出而不可见的部分（整数）。                                                                         | `const totalHeight = div.scrollHeight;`                                               |
+| **元素位置**                               |                                                                                                        |                                                                                       |
+| `element.offsetLeft` / `offsetTop`     | 相对于 `offsetParent` 的左/上边距。                                                                             | `const top = div.offsetTop;`                                                          |
+| `element.clientLeft` / `clientTop`     | 元素左边框/上边框的宽度（通常为 0，除非有滚动条）。                                                                            | `const borderLeft = div.clientLeft;`                                                  |
+| `element.scrollLeft` / `scrollTop`     | 元素水平/垂直滚动条滚动的距离（可读写）。                                                                                  | `div.scrollTop = 100; // 滚动到100px的位置`                                                 |
+| `element.getBoundingClientRect()`      | 返回元素的大小及其相对于视口的位置，返回一个 `DOMRect` 对象（包含 `x`, `y`, `width`, `height`, `left`, `top`, `right`, `bottom`）。 | `const rect = button.getBoundingClientRect();`<br>`console.log(rect.top, rect.left);` |
+
+
+**8. 事件处理**
+
+
+| API                                                 | 描述                                                                                                            | 示例                                                                                           |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| **监听与移除**                                           |                                                                                                               |                                                                                              |
+| `element.addEventListener(event, handler, options)` | 添加事件监听器。**（推荐）**                                                                                              | `btn.addEventListener('click', handleClick, { capture: false, once: true, passive: true });` |
+| `element.removeEventListener(event, handler)`       | 移除事件监听器。                                                                                                      | `btn.removeEventListener('click', handleClick);`                                             |
+| **事件对象**                                            |                                                                                                               |                                                                                              |
+| `event.target`                                      | 触发事件的**最具体**元素（事件冒泡的起点）。                                                                                      | `function(e) { console.log(e.target); }`                                                     |
+| `event.currentTarget`                               | 绑定事件监听器的元素。                                                                                                   | `function(e) { console.log(e.currentTarget); }`                                              |
+| `event.preventDefault()`                            | 阻止事件的默认行为（如链接跳转、表单提交）。                                                                                        | `form.addEventListener('submit', (e) => e.preventDefault());`                                |
+| `event.stopPropagation()`                           | 阻止事件在 DOM 树中继续冒泡或捕获。                                                                                          | `child.addEventListener('click', (e) => e.stopPropagation());`                               |
+| `event.stopImmediatePropagation()`                  | 阻止同一元素上的其他同类事件监听器被触发。                                                                                         | `btn1.addEventListener('click', (e) => e.stopImmediatePropagation());`                       |
+| **常见事件类型**                                          |                                                                                                               |                                                                                              |
+| 鼠标事件                                                | `click`, `dblclick`, `mousedown`, `mouseup`, `mouseover`, `mouseout`, `mouseenter`, `mouseleave`, `mousemove` |                                                                                              |
+| 键盘事件                                                | `keydown`, `keyup`, `keypress`                                                                                |                                                                                              |
+| 表单事件                                                | `submit`, `change`, `input`, `focus`, `blur`                                                                  |                                                                                              |
+| 窗口事件                                                | `load`, `DOMContentLoaded`, `resize`, `scroll`                                                                |                                                                                              |
+
+
+## 🍉**可选链 ?.** 
+
+
+ES2020特性
+
+
+解决了在 JavaScript 中访问一长串对象属性时必须进行多次 null 检查的问题
+
+
+```javascript
+obj = {
+  prop1: {
+    prop2: {
+      someProp: "value",
+    },
+  },
+};
+传统的:obj.prop1 && obj.prop1.prop2 && obj.prop1.prop2.someProp;
+现代的:obj.prop1?.prop2?.someProp;
+```
+
+
+如果其中一个属性是 null 或 undefined，则可选链?.将停止读取您要求它读取的属性并返回 undefined.
+
+
+**空值合并 ??**
+
+
+希望在变量为 null 或 undefined 的情况下应用默认值
+
+
+```javascript
+let amount = null;
+amount = amount ?? 1; // => 1,符合预期 ✅
+
+amount = 0;
+amount = amount ?? 1; // => 0,符合预期 ✅
+
+amount = "";
+amount = amount ?? 1; // => '',符合预期 ✅
+```
+
+
+一个结合的例子
+
+
+```javascript
+   let vip_customer_1 = {
+        name: "Carl",
+        vip: {
+          num: "U-1001",
+          country: "USA",
+        },
+      };
+
+      let vip_customer_2 = {
+        name: "Carl",
+        vip: {
+          num: "C-1001",
+        },
+      };
+
+      let customer = {
+        name: "Jennie",
+      };
+
+      /**
+       * @param {object} customer
+       * @param {object} [customer.vip]
+       * @param {last} [customer.vip.country]
+       */
+      const isVip = (cust) => {
+        return cust.vip?.num ?? "undefined";
+      };
+
+      //用例
+      console.log(isVip(vip_customer_1)); // => 'U-1001'
+      console.log(isVip(vip_customer_2)); // => 'C-1002'
+      console.log(isVip(customer)); //  => 'undefined'
+```
+
+
+## 🍉 **页面生命周期**
+
+
+HTML 页面的生命周期包含三个重要事件：
+
+- `DOMContentLoaded` —— 浏览器已完全加载 HTML，并构建了 DOM 树，但像 `<img>` 和样式表之类的外部资源可能尚未加载完成。
+- `load` —— 浏览器不仅加载完成了 HTML，还加载完成了所有外部资源：图片，样式等。
+- `beforeunload/unload` —— 当用户正在离开页面时。
+- 当 DOM 准备就绪时，`document` 上的 `DOMContentLoaded` 事件就会被触发。在这个阶段，我们可以将 JavaScript 应用于元素。
+	- 诸如 `<script>...</script>` 或 `<script src="..."></script>` 之类的脚本会阻塞 `DOMContentLoaded`，浏览器将等待它们执行结束。
+	- 图片和其他资源仍然可以继续被加载。
+- 当页面和所有资源都加载完成时，`window` 上的 `load` 事件就会被触发。我们很少使用它，因为通常无需等待那么长时间。
+- 当用户想要离开页面时，`window` 上的 `beforeunload` 事件就会被触发。如果我们取消这个事件，浏览器就会询问我们是否真的要离开（例如，我们有未保存的更改）。
+- 当用户最终离开时，`window` 上的 `unload` 事件就会被触发。在处理程序中，我们只能执行不涉及延迟或询问用户的简单操作。正是由于这个限制，它很少被使用。我们可以使用 `navigator.sendBeacon` 来发送网络请求。
+- `document.readyState` 是文档的当前状态，可以在 `readystatechange` 事件中跟踪状态更改：
+	- `loading` —— 文档正在被加载。
+	- `interactive` —— 文档已被解析完成，与 `DOMContentLoaded` 几乎同时发生，但是在 `DOMContentLoaded` 之前发生。
+	- `complete` —— 文档和资源均已加载完成，与 `window.onload` 几乎同时发生，但是在 `window.onload` 之前发生。
+
+## 🍉 BOM
+
+
+![windowObjects.svg](https://zh.javascript.info/article/browser-environment/windowObjects.svg)
+
+
+比如navigator看浏览器信息，screen看浏览器可视窗口，location看浏览器url,history看浏览器记录这些都是BOM
+
+
+## 🍉 **requestAnimationFrame**
+
+
+解决定时器做动画卡顿的问题
+
+
+`requestAnimationFrame`能够做到，精准严格的卡住显示器刷新的时间，比如普通显示器`60HZ`它会自动对应`17ms`执行一次，高级显示器`120HZ`，它会自动对应`9ms`执行一次。
+
+
+使用方法
+
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 50px;
+        height: 50px;
+        background-color: crimson;
+        position: absolute; /* 需要定位才能移动 */
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <script>
+      const box = document.querySelector(".box");
+      let pos = 0;
+      function animate() {
+        pos++;
+        box.style.left = pos + "px";
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+    </script>
+  </body>
+</html>
+
+```
+
+
+## 🍉 优雅的 map and set
+
+
+```javascript
+// 使用 Set 去除数组的重复项
+function dedupe(array) {
+  // 1. new Set(array) 会创建一个 Set 对象，自动去除所有重复值。
+  // 2. [...new Set(array)] 使用展开语法(...)将 Set 对象转换回数组。
+  return [...new Set(array)];
+}
+
+// 利用 Set 实现并集
+function union(arr1, arr2) {
+  // 1. 使用展开语法将两个集合/数组合并成一个新数组。
+  // 2. new Set() 会自动处理这个合并后数组中的重复项，从而得到并集。
+  return new Set([...arr1, ...arr2]);
+}
+
+// 利用 Set 实现交集
+function intersect(arr1, arr2) {
+  // 1. 将第二个集合/数组转换为 Set，以便利用其高效的 has() 方法进行查找。
+  const set2 = new Set(arr2);
+  // 2. 遍历第一个集合/数组，使用 filter() 筛选出那些也存在于 set2 中的元素。
+  // 3. 将筛选结果（一个数组）再转换成 Set。
+  return new Set([...arr1].filter(item => set2.has(item)));
+}
+
+// 利用 Set 实现差集
+function difference(arr1, arr2) {
+  // 1. 将第二个集合/数组转换为 Set，以便利用其高效的 has() 方法进行查找。
+  const set2 = new Set(arr2);
+  // 2. 遍历第一个集合/数组，使用 filter() 筛选出那些不存在于 set2 中的元素。
+  // 3. 将筛选结果（一个数组）再转换成 Set。
+  return new Set([...arr1].filter(item => !set2.has(item)));
+}
+
+
+// 测试用例
+console.log(dedupe([1, 1, 2, 3])); // [1, 2, 3]
+
+let a = new Set([1, 2, 3]);
+let b = new Set([4, 3, 2]);
+
+console.log(union(a, b)); // -> Set {1, 2, 3, 4}
+console.log(intersect(a, b)); // -> Set {2, 3}
+console.log(difference(a, b)); // ->  Set {1}
+```
+
+
+```javascript
+// 封装一个函数实现 Map 转为 数组
+function strMapToArray(map) {
+  // 使用展开语法(...)可以将 Map 对象转换为一个由 [key, value] 对组成的数组。
+  // 这等同于 Array.from(map.entries())
+  return [...map];
+}
+
+// 封装一个函数实现 数组 转为 Map
+function arrayTostrMap(arr) {
+  // Map 构造函数可以直接接受一个由 [key, value] 对组成的数组来创建 Map 实例。
+  return new Map(arr);
+}
+
+// 封装一个函数实现 Map 转为 对象
+function strMapToObj(strMap) {
+  let obj = Object.create(null);
+  // 遍历 Map 中的每一个键值对
+  for (let [k, v] of strMap) {
+    // 将键值对设置到新对象上
+    // 注意：如果 Map 的键不是字符串，它会被自动转换为字符串。
+    obj[k] = v;
+  }
+  return obj;
+}
+
+// 封装一个函数实现 对象转为 Map
+function objToStrMap(obj) {
+  // Map 构造函数可以接受 Object.entries() 的返回值
+  // Object.entries(obj) 会返回一个由对象自身可枚举属性的 [key, value] 对组成的数组
+  return new Map(Object.entries(obj));
+}
+
+// 封装一个函数实现 Map 转为 JSON
+function strMapToJson(strMap) {
+  // JSON.stringify 不能直接处理 Map，需要先将 Map 转换为普通对象
+  return JSON.stringify(strMapToObj(strMap));
+}
+
+// 封装一个函数实现 JSON 转为 Map
+function jsonToStrMap(jsonStr) {
+  // 先将 JSON 字符串解析为对象，再将对象转换为 Map
+  return objToStrMap(JSON.parse(jsonStr));
+}
+
+
+// --- 测试用例 ---
+
+// 测试用例一: 数组 -> Map
+let arr = [
+  [true, 7],
+  [{ foo: 3 }, ["abc"]],
+];
+console.log(arrayTostrMap(arr)); // -> Map {true => 7, Object {foo: 3} => ["abc"]}
+
+// 测试用例二: Map -> 对象
+const myMapForObj = new Map().set("yes", true).set("no", false);
+console.log(strMapToObj(myMapForObj)); // -> { yes: true, no: false }
+
+// 测试用例三: 对象 -> Map
+console.log(objToStrMap({ yes: true, no: false })); // -> Map {"yes" => true, "no" => false}
+
+// 测试用例四: Map -> JSON
+let myMapForJson = new Map().set("yes", true).set("no", false);
+console.log(strMapToJson(myMapForJson)); // -> '{"yes":true,"no":false}'
+
+// 测试用例五: JSON -> Map
+console.log(jsonToStrMap('{"yes": true, "no": false}')); //-> Map {'yes' => true, 'no' => false}
+
+// 测试用例六: Map -> 数组
+const myMapForArray = new Map().set(true, 7).set({ foo: 3 }, ["abc"]);
+console.log(strMapToArray(myMapForArray)); //-> [ [ true, 7 ], [ { foo: 3 }, [ 'abc' ] ] ]
+```
+
+
+## 🍉 **Map 与 Object 的区别及应用场景**
+
+
+**核心区别**
+
+
+| 特性           | `Map`                                                                           | `Object`                                                                                            |
+| ------------ | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| **键的类型**     | **任意类型** (包括对象、函数、原始类型等)                                                        | **只能是** **`String`** **或** **`Symbol`**                                                             |
+| **默认键**      | **没有默认键**，是一个干净的集合                                                              | **有原型链**，会继承 `Object.prototype` 上的默认键 (如 `toString`, `hasOwnProperty`)                              |
+| **大小/长度**    | 通过 `.size` 属性直接获取，性能好                                                           | 需要通过 `Object.keys(obj).length` 计算，性能较差                                                              |
+| **性能**       | 在**频繁增删键值对**的场景下性能更优                                                            | 在简单场景下性能很好，但键值对非常多时，增删性能可能不如 `Map`                                                                  |
+| **迭代**       | **天生可迭代**，默认按插入顺序迭代。迭代方式多样 (`for...of`, `forEach`, `keys`, `values`, `entries`) | **不是天生可迭代** (ES6前)，需要通过 `Object.keys()`, `Object.values()`, `Object.entries()` 转换。`for...in` 会遍历原型链 |
+| **顺序**       | **保证插入顺序**                                                                      | ES6 后，对于 String 和 Symbol 键会保证插入顺序，但总体不如 `Map` 直观和可靠                                                 |
+| **JSON 序列化** | **不能直接序列化**。需要先转为 Object 或数组。                                                   | **原生支持** `JSON.stringify()` 和 `JSON.parse()`                                                        |
+
+
+**什么时候使用** **`Map`****？**
+
+1. **键不是字符串时**：这是 **`Map`** 最核心的优势。例如，你需要将一个 DOM 元素与它的相关数据关联起来。
+2. **需要频繁增删键值对**：如果你的数据结构是动态的，需要频繁地添加和删除成员，**`Map`** 的性能通常更好。
+3. **需要保证键值对的插入顺序**：当你遍历集合时，元素的顺序必须与它们被添加的顺序一致。
+4. **需要一个“干净”的键值对集合**：当你不希望任何来自原型链的默认键（如 **`toString`**）干扰你的数据时。
+- **`Object`** **vs** **`Map`**：如果你的键是字符串，并且需要与 JSON 交互，用 **`Object`**。如果你的键是任意类型，或者需要频繁增删和保证顺序，用 **`Map`**。
+- **`Array`** **vs** **`Set`**：如果你需要有序的、可重复的、能通过索引访问的列表，用 **`Array`**。如果你需要一个没有重复值的集合，并且需要高效地进行成员检查，用 **`Set`**。
