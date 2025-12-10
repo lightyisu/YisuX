@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| 前端基础问题集合
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-12-08 15:59:00'
+updated: '2025-12-09 13:54:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -668,9 +668,8 @@ new Promise((resolve) => {
 
 总结：**一宏完清所有（这个宏产生的）微 再下一个宏** 
 
-
-在事件循环中 settimeout和整个代码都是同级别的宏
-
+- **宏任务**：**由浏览器/Node.js宿主环境提供（script、setTimeout、setInterval、I/O、UI渲染等）在事件循环的每个阶段执行，需要等待微任务队列清空后才开始 低优先级、延迟执行、任务量大**
+- **微任务**：**由JavaScript引擎内部产生（Promise、async/await、process.nextTick等）在当前宏任务执行完成后立即执行，在下一个宏任务开始前清空 高优先级、立即执行、任务量小**
 
 ## 🍉 V8垃圾回收
 
@@ -731,7 +730,7 @@ JavaScript 作为一门高级语言，为了提升开发效率和程序稳定性
 | **适用场景**          | 极少使用，除非脚本必须立即执行并影响后续HTML渲染 | **独立的第三方脚本**，如统计、广告 | **有依赖关系的应用主脚本**，如JS框架、应用逻辑      |
 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XWNTLS4G%2F20251208%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251208T080036Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQCM9aLeoeUdXAbhIUyNaLHHyc44Ow8mGaT8Uf0rH7FDXwIgOcXRv%2BZRp6H1inHNouxWCBLm1VXK8n4gCAsGwt7oqjwqiAQIoP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDBcQhuImr%2BwVTyzpgircA4%2FtYz1UpCKpQQHeqK79H0Klm13kTrjqceLRF1GpsbA5wRQ9d1mmStas78ehN4E5oeVShaunwPZZIsWbsuqG1nM5mC%2FegwNpWzQXPzMHZxI%2BIvuYzC%2BkPF1TVrdDdNyH4%2FVX1NGXh9BXU1Xz%2F59zTTeCIPT%2BTJKZ97PhqRHDsKOYfpPNkyrB8CsXemYWOzlhMGKgjgrVcjo5fDxXix4UjE1a5pEAFFzqQLjzNaNQUkmJDwnAN%2FqTl%2BylaD4WpH5eaVfS31260nrdbI87NCyJkkjfHKD%2BD48g15I%2Fr6099aprkLUCzoKZXKF7VfpBAJcY7alJdasCPYU4cqVaXT7tYPUX3%2F6JSwL8V%2FOZGlXGm3Q8%2BuHnEE6d6zaLjhcnYs%2BY%2BNIZ96ZXZoTKdpgtM53%2BJ%2BYOOHpwlqDD7yswtmyyRiUQguzTWGTVprBfDq0PXHwBamRcO967wEWqTI6RYtFTQlJVwteSkhVnedrOrdE2hA7fRfcwayd0uBHpZJ9lmL6EyXwu9hUW1qGeDx49o2eTfQ8UOptGpVNU6leFZ73WDZ2aPp1086wA7JER9onCYGcsF3dhLoGKuPKwlTNeeFYCXxz%2Fsv%2F1gLmcWoHJhOhrN3L3MRWMUgC7zoJS3fz9MIXu2ckGOqUBP6BoNl1zAL31p3JEeemrilx8rz9gqzIKl45InvxNmAfOFk4ghHV6Ydllbu1swOQ3ndDYmFPt1rucFmk0iANtT%2B%2F236RSky1C0vC3oeqg9z6QksnBQ9er2TNdO%2FU6twmNvmcMtIZFInTesYzYarjGyYedZSzKQkWSxqVpIQKbALbsfQovJaSqiNgEtspREf6c6pu7n%2F65BXCm0VLKFnP2q6p4QNyR&X-Amz-Signature=ef7a7bfaf6fb0af92e60fdc89fe1a96233bf2c0299f712e3cb1f434d8255906d&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666DOY2NLA%2F20251210%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251210T141758Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEA4aCXVzLXdlc3QtMiJIMEYCIQDLUAyoSModqq3b6HFyrebcN6NqPNIxPcrXFCpL2BZ%2BNQIhAKGCmVEIkwfva9xuO3fvXF3IfueWbP%2FIQjhm%2FvVBvqAoKogECNf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igw0eExaCA3OMtSAz%2Bcq3AOl9wms%2F1tPl3RbulGHmRWyPA%2FVsHMyTxaeiGrwtFd%2FNEZ6Y4tv9ERE8nsd69svqUYc2%2FWSe4sUtNWTVdh0KAwoRuz8NSA3poWm0ZGWBWFJBxF37FplnPKRuI6%2BMYiGN3zCTgxEhc67dTFlZIYSMQaSr28UgMNrxhBUvREcmCJ9NKmFwROVPnfifxVT3BZj%2F48zNnQBjtmWtEo5HVB%2BdWydhwJb%2B60b6rqxYfJxEOrNsmbTz2b8LFTNkIg7tviqzNGXob6u%2F2k2FDwcLerPKQOVCQa5KIcNk7%2FbGMw0l%2F5drfcxznoPwRwxI2t80NB%2FidYM%2FOs0jsSZhgCOTWza93qqng8dogwlmpa8msLwbTUSfWz3lShSiKc%2Fq8IfpsyEPWCTte4YaGuwl9lDo0XB2WsyJcWKTAMG0mxSUy0LH0qrMIUFNH7CrhQcq6olZous9uyo4jVSSOirmIl2uy4N8PqbxPAvJcNz5yoG9fVB72hD3BkfL7Q4SdffDnHnBwmQF2I6PBEyLtTfaVq3hHGfbLXtpXmfhiZjGVrQr52B3CHu4o7RDpIRiRixCRtJI%2FpqaX7NGPi6XypUP4vuxWGBkBYVQJhHaTgMe%2BsD1z03%2F8XKJGFHXtf6df11DzchzTCa%2FeXJBjqkATnRcTPoJOh%2FcmetIOoReWNk0%2FJf5WOn9KDGqU0Lp%2BffLjvh%2FJcU6Slns2vV0lWFl4pA75y8nnRhD9Th5EzIrRhJ8Mf9aoW42%2BQ5lM%2FpjvzBzwCMuRCBOanaYP8Sj4GUMzmPGjW4xDZVZB2KalKz2Vb1ipaidZ1f%2BkTJeFFDBZknbAIFAzx4jb%2FRlahwX3WCEDq7MNyivwkq3%2B%2BssBNlWZWhPhW2&X-Amz-Signature=61e6e7e8b9d40a1dc73e2da776ff6471b00e1b24f6a97e51ee83e149182cc00c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 
 ## 🍉 回调/promise/**generator**/async
