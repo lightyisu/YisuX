@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| 前端基础问题集合
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-12-09 13:54:00'
+updated: '2025-12-11 13:08:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -730,7 +730,7 @@ JavaScript 作为一门高级语言，为了提升开发效率和程序稳定性
 | **适用场景**          | 极少使用，除非脚本必须立即执行并影响后续HTML渲染 | **独立的第三方脚本**，如统计、广告 | **有依赖关系的应用主脚本**，如JS框架、应用逻辑      |
 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666DOY2NLA%2F20251210%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251210T141758Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEA4aCXVzLXdlc3QtMiJIMEYCIQDLUAyoSModqq3b6HFyrebcN6NqPNIxPcrXFCpL2BZ%2BNQIhAKGCmVEIkwfva9xuO3fvXF3IfueWbP%2FIQjhm%2FvVBvqAoKogECNf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igw0eExaCA3OMtSAz%2Bcq3AOl9wms%2F1tPl3RbulGHmRWyPA%2FVsHMyTxaeiGrwtFd%2FNEZ6Y4tv9ERE8nsd69svqUYc2%2FWSe4sUtNWTVdh0KAwoRuz8NSA3poWm0ZGWBWFJBxF37FplnPKRuI6%2BMYiGN3zCTgxEhc67dTFlZIYSMQaSr28UgMNrxhBUvREcmCJ9NKmFwROVPnfifxVT3BZj%2F48zNnQBjtmWtEo5HVB%2BdWydhwJb%2B60b6rqxYfJxEOrNsmbTz2b8LFTNkIg7tviqzNGXob6u%2F2k2FDwcLerPKQOVCQa5KIcNk7%2FbGMw0l%2F5drfcxznoPwRwxI2t80NB%2FidYM%2FOs0jsSZhgCOTWza93qqng8dogwlmpa8msLwbTUSfWz3lShSiKc%2Fq8IfpsyEPWCTte4YaGuwl9lDo0XB2WsyJcWKTAMG0mxSUy0LH0qrMIUFNH7CrhQcq6olZous9uyo4jVSSOirmIl2uy4N8PqbxPAvJcNz5yoG9fVB72hD3BkfL7Q4SdffDnHnBwmQF2I6PBEyLtTfaVq3hHGfbLXtpXmfhiZjGVrQr52B3CHu4o7RDpIRiRixCRtJI%2FpqaX7NGPi6XypUP4vuxWGBkBYVQJhHaTgMe%2BsD1z03%2F8XKJGFHXtf6df11DzchzTCa%2FeXJBjqkATnRcTPoJOh%2FcmetIOoReWNk0%2FJf5WOn9KDGqU0Lp%2BffLjvh%2FJcU6Slns2vV0lWFl4pA75y8nnRhD9Th5EzIrRhJ8Mf9aoW42%2BQ5lM%2FpjvzBzwCMuRCBOanaYP8Sj4GUMzmPGjW4xDZVZB2KalKz2Vb1ipaidZ1f%2BkTJeFFDBZknbAIFAzx4jb%2FRlahwX3WCEDq7MNyivwkq3%2B%2BssBNlWZWhPhW2&X-Amz-Signature=61e6e7e8b9d40a1dc73e2da776ff6471b00e1b24f6a97e51ee83e149182cc00c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XDG5NUFP%2F20251214%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251214T134631Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEG0aCXVzLXdlc3QtMiJHMEUCIQD71DOD%2BpUq3mkiTwXmCrIZaOMNYqmXZvWU1HOAofv9cgIgSyq30tKNHBUCZ4n7R%2BxcWgmtz7LH3p5OXXlCJUM5UOcq%2FwMINhAAGgw2Mzc0MjMxODM4MDUiDDnBStWsF2AYCNKXyircA7g%2FUSUSh%2Ffr7r%2FOI6Nb9GyatOMVbt06oehYHH0w87GUzK7UEgNEKcqU6SafUzA8xBVVT9IW6WNb4pbEcLeoStC8SQW7pJhGonDqfftkh0bvf8rdMVMOUKn4uZGLyZrCWwQbgoAZcrigO3yi8IEAZ787NduEsS%2Br1iPMsHPKVyHOnpsAxvfQUYwA4YgDp0t4M57RjDKKh%2FfQuDMziqjWJrZgcexQTBRZGLPmsVJPcGRAA1jjmF0ht2V7CPdYpXR7Ayl%2FZWPwurX4JToVQYpprK0svLnbISqe0d5dH5HFNyr6EhxOoLK3KIKhq6hNxabgvTQ9Y3hWPmzHYDntNqZy3k5Ma27dXGsxV6KzJ%2BfVmaq0glNTUTGTPMbyZaDLxXMU7nCCScLqXYB9ISHkj2hx9He0A5%2FrtM%2Fu0u%2BT2hpIBoo8FF8Otkn6bwlD2oYPwycBfQ9YkJiTJyUuPdPTWYJ1qmCZkC8FQenhJY%2BdFF%2BiNRutNb1AzwBO0LdVwHlupMOogbhilDFLQWg11Dvgs8Fr3M29Ml7Soip5cvqpdxjmkJ8xW5WGtEnqis6tw9IXTce266HsS7rnHAOTcyTkEQHe%2F9Dq0pYVtHgqKD7cNF6XyTPffMgsdL6aUXdir%2B62MIzr%2BskGOqUB7Xj19kPqD89A44W1CyE%2FYXOSoByaxBpu4D8XusZQJk%2BiOa7GBvrERWTYcLfsUQ9WIiLBZy%2Fx7hFOMR3LAjl%2BcWQ9d4V5UTGOCf0sV6mSf7YSOuyv%2FH5BTxil30d4LwfXy%2FGRS1RMhpXHiPa7EATSIXObSYGvC%2Ba%2BHz6GSfeQQlV%2FSVOcxKg%2BuKhBXW96MmIotx3II7b7m1n869tYxeOBSWyv3nrz&X-Amz-Signature=5ea6545c97241429b749d6fea74f821eff6672c100ccdd1b713daea9c6c9f570&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 
 ## 🍉 回调/promise/**generator**/async
@@ -3375,3 +3375,57 @@ console.log(strMapToArray(myMapForArray)); //-> [ [ true, 7 ], [ { foo: 3 }, [ '
 4. **需要一个“干净”的键值对集合**：当你不希望任何来自原型链的默认键（如 **`toString`**）干扰你的数据时。
 - **`Object`** **vs** **`Map`**：如果你的键是字符串，并且需要与 JSON 交互，用 **`Object`**。如果你的键是任意类型，或者需要频繁增删和保证顺序，用 **`Map`**。
 - **`Array`** **vs** **`Set`**：如果你需要有序的、可重复的、能通过索引访问的列表，用 **`Array`**。如果你需要一个没有重复值的集合，并且需要高效地进行成员检查，用 **`Set`**。
+
+## 🍉 强制缓存和协商缓存
+
+
+| 方面           | 强制缓存（强缓存）                            | 协商缓存                     |
+| ------------ | ------------------------------------ | ------------------------ |
+| **请求行为**     | 不发请求，直接用本地缓存                         | 发请求到服务器验证                |
+| **判断依据**     | `Expires` / `Cache-Control: max-age` | `Last-Modified` / `ETag` |
+| **HTTP 状态码** | 200 (from cache)                     | 304 (Not Modified) 或 200 |
+| **优点**       | 速度最快，零网络开销                           | 精确验证，节省带宽（只传头部）          |
+| **缺点**       | 可能用过期资源（客户端时间偏差）                     | 有网络请求开销                  |
+| **优先级**      | 先检查                                  | 后检查（强缓存失效时）              |
+| **示例场景**     | 静态 JS 文件，1 天内不更新                     | API 数据，可能微调但整体不变         |
+
+- Expires：绝对过期时间（HTTP/1.0），如 `Expires: Wed, 21 Oct 2025 07:28:00 GMT`。缺点：依赖客户端时间，可能不准。
+- Cache-Control：相对时间（HTTP/1.1），优先级更高，如 `Cache-Control: max-age=3600`（1小时内有效）。常见指令：`public`（可缓存）、`private`（仅浏览器缓存）、`no-cache`（需协商）、`no-store`（禁用缓存）。
+
+## 🍉 CSS作用域解决方案
+
+
+### 1.css in js
+
+
+**通过在运行时或编译时自动生成唯一的、几乎不会冲突的类名，并将这些样式规则注入到 DOM 中，从而实现样式的强隔离。**
+
+
+比如**`.sc-gZMcBi`** 这个类名是唯一的，它所定义的样式 **`color: blue`** **只会**作用于这个特定的按钮，绝不会影响到页面上的任何其他元素。**全局污染问题被完美解决。**
+
+
+### 2.vue css scoped
+
+
+ **给组件模板中的每个元素添加一个自定义属性**
+
+
+编译器会给当前组件模板内的所有 HTML 元素添加一个唯一的自定义属性，格式通常是 **`data-v-xxxxxxx`**，其中 **`xxxxxxx`** 是一个根据文件内容生成的哈希值，确保它在项目中是唯一的。
+
+
+**转换 CSS 选择器**
+
+
+编译器会同时转换你写在 **`<style scoped>`** 中的 CSS 选择器。它会在每个选择器的末尾，都追加刚刚生成的那个自定义属性选择器
+
+
+```css
+.wrapper[data-v-f3f3eg9g] {
+  border: 1px solid #ccc;
+  padding: 16px;
+}
+.title[data-v-f3f3eg9g] {
+  color: red;
+}
+```
+
