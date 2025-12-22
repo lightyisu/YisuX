@@ -7,7 +7,7 @@ slug: htmltip
 title: H&C&J| 前端基础问题集合
 status: 已发布
 urlname: 282e9dc9-c245-80da-83c6-f1711a1eb1f7
-updated: '2025-12-11 13:08:00'
+updated: '2025-12-19 22:25:00'
 ---
 
 # HCJ（前端基础三件套）
@@ -730,7 +730,7 @@ JavaScript 作为一门高级语言，为了提升开发效率和程序稳定性
 | **适用场景**          | 极少使用，除非脚本必须立即执行并影响后续HTML渲染 | **独立的第三方脚本**，如统计、广告 | **有依赖关系的应用主脚本**，如JS框架、应用逻辑      |
 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466VVERNVZI%2F20251219%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251219T023209Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQCbXzZ4a2gAlU7kAxEHxhbSKGFJvc2rvGDMDdOGsft0BgIhAKWATiMXsC6omvN9JPZChmF9Cbe%2BwzuGGpIejONXVQtPKogECKP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igy6m4G%2BORYb7inmr4Yq3AOJqDAg9IAadiTbLUr3K5uMVdd%2FtEvNJfVcIagahfxAxxyRa1H4U6hinMF4K4iev41n%2FDVkZtuekxPCxJS4f9dzpxhpo2ydkszXlTKudt5rJmLkFywp1hIaU6R0mjib1EVShQZceM%2BIpJKmjoYEZ7ZSRl5WdATFY99nh9cCoJ2A%2FqxSSvpyvEDKm3H2ImtiLPhQSBMxM5g7OBOSEc981zkVL4RMx8hoE0P3ExLEjAVt2MTJCMU%2F%2F6lrYJRe059ivqeu9tw4w1reVNbK57JP8FIMthCnkMmq6BJ3KSNTLHmQSmPzYW6yTz2pFLrMuGrtfVWG2ENuWq1HdZqjvE45DL5CGrzOMPd5tIK7LFb9Fdvyi1t%2FwlTG47oGXxFll90FjUXdA4eafEiqLiFydXTwlQ%2Fe3evdBZBho%2FTdK5Ai58CyDjD03T%2BZd6yBkIbxL1%2BC%2FO3T3UpO%2Bpqt%2FIbmEhGItdJEmyxKSgg9WqPb7HmRrztif87pqwG4qo%2FKFa0cvSasapRydJmp14lN43%2Fsu8QqTZrwEY0qO%2FWu8mC0g%2FQMojuKvIh1qgC6l3MFoWrVgFm2HtMjLnIKVZBezGX7RCSlYWrKrgOXCfV%2FF9%2BmM3EyMLJz79qfFr7YK2sRPrYoazDB4pLKBjqkAaEMjPavoiphXxnphI1%2B9lO%2BwXDRpTeGZO0FvoN0Aaw6g44%2FGFRdhxdXbicdY7Au3vCEyAufWcuyN%2Fu%2FLV1x4fiQAeZ%2FSD9jq27yZQSMp0Kd72lPpChwvX85bO5r6AC7QBBmKjc8tDznfNRMg6HQnb4FD4ubh%2FLXlVpzZf%2F1f1%2FClK4YQ11SRhrJsx6%2BcYbHH1PTcx%2FDkswaE%2BEvJmWnqzAGsff4&X-Amz-Signature=c916719ea15ffd9824c49d5c02f8bfb11aff80900a3e8283372e8d89f8877078&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466RGCEOZ3I%2F20251222%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251222T082551Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjECgaCXVzLXdlc3QtMiJHMEUCIGHyNRvqNL5DiA5c86t1k%2FuSZd2rnDKjjRc%2Fzh40G9ZtAiEAr6C3LCWuJmsEDQaU7yVX6dVDFBz6wrix7SR%2FmmwIPOQqiAQI8f%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDGm3JgIiy0cgf8qpMyrcA8qWvp57Chn7gMHUHT4Y9FCPtNSeHDR4k5%2FsuYioEQXaYsCkD9hEsNsvmKvogE9DkkUbSbfmkViG5itEsXwnDK7LvNPYwS2CnFYFptOPYrdDFqZxSiWfeaCPsF6VIh%2FQvb1go9axt6Z5ELdun6SNAf2ib0mINxz8N0IRiMxG0UTNdczZa03pH6SxWIheaiNhBbmfhbiq9n6qvibvVsArsle3%2BlchJO0a9OdKNmnFYQ1hnBK5mqZWYRp6nhcTfKx6xtoDXYDuPNaBQuf%2FJrwM89a2PwiaHqQhI9PWfKiFhh2THDpfOUEezTVF2OHGZim0oKBrklgup6%2FZQRKjuFiAX25QxHIUzAsx%2Bn33RVIyuVzlOISDvLxe86ze36ob4uQcRGgrxdzD5P5lrGzIc1Vk6paS5TyOcnVf2QIi0x4WkUV6r3sqxItNYzZPj69YwB%2FLiewfDcKMjEdShZiDBwvLXYeDQEvNCofZ%2F7qsMLO%2BbyKzjYbihKoBim%2F490s8AJdlBgP9335rTDy1byOZWMM7J3qqC7TAY242qUPNL5LOwC21Irj%2BLyaa2Mb00G%2F5WhT%2FwlAwvZLSAuNLgWF6gSuC0d7vAtqhDpSItrAWzBxDAwAPZ2h6JrxkhSzXSegWMMT3o8oGOqUB%2F%2B%2Fql%2BCgKCuOZRhPSOON%2BXXTJPx59wxCwxuUN5Qwvr3h1OLpSwmSVWhjdZPAklix5SQ7vcU0905zm6yA%2F0HNjaQfsSMYyJzLJ1gBZMV18yPihF3IhvfPSibUuQHseU%2B7QJw3D1PBchbWlB8vWub8msPrj14IoqIr4AFG3kMemLUrmWHRI1RTzH%2FMDxPsd%2Biu1z%2BUJPo0kvJ24haZ23y7JuSN58SK&X-Amz-Signature=f866538d97066a011661db5ac4d226ddc378d84209cddb3cffb63c83ecd2bd21&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 
 ## 🍉 回调/promise/**generator**/async
@@ -3428,4 +3428,100 @@ console.log(strMapToArray(myMapForArray)); //-> [ [ true, 7 ], [ { foo: 3 }, [ '
   color: red;
 }
 ```
+
+
+## 🍉 **`transition`**、**`animation`** 和 **`requestAnimationFrame`** (RAF) 
+
+
+**状态变化 → 用** **`transition`**
+
+
+**自己动、循环动、自动播放 → 用** **`animation`**
+
+
+**你要自己算每一帧 → 用** **`requestAnimationFrame`****（raf）**
+
+
+### 
+什么时候用 `transition`
+
+
+✅ 适合场景
+
+
+**有「前后两个状态」**，中间过程交给浏览器补。
+
+
+ **必须有“触发条件”**
+
+- class 切换
+- hover
+- JS 改样式
+- Vue / React 状态变化
+
+### 🧠 本质
+
+
+> “从 A → B 的过渡”
+
+
+### ❌ transition 不适合
+
+- 一加载就自动动
+- 需要循环
+- 需要关键帧控制节奏
+
+### 
+什么时候用 `animation`
+
+
+**动画自己会动，不需要外界触发**
+
+
+👉 **有完整时间轴**
+
+- 0% → 50% → 100%
+- 循环
+- 自动播放
+
+### 🧠 本质
+
+
+> “我定义好剧本，你按剧本演”
+
+
+### 什么时候一定要用 raf
+
+
+✅ 1️⃣ 动画进度由「连续数值」控制
+
+
+📌**不是 0 → 1 一次跳完**
+
+
+📌 而是**随数据流动**
+
+
+## 🍉 router里的query和params
+
+- **`query`**：更像是 **GET 请求的参数**，以 **`?key=value&key2=value2`** 的形式出现在 URL 中，主要用于**筛选、排序、搜索**等**可选**信息。
+- **`params`**：更像是 **RESTful 风格的路径参数**，是 URL 路径的一部分，例如 **`/user/123`**，主要用于**标识一个唯一的资源**，是**必要**的。
+
+| 特性           | `query` (查询参数)                              | `params` (路径参数)                      |
+| ------------ | ------------------------------------------- | ------------------------------------ |
+| **URL 表现形式** | `/search?keyword=vue&page=1` (使用 `?` 和 `&`) | `/user/123` (直接拼接在路径中)               |
+| **用途/语义**    | 可选的、附加的筛选条件                                 | 必需的、标识资源核心身份的 ID                     |
+| **路由定义**     | 路径中无需定义占位符，如 `path: '/search'`              | 路径中**必须**定义占位符，如 `path: '/user/:id'` |
+| **导航方式**     | 可以使用 `path` 或 `name` 进行导航                   | **必须**使用 `name` 进行导航（如果希望参数生效）       |
+| **页面刷新**     | **数据不会丢失**，因为参数在 URL 里                      | **数据不会丢失**，因为参数在 URL 里               |
+| **特殊情况**     | 无                                           | 如果路由定义没有占位符，`params` 传参后刷新页面会**丢失**  |
+
+
+本质：
+
+
+**有没有 params，决定这条路由能不能匹配上**
+
+
+**有没有 query，不影响路由是否匹配**
 
