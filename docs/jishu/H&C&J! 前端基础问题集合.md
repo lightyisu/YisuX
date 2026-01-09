@@ -286,7 +286,6 @@ lastName: "Doe"
 // this 指向 person1，参数 'New York' 和 'USA' 从数组中取出
 person.fullName.apply(person1, ['New York', 'USA']);
 // 输出: John Doe lives in New York, USA.
-
 ```
 
 
@@ -347,7 +346,6 @@ function debounce(fn, wait) {
 window.onresize = debounce(function () {
   console.log("resize");
 }, 500);
-
 ```
 
 
@@ -397,7 +395,6 @@ args:
     </script>
   </body>
 </html>
-
 ```
 
 
@@ -730,7 +727,7 @@ JavaScript 作为一门高级语言，为了提升开发效率和程序稳定性
 | **适用场景**          | 极少使用，除非脚本必须立即执行并影响后续HTML渲染 | **独立的第三方脚本**，如统计、广告 | **有依赖关系的应用主脚本**，如JS框架、应用逻辑      |
 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466QSLOYCNU%2F20260101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260101T140808Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEB4aCXVzLXdlc3QtMiJIMEYCIQDnS472TkguAcfIw%2FCSlRLtFSsT1VZ6b5WT6%2BsBvSZ5JQIhAILsidar9lGOtf%2FrLN1zib5DWh61xrkEHHJ%2BAMr%2BiQ0AKogECOf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx5q8YFVsGPrsolr%2FQq3AMYRDRT5R3bX4im5rGQadMLManxytf5r7uvn%2Fc%2FpGnz9WK%2F7vyfn%2BYNQAsBY6iiI7BkrLro72zVumuCycx%2BHzuMMRboF1GiD9jMzogiYNwXOoY66d5nyHA9qGkIOAiWwQuoH9OEezsil7tnO9lVjJZ84A1RxP7rTafVFQ8VxfTJc1lNXt10V2O5BLiSAnOV3W9mLdN6Hw9MUcjSOhqXJ8zMGLHXSJEFWz6hJMP205veywZOqpoJP1KwTH%2BvHq4bbJIYquagQeJVRUvxVX6Dj3dRoAfU9xWVRgrD1eltqGQnQi3GolUOPEQ6DgIkEA4QDGDDVFtP7ha%2BppdtJ8bc1%2BIr59nePQNw7cNZ8nfS%2Bwq1CENRH2IgBDvG6cW3lJ3sLmb5L4WQlTasLEBG5g02fq1ax7K4CJqdHjYDMA7EF7%2Fy%2BDaTSwA2OVm7dqsYTYwXbAlxEd9qKZRQ8WYHX9YQiRkY7BBGCmhxo35UJbVPwfab2aI2rnezz9xeVSKmWcdheyuTA9fDG2Ihk56rDO%2F8RdhrKUx2ew2%2BAehigET5epn1Ez3d3GPOzzmekTrhhnGWuWamD4Z4pazmfqaciQBQf2xVXdnwoL8PkoNyhZ4sUC%2BnvMGufzr04b%2BSo3AlMzCt9tnKBjqkAXrx54NWndFNyPfjZWoow0turbVqXGdFzN8FuAUmXOK9Sy%2FookDIKC0nXJJutlv8MHSrShLHxjjw%2FNf4bn6%2BnvrqBN5W543kK82c4Prjv4rgLCepKMgjpjbyifmzs4GSV0wTeilP%2FDlsrYsua1AJJGWK%2BDRP6s9arSyKs2Z6Dw%2F%2FO19hKuIJ4njMpkx72C%2BDaWDsM9liWVsLywgURFuD4CJg0wq7&X-Amz-Signature=bf28468b8d52a30a9ee19e4e3b7e56b90ebce1b91d21478a3e482960f6cf7521&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/791ab558-7273-4e64-9ac3-85351bb7a02a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4663ESXAGRR%2F20260109%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260109T164402Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIA0gp1A981U27APkU6BIEoXBxCfkgcBsZuXFBl%2B4EuNFAiEAwloEdpolwyHKw13UXSHDkxZjyxvABh6NvcvTmDVBu%2BoqiAQIqv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDOXtCbhVWGozxjo0%2BircA0J0AxIWjR%2FItERWRudC67Vs8Y65CueNl9FxXAADFiTwxhca3%2BNfopX%2BuegYvrB9zPBjn7lkwl8nXJVlg2KCq2k9dHW%2BiY9suuX21hfiraJzhtxp%2FAnA2eapdnNNXPkEnQwqAQepBc2%2BTewizb%2BV3zwCOgO5GD8Jv4LIwwf3KEN%2FBiEssJWXKsZAFnLjlhD4EqVM43JbeCrUss4awD2FAAYYYzJfyMXCq%2BPdr6kTvTa2Aqw2uWLLZZk49mkKB3SssSKydA3iDvqZd4djAfnh4B6zHn02oWFxMzCSkKGvO5K3jMwDpVIbWRXtmr9jh%2BDUchLNMBXlk%2FdpGlUz1J32yITMCT94VDrm8dRcz6vCeLTaCfz5yUVii%2Bc4eWsNw0CgB8QX64HbwkQyhaJy%2Bepq%2BPj96DJZfPE0OTyo2DQBB2Mu0YlX7cx8QTo8CKpf5LDb5%2BaapHCk7wwxOCCOK32yFoL%2F553HbWIJZXVZ8GmV0NlYi8e8HGeX12QrsyK%2FYSLw6Ux1FsGKhk6cYG5VCGZeX8xkZRJ1mjdaRleZlD6vyEqsDTz4MKL4SD4KlHiSpw0ECY79wh3GldduHgZDrI4UtxZ56c18AsrubOfc9kBbSRCJGVoK1RysYQklNbKhMNfYhMsGOqUBkvpDzgoz373g5pAifc7ZDfbFxE8Y9SOn3Pd95ZiijW%2FlceRixUEUNUhFhppbG6SpVUZwlalkwbWtypDytFSnOnlQzqKcO2PMqNPL%2BgylKb2sZV1w%2FyV3ffO1l4cXW0dZ0PyTarWs0T%2FJwaMcnxytr6Uo5mvE6jFt4QSKbDEW1EDr7K7nNiIdoi7kEjrjzK3iR4YjHWPBWlSu%2FmXqqGriMkG%2BQ%2FYH&X-Amz-Signature=3c3e2ad398e278b2590e93c1122bce7dd859d3d5262899281ccc65bb873c7a0c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 
 ## 🍉 回调/promise/**generator**/async
@@ -937,7 +934,7 @@ setTimeout(() => {
 
 
 ```typescript
- <input type="file" id="file_upload" />
+<input type="file" id="file_upload" />
  <button id="upload_btn">upload now</button>  
   
   const file_upload = document.querySelector("#file_upload");
@@ -1517,15 +1514,15 @@ JS 的内存主要分为两部分：
 **缓存的位置**
 
 1. **Memory Cache (内存缓存)**
-	- **特点**：速度最快，但容量小，且会随着页面的关闭（或标签页）而释放。它是“临时”的。
-	- **存储内容**：通常存储当前页面中体积小、访问频繁的资源，比如 base64 图片、小脚本等。
+    - **特点**：速度最快，但容量小，且会随着页面的关闭（或标签页）而释放。它是“临时”的。
+    - **存储内容**：通常存储当前页面中体积小、访问频繁的资源，比如 base64 图片、小脚本等。
 2. **Disk Cache (硬盘缓存)**
-	- **特点**：速度比内存慢，但容量大，存储时间长，即使关闭浏览器，下次打开也可能还在。它是“持久”的。
-	- **存储内容**：体积较大、不常变动的资源，如 CSS、JavaScript 文件、大图片等。
+    - **特点**：速度比内存慢，但容量大，存储时间长，即使关闭浏览器，下次打开也可能还在。它是“持久”的。
+    - **存储内容**：体积较大、不常变动的资源，如 CSS、JavaScript 文件、大图片等。
 3. **Service Worker Cache**
-	- **特点**：这是 PWA（Progressive Web App）的核心。它是一个运行在浏览器背后的独立线程，允许我们**编程式地控制缓存**。我们可以自由决定哪些资源被缓存、如何匹配缓存、缓存何时更新等，提供了极大的灵活性。
+    - **特点**：这是 PWA（Progressive Web App）的核心。它是一个运行在浏览器背后的独立线程，允许我们**编程式地控制缓存**。我们可以自由决定哪些资源被缓存、如何匹配缓存、缓存何时更新等，提供了极大的灵活性。
 4. **Push Cache (推送缓存)**
-	- **特点**：HTTP/2 的新特性，生命周期更短，只在会话中存在，当会话结束就被释放。它是浏览器主动推送的资源缓存。
+    - **特点**：HTTP/2 的新特性，生命周期更短，只在会话中存在，当会话结束就被释放。它是浏览器主动推送的资源缓存。
 
 **缓存的核心机制：两大策略**
 
@@ -1561,7 +1558,7 @@ JS 的内存主要分为两部分：
 
 
 ```typescript
- A[浏览器请求资源] --> B{本地是否存在缓存?};
+A[浏览器请求资源] --> B{本地是否存在缓存?};
     B -- 否 --> C[直接向服务器请求];
     B -- 是 --> D{强缓存是否有效? (Cache-Control: max-age)};
     D -- 是 --> E[直接使用缓存<br>200 OK (from cache)];
@@ -2001,7 +1998,6 @@ function sum(a, b, c) {
 
 const arr = [1, 2, 3];
 sum(...arr); // 6
-
 ```
 
 
@@ -2212,8 +2208,8 @@ Promise.any([p1, p2]).catch(error => {
 
 - 这个新的 Promise 会等到**所有**传入的 Promise 都完成（无论成功还是失败）后才会成功。
 - 其成功结果是一个数组，每个对象都对应一个传入的 Promise，并描述了其最终状态。
-	- **`{ status: 'fulfilled', value: ... }`** 表示成功。
-	- **`{ status: 'rejected', reason: ... }`** 表示失败。
+    - **`{ status: 'fulfilled', value: ... }`** 表示成功。
+    - **`{ status: 'rejected', reason: ... }`** 表示失败。
 
 这对于需要知道所有异步操作最终结果，而不关心是否有失败的场景非常有用。
 
@@ -2302,20 +2298,20 @@ function foo(x) {
 浏览器生成一帧，就像工厂里的一条流水线，主要有以下几个关键步骤。这个过程也被称为**关键渲染路径**。
 
 1. **JavaScript:**
-	- **触发器**：通常是 JavaScript 代码。比如通过 **`requestAnimationFrame`** 执行动画、用户交互（点击、滚动）、或者网络请求完成（如 AJAX）。
-	- **作用**：修改 DOM 结构、修改 CSS 样式等，为后续步骤提供数据。
+    - **触发器**：通常是 JavaScript 代码。比如通过 **`requestAnimationFrame`** 执行动画、用户交互（点击、滚动）、或者网络请求完成（如 AJAX）。
+    - **作用**：修改 DOM 结构、修改 CSS 样式等，为后续步骤提供数据。
 2. **Style (样式计算):**
-	- **作用**：浏览器解析 CSS，结合 DOM，计算出每个节点最终的样式（CSSOM）。这个过程会确定每个元素最终应用了哪些 CSS 规则。
-	- **成本**：通常比较快，但如果 CSS 选择器非常复杂（如通配符、深层嵌套），计算成本会增加。
+    - **作用**：浏览器解析 CSS，结合 DOM，计算出每个节点最终的样式（CSSOM）。这个过程会确定每个元素最终应用了哪些 CSS 规则。
+    - **成本**：通常比较快，但如果 CSS 选择器非常复杂（如通配符、深层嵌套），计算成本会增加。
 3. **Layout (布局 / 重排):**
-	- **作用**：根据计算出的样式，确定每个元素在屏幕上的精确位置和大小（几何信息）。浏览器会从根节点开始，递归计算所有元素的坐标。
-	- **成本**：**非常昂贵！** 页面元素越多，布局越复杂，耗时就越长。**任何可能改变元素位置或大小的操作都会触发布局。**
+    - **作用**：根据计算出的样式，确定每个元素在屏幕上的精确位置和大小（几何信息）。浏览器会从根节点开始，递归计算所有元素的坐标。
+    - **成本**：**非常昂贵！** 页面元素越多，布局越复杂，耗时就越长。**任何可能改变元素位置或大小的操作都会触发布局。**
 4. **Paint (绘制 / 重绘):**
-	- **作用**：布局完成后，浏览器知道了元素的位置和大小，接下来需要“填充”像素。比如绘制文本、颜色、边框、阴影等。这个过程通常在多个图层上完成。
-	- **成本**：**同样昂贵！** 绘制的区域越大、越复杂（如阴影），耗时就越长。
+    - **作用**：布局完成后，浏览器知道了元素的位置和大小，接下来需要“填充”像素。比如绘制文本、颜色、边框、阴影等。这个过程通常在多个图层上完成。
+    - **成本**：**同样昂贵！** 绘制的区域越大、越复杂（如阴影），耗时就越长。
 5. **Composite (合成):**
-	- **作用**：浏览器将所有绘制好的图层按照正确的顺序合并成最终的图像，然后显示在屏幕上。
-	- **成本**：**相对最低！** 这个过程主要由 GPU（显卡）完成，速度非常快。**如果只触发合成，而不触发布局和绘制，性能开销是最小的。**
+    - **作用**：浏览器将所有绘制好的图层按照正确的顺序合并成最终的图像，然后显示在屏幕上。
+    - **成本**：**相对最低！** 这个过程主要由 GPU（显卡）完成，速度非常快。**如果只触发合成，而不触发布局和绘制，性能开销是最小的。**
 
 **卡顿：**
 
@@ -2535,7 +2531,7 @@ function goodExample() {
 
 
 ```css
- .container {
+.container {
         display: grid;
         grid-template-columns: 100px 100px;
         grid-template-rows: 200px 200px;
@@ -2552,7 +2548,7 @@ function goodExample() {
 
 
 ```css
-  .container {
+.container {
         display: grid;
         grid-template-columns: 100px 100px;
         grid-template-rows: 200px 200px;
@@ -2609,7 +2605,6 @@ function goodExample() {
  .item-1 {
         grid-column:1/4;
  }
-
 ```
 
 
@@ -2623,7 +2618,7 @@ function goodExample() {
 
 
 ```html
- <style>
+<style>
       dl {
         display: grid;
         grid-template-columns: 100px 200px;
@@ -2703,8 +2698,8 @@ function goodExample() {
 
 1. **只有声明被提升**：变量的赋值操作（初始化）不会被提升。
 2. **提升到作用域顶部**：
-	- **`var`** 声明的变量会被提升到**函数作用域**的顶部。
-	- **`let`** 和 **`const`** 声明的变量会被提升到**块级作用域**（**`{...}`**）的顶部，但它们处于一个“暂时性死区”，无法访问。
+    - **`var`** 声明的变量会被提升到**函数作用域**的顶部。
+    - **`let`** 和 **`const`** 声明的变量会被提升到**块级作用域**（**`{...}`**）的顶部，但它们处于一个“暂时性死区”，无法访问。
 
 ### **不同类型声明的提升行为**
 
@@ -3116,7 +3111,7 @@ amount = amount ?? 1; // => '',符合预期 ✅
 
 
 ```javascript
-   let vip_customer_1 = {
+let vip_customer_1 = {
         name: "Carl",
         vip: {
           num: "U-1001",
@@ -3160,15 +3155,15 @@ HTML 页面的生命周期包含三个重要事件：
 - `load` —— 浏览器不仅加载完成了 HTML，还加载完成了所有外部资源：图片，样式等。
 - `beforeunload/unload` —— 当用户正在离开页面时。
 - 当 DOM 准备就绪时，`document` 上的 `DOMContentLoaded` 事件就会被触发。在这个阶段，我们可以将 JavaScript 应用于元素。
-	- 诸如 `<script>...</script>` 或 `<script src="..."></script>` 之类的脚本会阻塞 `DOMContentLoaded`，浏览器将等待它们执行结束。
-	- 图片和其他资源仍然可以继续被加载。
+    - 诸如 `<script>...</script>` 或 `<script src="..."></script>` 之类的脚本会阻塞 `DOMContentLoaded`，浏览器将等待它们执行结束。
+    - 图片和其他资源仍然可以继续被加载。
 - 当页面和所有资源都加载完成时，`window` 上的 `load` 事件就会被触发。我们很少使用它，因为通常无需等待那么长时间。
 - 当用户想要离开页面时，`window` 上的 `beforeunload` 事件就会被触发。如果我们取消这个事件，浏览器就会询问我们是否真的要离开（例如，我们有未保存的更改）。
 - 当用户最终离开时，`window` 上的 `unload` 事件就会被触发。在处理程序中，我们只能执行不涉及延迟或询问用户的简单操作。正是由于这个限制，它很少被使用。我们可以使用 `navigator.sendBeacon` 来发送网络请求。
 - `document.readyState` 是文档的当前状态，可以在 `readystatechange` 事件中跟踪状态更改：
-	- `loading` —— 文档正在被加载。
-	- `interactive` —— 文档已被解析完成，与 `DOMContentLoaded` 几乎同时发生，但是在 `DOMContentLoaded` 之前发生。
-	- `complete` —— 文档和资源均已加载完成，与 `window.onload` 几乎同时发生，但是在 `window.onload` 之前发生。
+    - `loading` —— 文档正在被加载。
+    - `interactive` —— 文档已被解析完成，与 `DOMContentLoaded` 几乎同时发生，但是在 `DOMContentLoaded` 之前发生。
+    - `complete` —— 文档和资源均已加载完成，与 `window.onload` 几乎同时发生，但是在 `window.onload` 之前发生。
 
 ## 🍉 BOM
 
@@ -3222,7 +3217,6 @@ HTML 页面的生命周期包含三个重要事件：
     </script>
   </body>
 </html>
-
 ```
 
 
@@ -3461,9 +3455,7 @@ console.log(strMapToArray(myMapForArray)); //-> [ [ true, 7 ], [ { foo: 3 }, [ '
 
 ### 🧠 本质
 
-
 > “从 A → B 的过渡”
-
 
 ### ❌ transition 不适合
 
@@ -3486,9 +3478,7 @@ console.log(strMapToArray(myMapForArray)); //-> [ [ true, 7 ], [ { foo: 3 }, [ '
 
 ### 🧠 本质
 
-
 > “我定义好剧本，你按剧本演”
-
 
 ### 什么时候一定要用 raf
 
