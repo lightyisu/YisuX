@@ -58,7 +58,7 @@ defineProps({
 **use example**
 
 
-```typescript
+```vue
 <template>
   <div>
     <!-- 使用组件，并传入 props -->

@@ -1,0 +1,19 @@
+import { ssrRenderAttrs } from "vue/server-renderer";
+import { useSSRContext } from "vue";
+import { _ as _export_sfc } from "./plugin-vue_export-helper.1tPrXgE0.js";
+const __pageData = JSON.parse('{"title":"经典美剧《行尸走肉》","description":"","frontmatter":{"catalog":["2024"],"date":"2024-08-05 08:00:00","type":"Post","slug":"watch1","title":"经典美剧《行尸走肉》","status":"已发布","urlname":"59b9879f-a70c-4438-be6d-15e18d84d006","updated":"2024-08-05 14:02:00"},"headers":[],"relativePath":"2024/经典美剧《行尸走肉》.md","filePath":"2024/经典美剧《行尸走肉》.md"}');
+const _sfc_main = { name: "2024/经典美剧《行尸走肉》.md" };
+function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<div${ssrRenderAttrs(_attrs)}><h1 id="经典美剧《行尸走肉》" tabindex="-1">经典美剧《行尸走肉》 <a class="header-anchor" href="#经典美剧《行尸走肉》" aria-label="Permalink to &quot;经典美剧《行尸走肉》&quot;">​</a></h1><p>最近几周，想找点美剧或者电影看看。于是，误打误撞又搜到了这个非常经典的美剧《行尸走肉》。之前也搜到过几次，但是就是没看进去。因为我是一个丧尸片爱好者，（比较喜欢末世氛围），总是对这些片子非常感兴趣。没看进去是因为，感觉《行尸走肉》太老了，一开头的无聊对话直接劝退我，而且系列太长了，我估摸着好像有十三季貌似。不过这几周我认真看下来，感觉确实是丧尸片上的佳作。目前看到第四季，随便聊聊自己看下来的感受。</p><p><img src="https://pic.baike.soso.com/p/20131219/20131219143406-882192667.jpg" alt="20131219143406-882192667.jpg" loading="lazy"></p><p>我觉得最可圈可点的就是行尸走肉的人物塑造，并不死板，因为整个电视剧过长，编剧给每个人物加了成长性设定。从主角Rick，到Genn以及弩哥的哥哥莫尔每一集都在加速他们的成长过程。其人物变得越来越丰满。这也给整个剧本带来了不可预测性，末世下的每个人都有可能做出不一样的举动。</p><p>其次感觉行尸走肉的情节特别粘性，几乎是每一集接着一集进入不同的高潮，高潮迭起但又能合适的收尾。四季看下来还不怎么疲倦。比起之前看的《浩瀚苍穹》我就看了三季把好像就烂尾了，主要是太容易疲劳了，有些剧情没深度，也没刺激点，更没看的欲望。不过《浩瀚苍穹》仍然是我觉得很不错的太空科幻电视剧。要说这个《行尸走肉》有什么深度，那确实也没有，反复在探讨群体利益和个人利益，以及末世救人法则上的事情。</p><p>作为一个丧尸片爱好者，行尸走肉在丧尸部分做的其实不怎么恐怖。主要把这部分表现在血腥上，什么吃内脏啥的，丧尸本身对于主角团来说基本上就是清杂。不断削弱了丧尸的恐怖程度也是美剧的基本操作了，比起东方丧尸，釜山行，王国这些，我觉得丧尸的恐怖程度都是远大于美剧类的丧尸的，还有那个不起眼的僵尸校园，通过丧尸行为来演绎恐怖。行尸走肉更表现为各种人性的恐怖，比如假善意换取生存，内部骚乱等等。</p></div>`);
+}
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("2024/经典美剧《行尸走肉》.md");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+const __________ = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
+export {
+  __pageData,
+  __________ as default
+};

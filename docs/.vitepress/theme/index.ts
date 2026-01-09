@@ -16,5 +16,6 @@ export default {
     app.component("Nav2web", Nav2web);
 
     app.component("NCard", NCard);
+    app.component("NSkeleton", NSkeleton);
   },
 } satisfies Theme;

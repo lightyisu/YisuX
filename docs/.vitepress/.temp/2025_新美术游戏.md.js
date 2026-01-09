@@ -1,0 +1,19 @@
+import { ssrRenderAttrs } from "vue/server-renderer";
+import { useSSRContext } from "vue";
+import { _ as _export_sfc } from "./plugin-vue_export-helper.1tPrXgE0.js";
+const __pageData = JSON.parse('{"title":"新美术游戏","description":"","frontmatter":{"catalog":["2025"],"date":"2025-05-04 08:00:00","type":"Post","slug":"newgame","title":"新美术游戏","status":"已发布","urlname":"1e8e9dc9-c245-803e-8c8c-cc60a44b05ff","updated":"2025-05-04 18:38:00"},"headers":[],"relativePath":"2025/新美术游戏.md","filePath":"2025/新美术游戏.md"}');
+const _sfc_main = { name: "2025/新美术游戏.md" };
+function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<div${ssrRenderAttrs(_attrs)}><p>4 月30 号收到了通过 arc raiders 的二次技术测试的邮件。运气挺好，然而我不准备回家遗憾的不能完整体验这个游戏。忍不住不浪费这次机会，零零散散用云游戏玩了一会被这个游戏震惊到了。</p><p>arc raiders 是我很久之前就关注到的游戏。在看他的第一支预告片之前，我预感和我之前玩的全境封锁很像，pve 刷怪游戏。美术和风格世界观都很有特点，末世夹杂废土气息，很少有这种机械与末世融合的恰到好处的游戏，电影。arc raiders 给我的感觉是美术极致，音效极致的游戏。</p><p>这是由 embark 制作的游戏感觉他们家就是美术主导音乐主导的公司，以这样导向制作游戏，这我可太喜欢了，就喜欢这种音乐配顶尖画面的感觉。embark 制作过 the Finals 我觉得那也是个极富创意的游戏。我觉得自 The Finals 以后我就彻底爱上了美术主导的游戏。我觉得可以是新美术游戏，就是那些光走路都是艺术品画面的游戏，亦或是那种强烈美术风格的游戏。</p><p>上手之后果然我就被震撼，强烈的废土气息融合赛博机械风格，简洁的赛博建筑体，连机械 ai 都是赛博风。枪械感往真实方向做的，打击感挺糙但是蛮真实。氛围感我觉得挺靠近战地系列，莫名其妙的警告音效和各种机械扫描音太有氛围感了。遗憾的是玩法是和三角洲摸金一样的搜打撤，塔科夫玩法，我一直也玩不明白这个模式，但是玩了几下 ar 我感觉还挺带劲的嘿。</p><p>玩了很久都会被里面的美术和音效震惊，如果在大电视上玩我都不敢想那体验是有多完美，虽然只是技术测试但是也能一瞥这个游戏的完成度已经接近发售。遗憾的是，看起来这个游戏不会以单机形式发布，所以很难说网游性质的游戏会陪伴多久。</p><p>很期待这种新美术游戏能够越来越多，还有今年的第二个我觉得美术力极其强大的极度潜力的…可惜也是搜打撤作品，失落星船：马拉松。</p></div>`);
+}
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("2025/新美术游戏.md");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+const _____ = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
+export {
+  __pageData,
+  _____ as default
+};

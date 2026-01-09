@@ -1,0 +1,29 @@
+import { ssrRenderAttrs } from "vue/server-renderer";
+import { useSSRContext } from "vue";
+import { _ as _export_sfc } from "./plugin-vue_export-helper.1tPrXgE0.js";
+const __pageData = JSON.parse('{"title":"HTTPS 能被抓包所以安全吗？","description":"","frontmatter":{"catalog":["jishu"],"date":"2023-08-07 08:00:00","type":"Post","slug":"https_securityif","title":"HTTPS 能被抓包所以安全吗？","status":"已发布","urlname":"62fc2ac3-897d-4be5-bbb9-3c7f60ef5e1d","updated":"2025-08-05 19:25:00"},"headers":[],"relativePath":"jishu/HTTPS 能被抓包所以安全吗？.md","filePath":"jishu/HTTPS 能被抓包所以安全吗？.md"}');
+const _sfc_main = { name: "jishu/HTTPS 能被抓包所以安全吗？.md" };
+function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<div${ssrRenderAttrs(_attrs)}><pre><code> 今天学习 Scrapy 的时候，抓取了豆瓣的登录信息用于模拟登录。意外的发现豆瓣的登录竟然把 username 和 password 写进了 Url。
+</code></pre><h3 id="现象" tabindex="-1">现象： <a class="header-anchor" href="#现象" aria-label="Permalink to &quot;现象：&quot;">​</a></h3><p>进入豆瓣登录后，inspect 会发现豆瓣走了<a href="https://accounts.douban.com/j/mobile/login/basic?remember=true&amp;name=xxxxx&amp;password=xxxxx" target="_blank" rel="noreferrer"><code>https://accounts.douban.com/j/mobile/login/basic？ remember=true&amp;name=xxxxx&amp;password=xxxxx</code></a> 的url，完完全全的把我的密码和手机号暴露在 url 里。说实话，我对网络这块也不是懂得很多，但我感觉用代理软件或者第三方代理服务登录后，<s>对方是完全可拿到我访问的 url ，这和是否走SSL肯定是无关的，直接赤裸裸告诉别人我的账号和密码了。</s>(错误观点 已修正 #修正）</p><p>于是我开始联想之前上网的安全性，以及HTTPS的作用，问了文心一言他说HTTPS可以保护 payload，但是写在 URL 是没法被保护的。这让我产生了一个问题：HTTPS究竟安全吗？</p><h3 id="https-浅浅理解" tabindex="-1">HTTPS（浅浅理解）: <a class="header-anchor" href="#https-浅浅理解" aria-label="Permalink to &quot;HTTPS（浅浅理解）:&quot;">​</a></h3><pre><code>之前使用过Fiddle抓包了自己的一些请求，完完全全也可以看到我发送和收到的内容，其中也不乏https，这个https真的安全吗。是不是我使用代理或者第三方服务的时候都相当于裸奔呢。
+
+
+当代理的时候，如果使用的是代理IP，本机首先发送数据到代理服务器，代理服务器与https的网站之间是加密通信，代理服务器将我们需要的内容再发送到本机，而数据在本机和代理服务器之间的通信并不是经过加密的，这样是否就不安全了呢？
+
+
+即便用了 Https ，数据也是可以被抓包和篡改的，你看我用 Charles 就抓了很多知名平台的 https 的包，我还能随意篡改数据。这样一讲确实HTTPS貌似一点用也没有，完完全全也是裸奔的嘛。其实不是，阅读了这两篇文章：
+</code></pre><p><a href="https://learnku.com/articles/19238" target="_blank" rel="noreferrer">https://learnku.com/articles/19238</a></p><p><a href="http://www.jinglingdaili.com/news-getInfo-id-24.html" target="_blank" rel="noreferrer">http://www.jinglingdaili.com/news-getInfo-id-24.html</a></p><p>其中告诉我们，我们在本地抓包的原因是因为本地拥有自己设置的证书，我的理解是本地的操作永远是可以随意更改抓取数据的，包只能在客户端自己抓到。在网络传输中SSL包裹的数据是不会被窃取的，需要预防的是某些本地客户端软件，可能控制客户端电脑，进而安装代理服务器自己的证书，进行SSL劫持，这样就会直接窃取HTTPS包裹的数据。访问所有的HTTPS网站时通过浏览器的SSL证书验证才是最安全的。</p><pre><code> 所以，SSL还是非常安全的协议，只要本地不被恶意地篡改可以放心的使用。
+</code></pre><h3 id="修正" tabindex="-1">修正： <a class="header-anchor" href="#修正" aria-label="Permalink to &quot;修正：&quot;">​</a></h3><pre><code>豆瓣的明文 URL 在TLS下还是很安全的，HTTPS 会保护URL参数进行加密只会透露访问域名主机，所以没什么问题。
+</code></pre><p><a href="https://zhuanlan.zhihu.com/p/553839592" target="_blank" rel="noreferrer">https://zhuanlan.zhihu.com/p/553839592</a></p></div>`);
+}
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("jishu/HTTPS 能被抓包所以安全吗？.md");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+const HTTPS___________ = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
+export {
+  __pageData,
+  HTTPS___________ as default
+};
