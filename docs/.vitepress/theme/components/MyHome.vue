@@ -1,193 +1,280 @@
 <template>
-  <div class="wrapper">
-    <div class="headline-container">
-      <!-- 背景图片 -->
-      <div class="hero-bg"></div>
+  <div class="home-container">
+    <div class="home-wrapper">
+      <div class="home-content">
+        <h1>
+          <span class="loop-text"> Every Story Needs a BLog !</span
+          ><span class="cursor">|</span>
+        </h1>
 
-      <!-- 极简句子内容 -->
-      <main class="main-content">
-        <div class="headline">
-          <div class="line-wrapper">
-            <span class="animate-text">Every story</span>
-          </div>
-          <div class="line-wrapper">
-            <span class="animate-text" style="animation-delay: 0.1s"
-              >needs a</span
-            >
-          </div>
-          <div class="line-wrapper" style="margin-top: -5px">
-            <span class="animate-text" style="animation-delay: 0.2s"
-              >blog.</span
-            >
-          </div>
+        <h1>NOW IS {{ formatted }}:)</h1>
+
+        <div class="fav-list">
+          <n-tag
+            :bordered="false"
+            type="success"
+            v-for="item in favlist"
+            :key="item"
+          >
+            {{ item }}
+          </n-tag>
         </div>
-      </main>
-      <div class="box-container">
-        <div id="box" ref="box"></div>
       </div>
     </div>
+    <div class="home-card">
+      <div class="home-card-content">
+        <n-card header-style="font-size: 30px" title="article 最新文章">
+          <h2><<{{ latestPost?.title || "暂无最新文章" }}>></h2>
+          <h2>
+            <span style="color: var(--naver-green)">{{
+              latestPost?.date || "---"
+            }}</span>
+            发布了新文章
+          </h2>
+          <div class="update-info">
+            <img
+              src="/update.png"
+              alt="update"
+              style="width: 30px"
+            />距今已更新/发布 {{ daysDiff }}天
+          </div>
+          <div style="margin: 20px 0">
+            <n-button>查看详情</n-button>
+          </div>
+        </n-card>
+      </div>
+      <div class="sub-card">
+        <div class="music-card-container">
+          <n-card
+            header-style="font-size: 30px;"
+            title="music play"
+            class="music-card"
+          >
+            <div class="music-info">
+              <n-image
+                :src="track_info.cover_url"
+                alt="music cover"
+                style="
+                  width: 100px;
+                  border-radius: 4px;
+                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                "
+              />
+              <div class="lyrics">
+                <p>{{ track_info.artist_name }} - {{ track_info.title }}</p>
+
+                <MusicControl
+                  :track_preview_url="track_info.preview_track_url"
+                  v-model="isPlaying"
+                />
+              </div>
+            </div>
+          </n-card>
+          <n-card style="width: 100%" class="music-bg-info">
+            <div class="music-info-inner">
+              <span>Track From Apple Music</span>
+              <img
+                src="/icons8-apple-music-48.png"
+                alt="apple music"
+                style="width: 30px"
+              />
+            </div>
+          </n-card>
+        </div>
+        <StatusCard :latestPost="latestPost" />
+        <SourceCard />
+      </div>
+    </div>
+
+    <div ref="lottieEl" class="lottie-btn" />
   </div>
 </template>
-
 <script setup lang="ts">
-import { gsap } from "gsap";
-import { ref, nextTick } from "vue";
+import { NTag, NButton, NImage } from "naive-ui";
+import { onMounted, ref, watch, computed } from "vue";
+import MusicControl from "../components/MusicControl.vue";
+import { useTypeLoop } from "../composables/useTypeLoop";
+import { useMusicData } from "../composables/useMusicData";
+import { useLottieAnimation } from "../composables/useLottieAnimation";
+import StatusCard from "../components/StatusCard.vue";
+import SourceCard from "../components/SourceCard.vue";
 
-const words = ["Life", "FrontEnd", "AnyOther Things"];
-const box = ref<HTMLElement | null>(null);
-const text = ref<HTMLElement | null>(null);
-let index = 0;
-const fun = () => {};
-const createWordSpan = (word: string) => {
-  const wordEl = document.createElement("div");
-  wordEl.className = "word";
-  wordEl.textContent = word;
-  return wordEl;
-};
-const animateText = () => {
-  createWordSpan("Life");
-};
+import { useDaysDiff } from "../composables/useDayDiff";
+import { data as posts } from "../utils/posts.data.mts";
+// 静态数据
+const favlist = ref([
+  "F1 FAN",
+  "KPOP FAN",
+  "LESSERAFIN FAN",
+  "2026",
+  "YisuX2.0",
+]);
+
+// 播放状态
+const isPlaying = ref(false);
+const date = new Date();
+const formatted = date
+  .toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+  .replace(/-/g, "/");
+// 使用组合式函数
+const { initTypeLoop } = useTypeLoop();
+const { track_info, getRandomTrack } = useMusicData();
+const { lottieEl, loadAnimation, toggleAnimation } = useLottieAnimation();
+// 监听播放状态变化
+watch(isPlaying, (newval) => {
+  toggleAnimation(newval);
+});
+const latestPost = computed(() => {
+  return posts.length > 0 ? posts[0] : null;
+});
+const daysDiff = useDaysDiff(latestPost.value?.date || "");
+// 页面挂载时执行初始化操作
+onMounted(() => {
+  // 初始化打字效果
+  initTypeLoop();
+
+  // 获取随机音乐数据
+  getRandomTrack();
+
+  // 加载 Lottie 动画
+  if (lottieEl.value) {
+    loadAnimation(
+      lottieEl.value,
+      new URL("/player music.json", import.meta.url).href
+    );
+  }
+});
 </script>
-
 <style scoped lang="scss">
-.wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 40vh;
+.home-container {
   width: 100%;
-
-  line-height: normal;
-  .headline-container {
+  font-family: "pixelfont", sans-serif;
+  background-color: var(--gray-background);
+  border-radius: 20px;
+  .n-image {
+    flex-shrink: 0; /* 强制不允许缩小，保持 100px */
+  }
+  .lottie-btn {
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+  }
+  .home-card {
+    margin-bottom: 140px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    vertical-align: center;
-    font-weight: bold;
-    font-size: 60px;
-    position: relative;
+    .home-card-content {
+      width: 1200px;
+    }
+    h2 {
+      font-size: 30px;
+      line-height: 1.2;
+    }
+    .n-card {
+      margin: 20px 0;
 
-    .text {
-      display: inline-block;
-      transition: transform 0.5s ease; // ✅ 平滑移动
+      min-width: 400px;
+      border-radius: 10px;
+    }
+    .update-info {
+      font-size: 20px;
+      line-height: 1.2;
+      display: flex;
+      font-weight: bold;
+      gap: 4px;
+      align-items: center;
     }
 
-    .box-container {
-      position: relative;
+    .music-info {
+      display: flex;
 
-      #box {
-        position: absolute;
-        padding: 10px;
-        top: 0;
-        left: 0;
-
-        box-sizing: border-box;
-        transition: width 0.5s ease; // ✅ 平滑移动
+      align-items: center;
+      gap: 20px;
+      .lyrics {
+        flex-grow: 1;
+        max-height: 200px;
+        overflow: hidden;
       }
     }
+    .sub-card {
+      display: flex;
+      width: 1200px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  }
+}
+.music-card-container {
+  position: relative;
+  max-width: 400px;
+  .music-card {
+    z-index: 2;
+  }
+  .music-bg-info {
+    :deep(.n-card__content) {
+      padding-top: 6px;
+    }
+    .music-info-inner {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    background: rgb(32, 32, 32);
+    color: #fff;
+    position: absolute;
+    top: -4%;
+    z-index: 1;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
-.word {
-  position: absolute;
-
-  display: flex;
-}
-
-.char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(20px) scale(0.8);
-}
-
-/* 模拟梅奔/高级感背景处理 */
-.hero-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
+.home-wrapper {
   width: 100%;
-  height: 100vh;
-  background: url("https://wallpapercave.com/wp/wp12483319.jpg");
-  margin: 60px;
-  background-size: cover;
-  z-index: -1;
-  transform: scale(1.1);
-  animation: slowZoom 12s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
+  padding: 20px;
+  border-radius: 20px;
 
-@keyframes slowZoom {
-  to {
-    transform: scale(1);
+  h1 {
+    font-size: 80px;
+    line-height: 1.2;
+    color: var(--naver-green);
   }
-}
-
-/* 纯净主体排版：下沉对齐 */
-.main-content {
-  height: 100vh;
-  display: flex;
-  align-items: flex-end;
-  padding: 0 0 8% 8%;
-  margin-right: 1000px;
-}
-@media screen and (max-width: 1400px) {
-  .main-content {
-    margin-right: 0;
+  .home-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 70vh;
   }
-}
-
-/* 核心标题 */
-.headline {
-  font-size: clamp(7rem, 10vw, 8.5rem);
-  font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-}
-
-.line-wrapper {
-  overflow: hidden;
-  margin-bottom: 2px;
-}
-
-/* 入场动画 + 时间流动渐变 */
-.animate-text {
-  display: block;
-  transform: translateY(110%);
-  animation: slideUp 1.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-
-  /* 时间流动渐变设置 */
-  background: linear-gradient(
-    to right,
-    #ffffff 20%,
-    #ff8700 40%,
-    #ff8700 60%,
-    #ffffff 80%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: slideUp 1.6s cubic-bezier(0.19, 1, 0.22, 1) forwards,
-    flowGradient 5s linear infinite; /* 时间流动的动画 */
-}
-
-@keyframes slideUp {
-  to {
-    transform: translateY(0);
+  .fav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
-}
-
-@keyframes flowGradient {
-  0% {
-    background-position: 0% center;
+  .cursor {
+    animation: blink 1s infinite;
+    color: var(--naver-green);
   }
-  100% {
-    background-position: -200% center;
-  }
-}
-
-/* 响应式调整 */
-@media (max-width: 768px) {
-  .main-content {
-    padding-bottom: 15%;
-    padding-left: 6%;
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 }
 </style>

@@ -1,13 +1,7 @@
-<!-- docs/blog/index.md -->
+---
+layout: page
+---
 
-Loading Now!
+## 技术文档
 
-<script setup>
-if (typeof window !== 'undefined') {
-  window.location.href = '/jishu/typescript.html' // 最新博客页路径
-}
-</script>
-
-<template>
-  <p>正在跳转到最新博客...</p>
-</template>
+欢迎来到技术文档页面，这里包含了各种技术相关的文章和笔记。

@@ -132,6 +132,12 @@
   --vp-custom-block-tip-text: var(--vp-c-text-1);
   --vp-custom-block-tip-bg: var(--vp-c-brand-soft);
   --vp-custom-block-tip-code-bg: var(--vp-c-brand-soft);
+  --gray-background:#EFF2F3;
+
+    --naver-green: #03c75a;
+   --naver-silm-green: #50aa79;
+    --swatch--clay: #CC785C; /* Claude官方的橘色 */
+    text-autospace: normal;
 }
 
 /**
@@ -146,18 +152,21 @@ pre{
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-.title .VPNavBarTitle span{
+.VPNavBarTitle span{
   background-image: url('/logo.png');
   background-repeat: no-repeat;
   background-size: contain;
   min-width: 100px;
   text-indent: -9999px; /* 将文字移出可视区域 */
+  display: inline-block;
+  height: 32px;
 }
 
 
 
 .VPContent{
   display: flex;
+ 
 }
  
 .VPFeatures {
@@ -170,4 +179,52 @@ pre{
   border-radius: 12px;
   backdrop-filter: blur(4px);
 }
+.VPNav .VPLink{
+  font-weight: bold;
+}
+.VPNav .VPLink.active span{
+  background: #05AC4F;
+  box-shadow: 0 2px 4px 0 rgba(3, 199, 90, .12);
+  color: #fff;
+  padding: 6px 10px;
+  border: 1px solid #0000000F;
+  border-radius: 2px;
+  box-sizing: content-box ;
 
+}
+.VPNavBarMenuLink{
+  display: block !important;
+}
+
+@font-face {
+  font-family: "pixelfont";
+  src:
+    url("/PixelifySans-Regular.ttf") format("truetype");
+  
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "claude_font";
+  src:
+    url('/Claude_font.otf') format("opentype");
+  
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/**
+ * Custom Sidebar Styles
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-z-index-sidebar: 50;
+  --vp-layout-max-width: 1440px;
+  --vp-nav-height: 64px;
+  --vp-layout-top-height: 0px;
+}
+.VPNav{
+  z-index: 99999 !important;
+}

@@ -1,29 +1,20 @@
-import { setup } from '@css-render/vue3-ssr'
-import { NConfigProvider } from 'naive-ui'
-import { useRoute } from 'vitepress'
-
-import { defineComponent, h, inject } from 'vue'
-
-
 // https://vitepress.dev/guide/custom-theme
-import { h } from 'vue'
-import type { Theme } from 'vitepress'
-import DefaultTheme from 'vitepress/theme'
-import './style.css'
-import Timeline from "./components/Timeline.vue";
-import MyLayout from './components/MyHome.vue';
-import Nav2web from './components/Nav2web.vue';
-import { NCard, NSkeleton } from 'naive-ui'
 
+import type { Theme } from "vitepress";
+import DefaultTheme from "vitepress/theme";
+import "./style.css";
+import { h } from "vue";
+
+import Nav2web from "./components/Nav2web.vue";
+import PostPage from "./Layouts/PostPage.vue";
+import { NCard, NSkeleton, NMenu } from "naive-ui";
 
 export default {
   extends: DefaultTheme,
+  Layout: PostPage,
+  async enhanceApp({ app, router, siteData }) {
+    app.component("Nav2web", Nav2web);
 
-  enhanceApp({ app, router, siteData }) {
-    app.component("Timeline", Timeline);
-    app.component('Nav2web',Nav2web);
-      app.component('NCard', NCard);
-    app.component('NSkeleton', NSkeleton);
-    console.log(siteData)
-  }
-} satisfies Theme
+    app.component("NCard", NCard);
+  },
+} satisfies Theme;

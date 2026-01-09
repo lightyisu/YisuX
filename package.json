@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@css-render/vue3-ssr": "^0.15.14",
+    "@vueuse/core": "^14.1.0",
     "naive-ui": "^2.42.0",
     "sass-embedded": "^1.89.2",
     "unplugin-auto-import": "^20.0.0",
@@ -19,6 +20,7 @@
   "dependencies": {
     "@elog/cli": "^0.13.3",
     "gsap": "^3.13.0",
+    "lottie-web": "^5.13.0",
     "vitepress": "^1.5.0"
   }
 }

@@ -94,7 +94,7 @@ handleJishuBar();
 
 //   return zhoukanbar[0].items[0].link
 // }
-export const set_sidebar = (pathname, isjishu = 0) => {
+export const set_sidebar = (isjishu = 0) => {
   if (isjishu == 1) {
     return jishubar;
   } else {

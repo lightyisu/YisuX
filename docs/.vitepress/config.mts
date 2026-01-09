@@ -1,27 +1,21 @@
 import { defineConfig } from "vitepress";
 import { set_sidebar } from "./set_sidebar.mjs";
 // import {set_nav} from './set_nav.mjs'
-import AutoImport from 'unplugin-auto-import/vite'
+import AutoImport from "unplugin-auto-import/vite";
 import { fileURLToPath, URL } from "node:url";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "YisuX-lightyisu的个人博客",
   description: "blog",
+
   vite: {
-   ssr: {
+    ssr: {
       // 将 naive-ui 添加到 noExternal 列表
-      noExternal: ['naive-ui']
+      noExternal: ["naive-ui"],
     },
     resolve: {
-      alias: [
-        {
-          find: /^.*\/VPHome\.vue$/,
-          replacement: fileURLToPath(
-            new URL("./theme/components/MyHome.vue", import.meta.url)
-          ),
-        },
-      ],
+      alias: [],
     },
   },
 
@@ -36,18 +30,14 @@ export default defineConfig({
 
     siteTitle: "YisuX",
     sidebar: {
-      "/jishu/": set_sidebar("docs/2023", 1),
-      "/": set_sidebar("docs/2023", 0),
-      
+      "/jishu": set_sidebar(1),
+      "/": set_sidebar(0),
+      "/介绍页.html": set_sidebar(0),
     },
 
     socialLinks: [
       { icon: "github", link: "https://github.com/lightyisu/yisupower" },
     ],
-    footer: {
-      message: "YisuX.com ",
-      copyright: "Copyright © 2020-2025 lightyisu ",
-    },
   },
   markdown: {
     image: {
