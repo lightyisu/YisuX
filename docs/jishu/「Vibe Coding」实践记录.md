@@ -7,17 +7,14 @@ slug: vibecoding
 title: 「Vibe Coding」实践记录
 status: 已发布
 urlname: 2d0e9dc9-c245-800d-aff4-e1670ea8cdac
-updated: '2026-01-11 15:02:00'
+updated: '2026-01-11 15:16:00'
 ---
 
-## #定义
+## 定义
 
 
 Vibe Coding是由Andre Kaparthy于2025年2月3日在X平台上提出的新型编程方式。
 
 
-## #核心
-
-
-用AI编辑器如cursor等工具 完全不写代码
+## 待更新
 
