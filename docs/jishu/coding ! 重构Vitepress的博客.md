@@ -4,10 +4,10 @@ catalog:
 date: '2026-01-11 08:00:00'
 type: Post
 slug: adwa
-title: 重构Vitepress的博客
+title: coding | 重构Vitepress的博客
 status: 已发布
 urlname: 2e5e9dc9-c245-8086-b20a-c9c591817515
-updated: '2026-01-11 14:47:00'
+updated: '2026-01-11 14:57:00'
 ---
 
 ## 起因

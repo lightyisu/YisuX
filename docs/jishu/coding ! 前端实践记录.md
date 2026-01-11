@@ -4,10 +4,10 @@ catalog:
 date: '2025-12-26 08:00:00'
 type: Post
 slug: codefe
-title: '[前端实践]记录贴'
+title: coding | 前端实践记录
 status: 已发布
 urlname: 2d3e9dc9-c245-809e-b020-c3445cb33a76
-updated: '2026-01-04 22:07:00'
+updated: '2026-01-11 14:57:00'
 ---
 1. CSS原生变量在主题定制方面很常用 用法是`--name` 定义 `var(--name)`使用
 2. `scoped`的本质是为元素加上了`data-v-xxxx` 这样的属性 元素身上有这个不需要深度选择器没有则需要。深度选择器**告诉 Vue 编译器，这条规则不要加** **`data-v-xxxx`** **属性选择器，让它“穿透”进去，影响到子组件**

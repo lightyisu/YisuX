@@ -4,10 +4,10 @@ catalog:
 date: '2025-12-24 08:00:00'
 type: Post
 slug: vibecoding
-title: 「Vibe Coding」教程#
+title: 「Vibe Coding」实践记录
 status: 已发布
 urlname: 2d0e9dc9-c245-800d-aff4-e1670ea8cdac
-updated: '2026-01-01 22:11:00'
+updated: '2026-01-11 15:02:00'
 ---
 
 ## #定义
