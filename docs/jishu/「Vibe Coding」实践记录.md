@@ -7,13 +7,16 @@ slug: vibecoding
 title: 「Vibe Coding」实践记录
 status: 已发布
 urlname: 2d0e9dc9-c245-800d-aff4-e1670ea8cdac
-updated: '2026-01-17 17:56:00'
+updated: '2026-01-19 17:48:00'
 ---
 
 ## 定义
 
 
 Vibe Coding是由Andre Kaparthy于2025年2月3日在X平台上提出的新型编程方式。
+
+
+## Vibe Coding工具
 
 
 ## TRAE
@@ -92,4 +95,28 @@ export https_proxy=http://127.0.0.1:7890
 
 
 两者一个是IDE Agent 一个是 Cli Agent，有很多地方都是重叠的，两者都可以生成代码、运行脚本、进行调试，对于日常开发任务（git、shell 脚本、调试）都有一定能力。当我们在对比这些看起来形态不一样的产品的时候我们实际上还是在对比他们最核心的这些重叠业务能力。
+
+
+## Vibe Coding供应商
+
+
+### bigmodel.cn
+
+
+[https://bigmodel.cn/](https://bigmodel.cn/)
+
+
+智谱清源 GLM供应商
+
+
+价格相对便宜 可以用GLM系列模型
+
+
+### Open Code
+
+
+感觉是完全偏命令行的CLI模型内置免费供应商
+
+
+[https://opencode.ai/](https://opencode.ai/)
 
