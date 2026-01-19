@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>URL → R2 上传工具</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        padding: 36px 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        width: 480px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      h3 {
+        margin: 0 0 8px 0;
+        font-size: 24px;
+        font-weight: 700;
+        text-align: center;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .subtitle {
+        font-size: 13px;
+        text-align: center;
+        color: #999;
+        margin-top: -12px;
+      }
+
+      input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e8ecf4;
+        border-radius: 12px;
+        font-size: 14px;
+        transition: 0.3s;
+        box-sizing: border-box;
+        background: #fafbfc;
+      }
+
+      input:focus {
+        border-color: #667eea;
+        outline: none;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      }
+
+      button {
+        padding: 14px;
+        margin: 12px 0;
+        font-size: 16px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .result {
+        background: #f8f9fe;
+        border: 2px solid #e8ecf4;
+        border-radius: 12px;
+        padding: 16px;
+        display: none;
+        gap: 12px;
+      }
+
+      .result.show {
+        display: flex;
+        flex-direction: column;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .preview-box {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 2px solid #e8ecf4;
+      }
+
+      .preview-box img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .url-box {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .url-box input {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 13px;
+        color: #666;
+        background: white;
+      }
+
+      .copy-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        white-space: nowrap;
+        box-shadow: none;
+      }
+
+      .copy-btn:hover {
+        background: #5568d3;
+        transform: none;
+      }
+
+      .copy-btn.copied {
+        background: #10b981;
+      }
+
+      .log {
+        background: #2d3748;
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 12px;
+        color: #e2e8f0;
+        min-height: 60px;
+        max-height: 120px;
+        overflow: auto;
+        white-space: pre-wrap;
+        font-family: "Monaco", "Menlo", monospace;
+      }
+
+      .log.error {
+        background: #742a2a;
+      }
+
+      .log.success {
+        background: #22543d;
+      }
+
+      .footer {
+        font-size: 12px;
+        text-align: center;
+        color: #999;
+        margin-top: -4px;
+      }
+
+      .info-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #666;
+        padding: 4px 0;
+      }
+
+      .info-label {
+        font-weight: 500;
+        color: #999;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: -12px;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 10px;
+        text-align: center;
+        background: #f0f0f5;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        color: #666;
+        transition: 0.2s;
+      }
+
+      .tab:hover {
+        background: #e5e7eb;
+      }
+
+      .tab.active {
+        background: #667eea;
+        color: white;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .drop-zone {
+        border: 2px dashed #e8ecf4;
+        border-radius: 12px;
+        padding: 40px 20px;
+        text-align: center;
+        transition: 0.3s;
+        cursor: pointer;
+        background: #fafbfc;
+      }
+
+      .drop-zone:hover,
+      .drop-zone.dragover {
+        border-color: #667eea;
+        background: #f0f4ff;
+      }
+
+      .drop-zone p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+      }
+
+      .drop-zone .hint {
+        font-size: 12px;
+        color: #999;
+        margin-top: 8px;
+      }
+
+      #fileInput {
+        display: none;
+      }
+
+      .marquee {
+        margin-top: 20px;
+        padding: 10px 0;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .marquee-track {
+        display: flex;
+        animation: marquee 15s linear infinite;
+        width: max-content;
+      }
+
+      .marquee:hover .marquee-track {
+        animation-play-state: paused;
+      }
+
+      .marquee-logo {
+        height: 10px;
+        margin: 0 30px;
+
+        opacity: 0.6;
+        transition: 0.3s;
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+      }
+      .footer-end {
+        font-size: 18px;
+        text-align: center;
+        font-weight: bold;
+        color: #e2e8f0;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <h3>图片上传到 R2</h3>
+        <div class="subtitle">自动保存到 blog_img 目录，带时间戳</div>
+
+        <input
+          id="apiToken"
+          type="password"
+          placeholder="输入 API Token (Bearer Token)"
+          style="margin-bottom: 8px; display: none"
+        />
+        <div
+          id="tokenStatus"
+          style="
+            margin-bottom: 8px;
+            display: none;
+            text-align: center;
+            color: #10b981;
+            font-size: 13px;
+          "
+        >
+          已连接
+          <span
+            onclick="clearToken()"
+            style="color: #999; cursor: pointer; margin-left: 8px"
+            >清除</span
+          >
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" data-tab="url">URL 上传</div>
+          <div class="tab" data-tab="file">文件/粘贴上传</div>
+        </div>
+
+        <div class="tab-content active" id="urlTab">
+          <input
+            id="url"
+            type="text"
+            placeholder="输入图片 URL，如：https://example.com/img.png"
+          />
+          <button id="upload">开始上传</button>
+        </div>
+
+        <div class="tab-content" id="fileTab">
+          <div class="drop-zone" id="dropZone">
+            <p>点击选择图片 或 拖拽到这里</p>
+            <p class="hint">支持 Ctrl+V 粘贴图片</p>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" />
+          <button id="uploadFile" style="margin-top: 8px">上传图片</button>
+        </div>
+
+        <div class="log" id="log">等待操作...</div>
+
+        <div class="result" id="result">
+          <div class="preview-box">
+            <img id="preview" src="" alt="预览" />
+          </div>
+          <div class="info-item">
+            <span class="info-label">文件名:</span>
+            <span id="filename"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">大小:</span>
+            <span id="filesize"></span>
+          </div>
+          <div class="url-box">
+            <input id="previewUrl" readonly />
+            <button class="copy-btn" id="copyBtn" onclick="copyUrl()">
+              复制
+            </button>
+          </div>
+        </div>
+
+        <div class="footer">
+          支持 URL 上传 / 文件上传 / 粘贴上传 · 一键复制 URL
+        </div>
+      </div>
+      <div class="footer-end">Powered by vibe coding : claude code & TRAE</div>
+    </div>
+
+    <script>
+      let currentFile = null;
+
+      // Cookie 辅助函数
+      function setCookie(name, value, days = 30) {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/`;
+      }
+
+      function getCookie(name) {
+        const nameEQ = `${name}=`;
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          let c = cookies[i].trim();
+          if (c.indexOf(nameEQ) === 0) {
+            return decodeURIComponent(c.substring(nameEQ.length));
+          }
+        }
+        return null;
+      }
+
+      function removeCookie(name) {
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+      }
+
+      // 清除 token
+      function clearToken() {
+        removeCookie("api_token");
+        document.getElementById("apiToken").value = "";
+        document.getElementById("apiToken").style.display = "block";
+        document.getElementById("tokenStatus").style.display = "none";
+      }
+
+      // 更新 token 显示状态
+      function updateTokenStatus() {
+        const token = document.getElementById("apiToken").value.trim();
+        if (token) {
+          document.getElementById("apiToken").style.display = "none";
+          document.getElementById("tokenStatus").style.display = "block";
+        } else {
+          document.getElementById("apiToken").style.display = "block";
+          document.getElementById("tokenStatus").style.display = "none";
+        }
+      }
+
+      // 页面加载时恢复保存的 token
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedToken = getCookie("api_token");
+        const tokenInput = document.getElementById("apiToken");
+        const tokenStatus = document.getElementById("tokenStatus");
+
+        if (savedToken) {
+          tokenInput.value = savedToken;
+          validateToken(savedToken, (valid) => {
+            if (valid) {
+              tokenInput.style.display = "none";
+              tokenStatus.style.display = "block";
+            } else {
+              tokenInput.style.display = "block";
+              tokenStatus.style.display = "none";
+              removeCookie("api_token");
+              tokenInput.value = "";
+            }
+          });
+        } else {
+          tokenInput.style.display = "block";
+          tokenStatus.style.display = "none";
+        }
+      });
+
+      // 验证 token 是否有效
+      function validateToken(token, callback) {
+        fetch("https://r2.lightyisu.workers.dev/verify", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => callback(data.valid))
+          .catch(() => callback(false));
+      }
+
+      // Token 输入框变化时自动保存
+      document.getElementById("apiToken").addEventListener("input", (e) => {
+        const token = e.target.value.trim();
+        if (token) {
+          setCookie("api_token", token, 30); // 保存 30 天
+        } else {
+          removeCookie("api_token");
+        }
+        // 输入时不切换显示状态，等失焦后再切换
+      });
+
+      // Token 输入框失焦时验证并保存
+      document.getElementById("apiToken").addEventListener("blur", () => {
+        const token = document.getElementById("apiToken").value.trim();
+        const tokenInput = document.getElementById("apiToken");
+        const tokenStatus = document.getElementById("tokenStatus");
+
+        if (!token) {
+          tokenInput.style.display = "block";
+          tokenStatus.style.display = "none";
+          removeCookie("api_token");
+          return;
+        }
+
+        // 先显示加载状态
+        tokenStatus.innerHTML = "正在验证...";
+        tokenStatus.style.display = "block";
+
+        validateToken(token, (valid) => {
+          if (valid) {
+            setCookie("api_token", token, 30);
+            tokenInput.style.display = "none";
+            tokenStatus.innerHTML =
+              '已连接 <span onclick="clearToken()" style="color: #999; cursor: pointer; margin-left: 8px;">清除</span>';
+          } else {
+            tokenInput.style.display = "block";
+            tokenStatus.style.display = "none";
+            removeCookie("api_token");
+            document.getElementById("log").textContent =
+              "❌ Token 无效，请检查后重新输入";
+            document.getElementById("log").className = "log error";
+          }
+        });
+      });
+
+      // Tab 切换
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.onclick = () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".tab-content")
+            .forEach((c) => c.classList.remove("active"));
+          tab.classList.add("active");
+          document
+            .getElementById(tab.dataset.tab + "Tab")
+            .classList.add("active");
+        };
+      });
+
+      // URL 上传
+      document.getElementById("upload").onclick = async () => {
+        const url = document.getElementById("url").value.trim();
+        await uploadByUrl(url);
+      };
+
+      async function uploadByUrl(url) {
+        const logBox = document.getElementById("log");
+        const uploadBtn = document.getElementById("upload");
+        const resultBox = document.getElementById("result");
+        const apiToken = document.getElementById("apiToken").value.trim();
+
+        if (!url) {
+          logBox.textContent = "❌ 请输入图片 URL！";
+          logBox.className = "log error";
+          return;
+        }
+
+        if (!apiToken) {
+          logBox.textContent = "❌ 请输入 API Token！";
+          logBox.className = "log error";
+          return;
+        }
+
+        logBox.textContent = "⏳ 上传中，请稍候...";
+        logBox.className = "log";
+        uploadBtn.disabled = true;
+        resultBox.classList.remove("show");
+
+        try {
+          const res = await fetch("https://r2.lightyisu.workers.dev/upload", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiToken}`,
+            },
+            body: JSON.stringify({ url }),
+          });
+
+          const data = await res.json();
+          handleResponse(data, resultBox, logBox, uploadBtn);
+        } catch (err) {
+          logBox.textContent = "❌ 请求失败：" + err;
+          logBox.className = "log error";
+          uploadBtn.disabled = false;
+        }
+      }
+
+      // 文件上传
+      document.getElementById("dropZone").onclick = () => {
+        document.getElementById("fileInput").click();
+      };
+
+      document.getElementById("fileInput").onchange = (e) => {
+        if (e.target.files.length > 0) {
+          currentFile = e.target.files[0];
+          document.getElementById("uploadFile").textContent =
+            `上传：${currentFile.name}`;
+        }
+      };
+
+      document.getElementById("uploadFile").onclick = async () => {
+        if (!currentFile) {
+          document.getElementById("log").textContent = "❌ 请先选择图片！";
+          document.getElementById("log").className = "log error";
+          return;
+        }
+        await uploadByFile(currentFile);
+      };
+
+      async function uploadByFile(file) {
+        const logBox = document.getElementById("log");
+        const uploadBtn = document.getElementById("uploadFile");
+        const resultBox = document.getElementById("result");
+        const apiToken = document.getElementById("apiToken").value.trim();
+
+        if (!apiToken) {
+          logBox.textContent = "❌ 请输入 API Token！";
+          logBox.className = "log error";
+          return;
+        }
+
+        logBox.textContent = "⏳ 上传中，请稍候...";
+        logBox.className = "log";
+        uploadBtn.disabled = true;
+        resultBox.classList.remove("show");
+
+        try {
+          const formData = new FormData();
+          formData.append("file", file);
+
+          const res = await fetch(
+            "https://r2.lightyisu.workers.dev/upload-file",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${apiToken}`,
+              },
+              body: formData,
+            },
+          );
+
+          const data = await res.json();
+          handleResponse(data, resultBox, logBox, uploadBtn);
+        } catch (err) {
+          logBox.textContent = "❌ 请求失败：" + err;
+          logBox.className = "log error";
+          uploadBtn.disabled = false;
+        }
+      }
+
+      function handleResponse(data, resultBox, logBox, uploadBtn) {
+        if (data.success) {
+          logBox.textContent = "✅ 上传成功！";
+          logBox.className = "log success";
+
+          document.getElementById("preview").src = data.previewUrl;
+          document.getElementById("filename").textContent = data.r2Key;
+          document.getElementById("filesize").textContent = formatBytes(
+            data.size,
+          );
+          document.getElementById("previewUrl").value = data.previewUrl;
+          resultBox.classList.add("show");
+
+          document.getElementById("copyBtn").textContent = "复制";
+          document.getElementById("copyBtn").classList.remove("copied");
+        } else {
+          logBox.textContent = `❌ ${data.error}`;
+          logBox.className = "log error";
+        }
+        uploadBtn.disabled = false;
+      }
+
+      function copyUrl() {
+        const input = document.getElementById("previewUrl");
+        input.select();
+        input.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(input.value).then(() => {
+          const btn = document.getElementById("copyBtn");
+          btn.textContent = "已复制！";
+          btn.classList.add("copied");
+          setTimeout(() => {
+            btn.textContent = "复制";
+            btn.classList.remove("copied");
+          }, 2000);
+        });
+      }
+
+      function formatBytes(bytes) {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return (
+          Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i]
+        );
+      }
+
+      // 按回车上传
+      document.getElementById("url").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          document.getElementById("upload").click();
+        }
+      });
+
+      // 拖拽上传
+      const dropZone = document.getElementById("dropZone");
+
+      dropZone.ondragover = (e) => {
+        e.preventDefault();
+        dropZone.classList.add("dragover");
+      };
+
+      dropZone.ondragleave = () => {
+        dropZone.classList.remove("dragover");
+      };
+
+      dropZone.ondrop = (e) => {
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+        const files = e.dataTransfer.files;
+        if (files.length > 0 && files[0].type.startsWith("image/")) {
+          currentFile = files[0];
+          document.getElementById("uploadFile").textContent =
+            `上传：${currentFile.name}`;
+        }
+      };
+
+      // 粘贴上传
+      document.onpaste = (e) => {
+        const items = e.clipboardData?.items;
+        if (!items) return;
+
+        for (let item of items) {
+          if (item.type.startsWith("image/")) {
+            const file = item.getAsFile();
+            if (file) {
+              currentFile = file;
+              document.getElementById("uploadFile").textContent =
+                `上传：已粘贴图片`;
+              uploadByFile(file);
+              break;
+            }
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
