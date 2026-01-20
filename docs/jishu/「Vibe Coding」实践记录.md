@@ -7,7 +7,7 @@ slug: vibecoding
 title: 「Vibe Coding」实践记录
 status: 已发布
 urlname: 2d0e9dc9-c245-800d-aff4-e1670ea8cdac
-updated: '2026-01-19 17:48:00'
+updated: '2026-01-19 19:29:00'
 ---
 
 ## 定义
@@ -119,4 +119,16 @@ export https_proxy=http://127.0.0.1:7890
 
 
 [https://opencode.ai/](https://opencode.ai/)
+
+
+## Vibe Coding感受
+
+
+目前也只用了Claude Code/TRAE 做一点vibe coding，体验下来就是细节改不了不如直接上手，不过以结果为导向倒是非常好的工具。
+
+
+原因主要是AI也看不着界面，只能模糊的去打磨一点点，功能上AI也没办法连锁反应，比如我可能是去设置cookie导致了另一个错误，但是AI可能又把cookie这事忘了转而把这个错误计算为一个通用错误，从而在一直兜圈，兜了半天最好的结果是找到问题了最差的是因为缺少了这个的前置条件一直在循环。
+
+
+如果把vibe coing作为结果导向一点不去介入只看结果的话，这就是比较好的工具了。
 
