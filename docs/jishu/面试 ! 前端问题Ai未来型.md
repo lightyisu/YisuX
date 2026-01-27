@@ -7,66 +7,37 @@ slug: mianshi2
 title: 面试 | 前端问题Ai未来型
 status: 已发布
 urlname: 2c5e9dc9-c245-8031-874a-e60b6a70ae7a
-updated: '2026-01-15 18:25:00'
+updated: '2026-01-27 21:47:00'
 ---
 
 ## 前端工程师未来会被ai取代吗
 
 
-GPT帮整理：
+GPT帮整理+筛选：
 
 
-前端工程师不会被 AI 取代，但「大量低价值前端」一定会消失。
+产品方面：模糊的需求AI无法去界定一个很好的技术方案，技术选型，性能策略，架构拆分，复杂场景的边界问题取舍问题。
 
 
-### 做懂「工程」的前端
+前端方面：前端本身的迭代速度快，AI的学习能力经验可能跟不上前端产品的更新速度。产品细节AI无法做到完美。
 
 
-AI 很会写代码，但**极弱于工程决策**：
-
-- 项目结构怎么拆？
-- 状态放哪里？Redux / Zustand / URL / Server？
-- 组件怎么设计才能复用 3 年？
-- 怎么避免后期技术债爆炸？
-
-技术债不是因为代码写得不优雅，而是因为「变化没有被显式建模」
+## 怎么优化技术债
 
 
-你以为不会变的东西，最后一定会变。
+一般会先识别技术债的类型和影响面，然后按是否阻塞业务排序。对于 P0/P1 的债务，会采用伴随式重构或局部隔离的方式逐步解决，同时通过 lint、规范和 review 防止新增技术债。不会做大规模无收益重构，而是用数据推动逐步演进。
 
-1. 把稳定的东西写成灵活 把一定会变的东西写死
-2. 隐式约定太多
-3. 抽象提前 or 抽象错误 用一个组件 cover 10 种场景
 
-解决方法：
+## 如果核心模块代码非常糟，但线上又不能动，你怎么办？
 
-1. **用「变化轴」而不是「功能」拆模块** 其实就是哪些容易变动放到一块去不容易变动的放一起
-2. **把「不稳定的东西」显式包一层**  立刻包一层，不要直连。
-3. **宁愿“重复一点”，也不要“错误抽象”** 其实是组件复用性的坏处 因为复用多处等于改多处
-4. **状态来源不清晰**
-5. **每个模块必须有「逃生通道」** 会被替换的可能性
 
-### 懂「业务 & 产品」的前端
+如果核心模块代码质量很差，但线上又不能动，我一般不会选择直接重构或替换。首先会把重点放在**保证线上稳定**上，在不改动核心逻辑的前提下补充必要的监控、日志和报警，确保问题可观测、可回滚。接着会通过**隔离的方式控制影响面**，比如在核心模块外加一层适配或封装，把它当成一个不可修改的第三方模块，新业务只和隔离层交互，避免技术债继续扩散。在此基础上，如果条件允许，会采用**渐进式替换**的方式，比如双写、影子流量或灰度切换，在保证行为一致和风险可控的情况下逐步引入新的实现，而不是一次性重写。同时我会补齐核心路径的回归用例和边界测试，让系统先变得“可验证”，再逐步变得“可修改”。整体目标不是追求代码立刻变干净，而是在可控风险下持续降低技术债。
 
-- 这个交互是不是用户真的需要？
-- 这个 loading 会不会让用户焦虑？
-- 为什么这里要“慢一点反而更好”？
-
-### 高级前端 / 前端架构师
-
-- 微前端 / Monorepo
-- SSR / RSC / Edge
-- 性能优化（LCP、CLS、INP）
-- 跨端（Web + RN + Electron + 小程序）
-- 可视化 / 编辑器 / 图形系统
 
 ## 平时如何使用ai
 
 
-### Ai补全代码:
-
-
-使用AI补全代码快速生成样板代码 
+**Ai补全代码:**使用AI补全代码快速生成样板代码 
 
 
 1.小范围补全代码 
@@ -99,110 +70,44 @@ TS类型需要精准编写复杂的泛型，代码补全能够自动推导泛型
 +除AI补全之外使用提问、bug调试、找报错问题
 
 
-### 更好的用TRAE/Cursor:
+**做Code Review：**1.检查代码可能的漏洞 2.用AI去解释一个陌生代码的结构节省Review时间
+
+
+### 更好的用TRAE/Cursor/ClaudeCode:
 
 
 1.让AI改动前先commit 防止后续出现代码混乱的情况 特别是完全agent/solo模式
 
 
-2.多创建新建对话 预防过长上下文造成降智
+2.将危险的操作加入黑名单例如rm/git,告诉明确的范围 不盲目accept
 
 
-3.将危险的操作加入黑名单例如rm/git,告诉明确的范围 不盲目accept
+3.确定一个**上限模型Claude和下限模型GLM**,轻任务使用下限模型，重任务使用上限模型
 
 
-4.使用更好的自定义模型例如codex/claude code
+4.**把重要信息写成文件让Code Agent自动读取作为一个长期记忆+多对话窗口**
 
 
-### **React Server Component**
+5.任务过于复杂的时候首先让AI或者自己拆分任务步骤 **设计方案和计划**
 
 
-React Server Component（简称 RSC）是一种新型 React 组件，它专为在服务器端渲染而设计，与传统的客户端组件不同，RSC 的代码不会被打包发送到浏览器，而是直接在服务器上执行并生成 HTML 发送给客户端。这使得它能够直接访问服务器资源（如数据库），从而减少客户端 JavaScript 捆绑包的大小，提高应用性能和加载速度。
+6.阅读这些agent工具的文档站，查看最佳实践
 
 
-RSC 是 React 生态中一项重大范式转变，它将组件分为两类：**服务器组件**（默认）和**客户端组件**（需用 'use client' 标记）。服务器组件在服务器上一次性渲染，不参与客户端的水合（hydration）过程，因此它们更轻量且高效，适合处理静态内容或数据密集型逻辑。
+**总结：顶尖模型决定了处理问题的上限和深度，高性价比模型决定了下限和探索的广度**
 
 
-**主要优势**：
-
-- **性能优化**：零客户端 JS 开销，减少捆绑包大小（可达 90% 以上减少）。
-- **数据获取**：直接在组件中调用服务器 API，无需额外网络请求。请求后直接包裹在html模板。
-- **安全性**：敏感逻辑（如 API 密钥）保持在服务器端。
-
-### **“信号式”响应式**
+ref:[https://code.claude.com/docs/en/best-practices](https://code.claude.com/docs/en/best-practices)
 
 
-与传统的虚拟 DOM（Virtual DOM）模型不同，信号式响应式不依赖运行时 diffing（差异比较），而是直接追踪数据依赖关系，只在真正变化的部分触发 DOM 更新
+## Claude Code的最佳实践一览
 
 
-为什么更精细、高性能？
-信号追踪依赖图变化传播如涟漪，只波及下游节点。相比虚拟 DOM 的“树遍历”，这减少 90%+ 的无谓计算。在 JS Framework Benchmark（2025 数据），Solid.js/Qwik/Svelte 5 的运行时速度是 React 的 2-3 倍，内存使用低 50%。
+![1769521480314.png](https://r2.yisux.com/blog_img/1769521480314.png)
 
 
-虚拟dom→信号式
+![1769521555091.png](https://r2.yisux.com/blog_img/1769521555091.png)
 
 
-在 2010 年代初，前端开发面临一个核心痛点：真实 DOM 操作昂贵且低效。浏览器中的真实 DOM（Document Object Model）是一个树状结构，每次修改（如添加/删除元素、更改属性）都会触发重绘（reflow）和重排（repaint），这在复杂、动态 UI（如 Facebook 的新闻 feed）中会导致性能瓶颈——频繁更新可能让页面卡顿，甚至崩溃。
-
-
-**总结：更改一次就会回流一次太卡了 直接用虚拟dom算完了一次回流**
-
-
-信号式不会面对真实 DOM 操作昂贵且低效？
-
-- **原生DOM操作 (jQuery时代)**：**一个拿着大锤的工人**。你想把墙上的一颗钉子敲进去一点，他抡起大锤，“哐”地一下砸在墙上。虽然钉子动了，但整面墙都在震。如果你让他敲100下，墙可能就塌了（页面卡顿）。这个过程是**手动、粗暴、且容易误伤**的。
-- **虚拟DOM (React/Vue)**：**一个聪明的建筑师团队**。每次你想修改房子，他们不会直接动工。而是先在图纸上画一个新设计（新VDOM树），然后和旧图纸对比，找出所有需要修改的地方。最后，工头会拿着一份清单，指挥工人一次性、高效地把所有改动做完。这个过程是**批量、优化过的**，但每次都需要“重新画图纸”和“对比图纸”的成本。
-- **信号式响应式**：**一个拥有精密传感器的智能家居系统**。系统里每个设备（UI节点）都知道自己依赖于哪个传感器（信号）。比如，客厅的灯（**`<p>`**标签）只连接到“亮度传感器”（**`count`**信号）。当“亮度传感器”的数值变化时，系统**只**会向客厅的灯发送指令，让它调整亮度。其他房间的设备（空调、电视）完全不受影响。这个过程是**自动、精准、且影响范围最小**的。
-
-**核心秘诀：高细粒度/隐式的订阅关系**
-
-
-**1. 细粒度订阅**
-
-
-```javascript
-// Solid.js 示例
-const count = signal(0);
-
-// 在JSX中读取信号
-function Counter() {
-  return (
-    <div>
-      <p>Count: {count()}</p>  // <p> 标签订阅了 count 信号
-      <button onClick={() => count.value++}>Increment</button>
-    </div>
-  );
-}
-```
-
-
-框架在初次渲染时，会建立一个**隐式的订阅关系**：**`<p>`** 这个DOM节点里的文本内容，订阅了 **`count`** 这个信号。这个关系是**精确到DOM节点级别**的，而不是组件级别。
-
-
-
-**2.直接、最小化更新**
-
-
-当你点击按钮，**`count.value`** 变化时，会发生什么？
-
-- **没有组件重新渲染**：**`Counter`** 函数**不会**被重新执行。
-- **没有VDOM Diff**：框架**不会**创建新的虚拟DOM树来进行比较。
-- **直接更新**：**`count`** 信号会通知所有订阅了它的地方。在这个例子里，它只会通知那个 **`<p>`** 标签。然后框架会执行一个**极其轻量级**的操作，类似于 **`p.textContent = "Count: 1"`**。
-
-这个操作的开销，远小于“重新执行组件函数 + Diff算法 + 批量Patch”的总和。
-
-
-**3. 批量更新**
-
-
-优秀的信号式框架（如Solid.js）会处理这个问题。它会将同一个微任务队列中的所有DOM更新**收集起来，然后一次性、按顺序地应用到真实DOM上**。这避免了“布局抖动”，确保了性能，和虚拟DOM的批量更新有异曲同工之妙，但它的决策依据是“哪些信号变了”，而不是“新旧VDOM树哪里不同”。
-核心：对比订阅列表
-
-
-| 特性        | 原生DOM操作 (jQuery)                       | 虚拟DOM                               | 信号式响应式                          |
-| --------- | -------------------------------------- | ----------------------------------- | ------------------------------- |
-| **更新范围**  | **开发者手动决定**，容易过大，引发不必要的Reflow/Repaint。 | **组件级别**。一个状态变化可能导致整个组件树被重新渲染和Diff。 | **DOM节点级别**。只更新真正依赖该数据的DOM部分。   |
-| **决策开销**  | **无**，直接操作，但决策本身容易出错。                  | **高**。每次更新都需要重新执行组件函数和运行Diff算法。     | **极低**。信号变化时，直接通过订阅关系找到目标，无需计算。 |
-| **DOM操作** | **频繁、零散、不可预测**。                        | **批量、优化后**。但可能更新了并未改变的部分。           | **最小化、精准、批量**。理论上只更新绝对必要的部分。    |
-| **心智模型**  | 命令式："我命令你改变这个元素"。                      | 声明式："UI是状态的函数，状态变了UI就变"。            | 声明式："这个UI依赖这个数据，数据变了UI自动变"。     |
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/ed141b76-e4f4-4030-b3c9-9f8f9925cc4f/794b52b2-42c2-4853-93cd-3217071e773d/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466UAIEJJ3G%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T134851Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEI3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDQrFabajHgxKPaACnpm%2FEDARdGGYgRmcdWth6Qg69nEgIhAOcso2WyWVruY05VoZuY2ljN2nxYC28CPPtwj80bH1nQKv8DCFYQABoMNjM3NDIzMTgzODA1Igy%2FY8aH5D3vQWBVYHMq3AMzUgegTHC8EwAvHwm9ba0HT8dtldtCkPNCgkle%2FUhx2FDSJ83ZqmQN8DAnxZU%2BS6WGtmqy8kq5nfGh4TeA5KAUVrnseKHQUZ2X0cGw4008blalwx%2BR4T0PnuhKqKVbkfWIjPOsIgXfSvo5ogCy%2F4HD9QjOOZKcCxkAZHw9FIB8HjRcAxft8WcbTxoIXrUJrp%2Btj0Co%2F1F%2BNIhW6EiF3WGK%2Fe83tchERQyN5SMS75fCtnC%2BYsMvQlfnHsviEJP56nvW6iCftD1OF9BKdOCDFb2EX%2FhcrAC%2FkXO4yRuGnm8%2FvPcQOlUlDZ7rVylVBr9vjC05VRjFyTex5Q%2Fl13O58jKnNRUNPl3Z%2FEiSntniahePmRzcGf17moV0NIkYVg13EPrGshuxIjW85hMRpBkJomXi2w9lPt%2BxAsnDiBf8c8mxKkOeAgJ8LGkPbb7I2EVW9LTovVkFANPp1YSM%2FantTSjtbDXZK3Hrmk14%2FopdKmWxWB%2FZkvwjj6cp5T%2FZWqIr5CNt48HuacBZpTdNxPG5oSuOOQmV%2F650vBKwHPRUZgKW45yAl28z%2BrMZd5qhUsCS%2BcfRrZHJeke1L2Z%2F0lXjYIgydsRFsLbopzXOyMhXMgsooaR73Ve8aqQ3m3T%2BqDCX6OLLBjqkAeO3GJ2yX2G6cnEo9dd0zC58RToizwJ1wTT8UV4YWH%2BZ3FBbkBIG7y%2F0U1fWidlflgd8m9ODqHmpN%2FLAX9TjGbS%2BpeXmi6jKU0oMZ7fH1wdsPbl9kICh6Dgy0Ce6IiQNP2NFNGudm23f3Ir0nRyFOy%2F6wNBSuGlpaF1Ckr86UQi6%2BWjAwkaFAn6b5xHCk83l%2Btjbom2Uez4R7ZSQVVBoNQvAiCcN&X-Amz-Signature=61d7e5fc76363a81688ce6a6fe14302672152a42abdc9966db23fd19828fcb1e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
