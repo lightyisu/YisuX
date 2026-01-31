@@ -166,7 +166,7 @@ const extractToc = () => {
 // 监听滚动，高亮当前标题
 const updateActiveId = () => {
   const headers = document.querySelectorAll(
-    ".post-content h2, .post-content h3"
+    ".post-content h2, .post-content h3",
   );
   const scrollY = window.scrollY;
 
@@ -233,8 +233,15 @@ const scrollToHeading = (id: string) => {
 
 .post-content {
   /* Claude风格字体 - 使用更现代的字体栈 */
-  font-family: "claude_font", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+  font-family:
+    "claude_font",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans",
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei",
     sans-serif;
 
   text-align: left; /* 两端对齐 */
@@ -586,10 +593,10 @@ const scrollToHeading = (id: string) => {
 
   .article-content {
     flex: 1;
-    min-width: 0;
+
     display: grid;
     grid-template-columns: 1fr;
-    justify-content: center;
+
     padding: 48px 64px;
 
     .content-wrapper {
@@ -599,21 +606,22 @@ const scrollToHeading = (id: string) => {
     }
     .toc-floating {
       font-family: "claude_font";
-
       overflow-y: auto;
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
       border-radius: 16px;
       padding: 24px;
-      max-width: 420px;
-      min-width: 300px;
+
+      width: 220px;
       margin: 20px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 12px 24px rgba(0, 0, 0, 0.06),
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.02),
+        0 12px 24px rgba(0, 0, 0, 0.06),
         0 0 0 1px rgba(0, 0, 0, 0.04);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: sticky;
       max-height: calc(100vh - 100px);
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
       top: 40px;
       .toc-header {
         font-size: 13px;
@@ -638,6 +646,8 @@ const scrollToHeading = (id: string) => {
       }
 
       .toc-link {
+        white-space: nowrap;
+        text-overflow: ellipsis;
         display: block;
         padding: 10px 16px;
         color: #374151;
