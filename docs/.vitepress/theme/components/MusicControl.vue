@@ -15,6 +15,7 @@ const music_end_time = ref(0);
 const playmusic = () => {
   if (!audio.value) return;
   if (audio.value.paused) {
+    audio.value.volume=0.2
     audio.value.play();
     playbtn_state.value = "/pause.svg";
     emit("update:modelValue", true);

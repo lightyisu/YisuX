@@ -83,6 +83,12 @@
         </div>
         <StatusCard :latestPost="latestPost" />
         <SourceCard />
+        <n-card title="DEMO Collection">
+          <a href="https://demo.yisux.com" target="_blank">
+               <n-button>demo.yisux.com</n-button>
+          </a>
+       
+        </n-card>
       </div>
     </div>
 
