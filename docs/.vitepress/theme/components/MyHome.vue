@@ -22,14 +22,14 @@
       </div>
     </div>
     <div class="home-card">
-      <div class="home-card-content">
-        <n-card header-style="font-size: 30px" title="article 最新文章">
+      <div class="card-item article-card">
+        <n-card title="article 最新文章">
           <h2><<{{ latestPost?.title || "暂无最新文章" }}>></h2>
           <h2>
             <span style="color: var(--naver-green)">{{
               latestPost?.date || "---"
             }}</span>
-            发布了新文章
+        
           </h2>
           <div class="update-info">
             <img
@@ -38,58 +38,52 @@
               style="width: 30px"
             />距今已更新/发布 {{ daysDiff }}天
           </div>
-          <div style="margin: 20px 0">
-            <n-button>查看详情</n-button>
+      
+        </n-card>
+      </div>
+      <div class="card-item music-card-container">
+        <n-card
+   
+          title="music play"
+          class="music-card"
+          :header-style="{ padding: '12px 16px', fontSize: '18px', fontWeight: 'bold' }"
+        >
+          <div class="music-info">
+            <n-image
+              :src="track_info.cover_url"
+              alt="music cover"
+              style="
+                width: 50px;
+                border-radius: 4px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+              "
+            />
+            <div class="lyrics">
+              <p>{{ track_info.artist_name }} - {{ track_info.title }}</p>
+              <MusicControl
+                :track_preview_url="track_info.preview_track_url"
+                v-model="isPlaying"
+              />
+            </div>
+          </div>
+        </n-card>
+        <n-card 
+          style="width: auto" 
+          class="music-bg-info"
+          @click="togglePlay"
+        >
+          <div class="music-info-inner">
+            <img
+              src="/icons8-apple-music-48.png"
+              alt="apple music"
+              style="width: 18px"
+            />
           </div>
         </n-card>
       </div>
-      <div class="sub-card">
-        <div class="music-card-container">
-          <n-card
-            header-style="font-size: 30px;"
-            title="music play"
-            class="music-card"
-          >
-            <div class="music-info">
-              <n-image
-                :src="track_info.cover_url"
-                alt="music cover"
-                style="
-                  width: 100px;
-                  border-radius: 4px;
-                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-                "
-              />
-              <div class="lyrics">
-                <p>{{ track_info.artist_name }} - {{ track_info.title }}</p>
-
-                <MusicControl
-                  :track_preview_url="track_info.preview_track_url"
-                  v-model="isPlaying"
-                />
-              </div>
-            </div>
-          </n-card>
-          <n-card style="width: 100%" class="music-bg-info">
-            <div class="music-info-inner">
-              <span>Track From Apple Music</span>
-              <img
-                src="/icons8-apple-music-48.png"
-                alt="apple music"
-                style="width: 30px"
-              />
-            </div>
-          </n-card>
-        </div>
-        <StatusCard :latestPost="latestPost" />
-        <SourceCard />
-        <n-card title="DEMO Collection">
-          <a href="https://demo.yisux.com" target="_blank">
-               <n-button>demo.yisux.com</n-button>
-          </a>
-       
-        </n-card>
-      </div>
+    
+     
+    
     </div>
 
     <div ref="lottieEl" class="lottie-btn" />
@@ -138,6 +132,12 @@ const latestPost = computed(() => {
   return posts.length > 0 ? posts[0] : null;
 });
 const daysDiff = useDaysDiff(latestPost.value?.date || "");
+
+// 切换播放状态
+const togglePlay = () => {
+  isPlaying.value = !isPlaying.value;
+};
+
 // 页面挂载时执行初始化操作
 onMounted(() => {
   // 初始化打字效果
@@ -158,9 +158,11 @@ onMounted(() => {
 <style scoped lang="scss">
 .home-container {
   width: 100%;
+  min-height: 100%;
   font-family: "pixelfont", sans-serif;
-  background-color: var(--gray-background);
-  border-radius: 20px;
+  padding: 20px;
+  overflow-x: hidden;
+  
   .n-image {
     flex-shrink: 0; /* 强制不允许缩小，保持 100px */
   }
@@ -172,27 +174,28 @@ onMounted(() => {
     bottom: 20px;
   }
   .home-card {
-    margin-bottom: 140px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .home-card-content {
-      width: 1200px;
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-auto-rows: 200px;
+    gap: 40px;
+    .card-item {
+      min-width: 260px;
+    
+      .n-card {
+        height: 100%;
+      }
     }
     h2 {
-      font-size: 30px;
+      font-size: 20px;
       line-height: 1.2;
     }
     .n-card {
-      margin: 20px 0;
-
-      min-width: 400px;
       border-radius: 10px;
     }
     .update-info {
-      font-size: 20px;
+     
       line-height: 1.2;
       display: flex;
       font-weight: bold;
@@ -201,48 +204,69 @@ onMounted(() => {
     }
 
     .music-info {
-      display: flex;
 
       align-items: center;
       gap: 20px;
       .lyrics {
-        flex-grow: 1;
-        max-height: 200px;
+        
+        max-height: 100px;
         overflow: hidden;
       }
-    }
-    .sub-card {
-      display: flex;
-      width: 1200px;
-      margin: 20px 0;
-      flex-wrap: wrap;
-      gap: 20px;
     }
   }
 }
 .music-card-container {
   position: relative;
-  max-width: 400px;
   .music-card {
     z-index: 2;
+    height: 100%;
+    
+    :deep(.n-card__content) {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      .music-info {
+        position: relative;
+        top: -10px;
+        flex: 1;
+      }
+    }
   }
   .music-bg-info {
+    height: 22px !important;
+    width: auto !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      transform: translateX(100%) scale(1.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    &:active {
+      transform: translateX(100%) scale(0.98);
+    }
+    
     :deep(.n-card__content) {
-      padding-top: 6px;
+      padding: 0px 16px;
+      display: flex;
     }
     .music-info-inner {
       display: flex;
       align-items: center;
-      gap: 4px;
     }
 
-    background: rgb(32, 32, 32);
+    background-color: rgb(17, 17, 17);
     color: #fff;
     position: absolute;
-    top: -4%;
-    z-index: 1;
+    top: 6px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(100%);
+    z-index: 3;
+    border:1px solid rgb(214, 210, 210);
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+  
   }
 }
 
@@ -252,21 +276,21 @@ onMounted(() => {
   border-radius: 20px;
 
   h1 {
-    font-size: 80px;
+    font-size: 52px;
     line-height: 1.2;
+    margin: 8px 0;
     color: var(--naver-green);
   }
   .home-content {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: left;
     flex-direction: column;
-    height: 70vh;
+    height: 25vh;
   }
   .fav-list {
     display: flex;
-    justify-content: center;
-    align-items: center;
+  
     flex-wrap: wrap;
     gap: 10px;
   }
@@ -281,6 +305,12 @@ onMounted(() => {
     50% {
       opacity: 0;
     }
+  }
+}
+
+@media (max-width: 960px) {
+  .home-container .home-card {
+    grid-template-columns: 1fr;
   }
 }
 </style>

@@ -12,7 +12,6 @@
           <li><a href="/">首页</a></li>
           <li><a :href="latestPost?.url || '/jishu/'">技术</a></li>
           <li><a href="/介绍页.html">日常</a></li>
-          <li><a href="/nav2web">导航</a></li>
         </ul>
       </div>
     </div>
@@ -47,10 +46,10 @@ const latestPost = computed(() => {
     margin: 0 10px;
   }
   .menu {
-    margin-right: 140px;
     font-size: 18px;
   }
 }
+
 .logo-text {
   text-indent: -999999px;
   position: absolute;

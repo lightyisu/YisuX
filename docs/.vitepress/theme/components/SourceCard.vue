@@ -3,15 +3,15 @@
     <n-card
       title="Inspiration and Utils"
       style="height: 90%; border-radius: 10px"
-      header-style="font-size: 30px;"
+      header-style="font-size: 20px;"
     >
       <div class="tools-box">
         <div class="tool-item" v-for="item in utils" :key="item.name">
           <img
             :src="item.icon"
-            style="width: 40px; height: 40px; object-fit: contain"
+            style="width: 28px; height: 28px; object-fit: contain"
           />
-          <n-button size="small">
+          <n-button size="tiny">
             <a :href="item.link" target="_blank">
               {{ item.name }}
             </a>
@@ -70,16 +70,16 @@ const utils = ref([
   height: 100%;
   .tools-box {
     display: flex;
-
+    flex-wrap: wrap;
     align-items: center;
-    gap: 40px;
+    gap: 12px;
   }
   .tool-item {
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 4px;
+    margin-bottom: 4px;
   }
 }
 </style>

@@ -3,9 +3,9 @@
     <n-card
       title="State of YisuX"
       style="height: 90%; border-radius: 10px"
-      header-style="font-size: 30px;"
+      header-style="font-size: 20px;"
     >
-      <n-timeline horizontal size="large">
+      <n-timeline size="small">
         <n-timeline-item content="最新记录" />
         <n-timeline-item
           type="success"

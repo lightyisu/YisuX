@@ -225,6 +225,23 @@ pre{
   --vp-nav-height: 64px;
   --vp-layout-top-height: 0px;
 }
-.VPNav{
+
+/* 覆盖 VitePress 默认布局样式 */
+.Layout {
+  min-height: auto !important;
+}
+
+.VPContent {
+  flex-grow: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.VPNav {
   z-index: 99999 !important;
+  position: relative !important;
+}
+
+.VPFooter {
+  display: none !important; /* 隐藏默认的 VitePress footer */
 }

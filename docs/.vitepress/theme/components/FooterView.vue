@@ -1,16 +1,10 @@
 <template>
   <div class="footer-container">
     <h2>
-      inspired By <span class="naver-design">Naver&Claude Design</span> &
-      redesign in 2026 <br />Maybe Every Story Really Needs a Blog
+      
+      Redesign in 2026 <br />Maybe Every Story Really Needs a Blog
     </h2>
-    <div>
-      <img src="/logo.png" style="width: 120px" alt="logo" />
-      <p style="font-size: 16px; font-weight: bold">
-        @YiusX.com<br />
-        2020-2026
-      </p>
-    </div>
+  
   </div>
 </template>
 
@@ -19,17 +13,18 @@
 <style scoped lang="scss">
 .footer-container {
   width: 100%;
-  min-height: 300px;
+  height: 200px;
   display: flex;
-  justify-content: space-around;
+
+  align-items: center;
   background: #fff;
-  padding: 40px;
+  padding: 12px 40px;
   font-family: "inter", sans-serif;
   .naver-design {
     color: var(--naver-green);
   }
   h2 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
   }
 }

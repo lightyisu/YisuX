@@ -1,21 +1,41 @@
 <script setup lang="ts">
-import { onMounted, ref, useTemplateRef } from "vue";
-defineProps<{
+import { onMounted, ref, useTemplateRef, watch } from "vue";
+
+const props = defineProps<{
   track_preview_url: string;
   modelValue: boolean;
 }>();
+
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void;
 }>();
+
 const rangeRef = ref<HTMLInputElement | null>(null);
 const audio = ref<HTMLAudioElement | null>(null);
 const playbtn_state = ref("/play.svg");
 const music_start_time = ref(0);
 const music_end_time = ref(0);
+
+// 监听外部传入的 modelValue 变化
+watch(() => props.modelValue, (newVal) => {
+  if (!audio.value) return;
+  
+  if (newVal && audio.value.paused) {
+    // 外部要求播放
+    audio.value.volume = 0.2;
+    audio.value.play();
+    playbtn_state.value = "/pause.svg";
+  } else if (!newVal && !audio.value.paused) {
+    // 外部要求暂停
+    audio.value.pause();
+    playbtn_state.value = "/play.svg";
+  }
+});
+
 const playmusic = () => {
   if (!audio.value) return;
   if (audio.value.paused) {
-    audio.value.volume=0.2
+    audio.value.volume = 0.2;
     audio.value.play();
     playbtn_state.value = "/pause.svg";
     emit("update:modelValue", true);
@@ -67,6 +87,14 @@ onMounted(() => {
       :src="track_preview_url"
     ></audio>
 
+    <img
+      @click="playmusic"
+      :src="playbtn_state"
+      style="width: 25px"
+      alt="play"
+      class="play-btn"
+    />
+
     <div class="progress-container">
       <input
         ref="rangeRef"
@@ -81,19 +109,18 @@ onMounted(() => {
         <span>{{ formatTime(music_start_time) }}</span>
         <span>{{ formatTime(music_end_time) }}</span>
       </div>
-      <img
-        @click="playmusic"
-        :src="playbtn_state"
-        style="width: 25px"
-        alt="play"
-        class="play-btn"
-      />
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.music-controls {
+  position: relative;
+}
 .play-btn {
+  position: absolute;
+  top: -140px;
+  right: 0;
   transition: transform 0.2s ease;
   cursor: pointer;
 }

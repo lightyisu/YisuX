@@ -1,41 +1,46 @@
 <template>
-  <HeaderView />
+  <div class="app-container">
+    <HeaderView class="app-header" />
 
-  <div v-if="frontmatter.layout === 'home'">
-    <MyHome />
-  </div>
-
-  <!--文章页面-->
-  <div v-else class="home-wrapper">
-    <div class="left-pannel pannel">
-      <div v-if="!shouldHide" class="sidebar">
-        <div class="sidebar-item">
-          <n-menu :options="menuOptions" />
-        </div>
-      </div>
+    <div v-if="frontmatter.layout === 'home'" class="app-content">
+      <MyHome />
     </div>
-    <div class="article-content pannel">
-      <div class="page-meta">
-        <h1 class="big_title">{{ page_titile }}</h1>
-        <div class="time">
-          <div class="created-at">创建于: {{ page_created_beauty }}</div>
-          <div class="updated-at">更新于: {{ page_updated_beauty }}</div>
-        </div>
-      </div>
 
-      <div class="content-wrapper">
-        <Content class="post-content" />
+    <!--文章页面-->
+    <div v-else class="article-page app-content">
+      <!-- 左侧导航卡片 -->
+      <aside v-if="menuOptions.length > 0" class="side-nav-card">
+        <n-menu :options="menuOptions" />
+      </aside>
 
-        <!-- 右侧悬浮目录 -->
-        <div v-if="tocItems.length > 0" class="toc-floating">
-          <div class="toc-header">On this page</div>
-          <nav class="toc-nav">
+      <!-- 主内容卡片 -->
+      <article class="receipt-container">
+        <!-- 头部信息 -->
+        <header class="receipt-header">
+          <h1 class="receipt-title">{{ page_titile }}</h1>
+          <div class="receipt-meta">
+            <div class="receipt-date">
+              <span class="label">创建于:</span>
+              <span class="value">{{ page_created_beauty }}</span>
+            </div>
+            <div class="receipt-date">
+              <span class="label">更新于:</span>
+              <span class="value">{{ page_updated_beauty }}</span>
+            </div>
+          </div>
+          <div class="receipt-divider"></div>
+        </header>
+
+        <!-- 文章目录 -->
+        <div v-if="tocItems.length > 0" class="receipt-toc">
+          <div class="toc-title">目录</div>
+          <nav class="toc-list">
             <a
               v-for="item in tocItems"
               :key="item.id"
               :href="`#${item.id}`"
               :class="[
-                'toc-link',
+                'toc-item',
                 `toc-level-${item.level}`,
                 { active: activeId === item.id },
               ]"
@@ -45,10 +50,17 @@
             </a>
           </nav>
         </div>
-      </div>
+
+        <!-- 文章内容 -->
+        <div class="receipt-content">
+          <Content class="post-content" />
+        </div>
+
+     
+      </article>
     </div>
+    <FooterView class="app-footer" />
   </div>
-  <FooterView />
 </template>
 
 <script setup lang="ts">
@@ -563,149 +575,516 @@ const scrollToHeading = (id: string) => {
 </style>
 
 <style scoped lang="scss">
-.home-wrapper {
+// App 容器布局
+.app-container {
   display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #fff;
+}
+
+// Header 固定高度
+.app-header {
+  flex-shrink: 0;
+  background: #fff;
+}
+
+// 内容区域自适应 - 灰色背景
+.app-content {
+  flex: 1;
+  overflow: auto;
+  background: var(--gray-background);
+}
+
+// Footer 固定高度 200px
+.app-footer {
+  flex-shrink: 0;
+  height: 200px;
+  background: #fff;
+}
+
+// 文章页面 - 居中小票样式
+.article-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; // 顶部对齐
+  gap: 24px;
+  padding: 80px 20px;
+  min-height: calc(100vh - 200px - 64px);
+  background: 
+    linear-gradient(180deg, #f5f5f5 0%, var(--gray-background) 50%, #f5f5f5 100%);
+}
+
+// 左侧导航卡片 - 简约设计
+.side-nav-card {
+  position: sticky;
+  top: 80px;
+  width: 220px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  flex-shrink: 0;
+  margin-top: 0;
+  
+  :deep(.n-menu) {
+    font-family: "claude_font", sans-serif;
+    
+    .n-menu-item {
+      margin: 0;
+    }
+    
+    .n-menu-item-content {
+      border-radius: 0;
+      transition: all 0.15s ease;
+      padding: 10px 16px;
+      border-left: 2px solid transparent;
+      
+      &:hover {
+        background: transparent;
+        border-left-color: #dee2e6;
+      }
+      
+      &::before {
+        border-radius: 0;
+      }
+    }
+    
+    .n-menu-item-content--selected {
+      background: transparent;
+      border-left-color: #495057;
+      
+      .n-menu-item-content__link {
+        color: #191919;
+        font-weight: 500;
+      }
+    }
+    
+    .n-menu-item-content__link {
+      color: #6c757d;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+}
+
+// 小票容器 - 精致卡片设计
+.receipt-container {
+  max-width: 720px;
   width: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(0, 0, 0, 0.03);
+  position: relative;
+}
 
-  margin: 0 auto;
-  padding: 48px 32px;
-  gap: 32px;
-  background: #fafafa;
-
-  .left-pannel {
-    width: 280px;
-    position: sticky;
-    top: 80px;
-    height: fit-content;
+// 头部信息 - 优雅排版
+.receipt-header {
+  padding: 48px 56px 32px;
+  position: relative;
+  
+  .receipt-title {
+    font-family: "claude_font", sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #0a0a0a;
+    margin: 0 0 24px 0;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, #191919 0%, #2c2c2c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-
-  .pannel {
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #e5e5e5;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  }
-
-  .sidebar {
-    padding: 16px;
-    font-family: "claude_font";
-  }
-
-  .article-content {
-    flex: 1;
-
-    display: grid;
-    grid-template-columns: 1fr;
-
-    padding: 48px 64px;
-
-    .content-wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-    }
-    .toc-floating {
-      font-family: "claude_font";
-      overflow-y: auto;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      padding: 24px;
-
-      width: 220px;
-      margin: 20px;
-      box-shadow:
-        0 4px 6px rgba(0, 0, 0, 0.02),
-        0 12px 24px rgba(0, 0, 0, 0.06),
-        0 0 0 1px rgba(0, 0, 0, 0.04);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: sticky;
-      max-height: calc(100vh - 100px);
-      scrollbar-width: none;
-      top: 40px;
-      .toc-header {
-        font-size: 13px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        color: #6b7280;
-        margin-bottom: 20px;
-        padding-bottom: 16px;
-        border-bottom: 2px solid #e5e7eb;
-        position: relative;
-      }
-
-      .toc-floating:hover .toc-header::after {
-        width: 80px;
-      }
-
-      .toc-nav {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-
-      .toc-link {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        display: block;
-        padding: 10px 16px;
-        color: #374151;
-        text-decoration: none;
-        font-size: 14px;
-        line-height: 1.6;
-        border-radius: 8px;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-        border-left: 3px solid transparent;
-      }
-
-      .toc-link::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 0;
-        background: linear-gradient(
-          90deg,
-          rgba(217, 119, 6, 0.08),
-          rgba(245, 158, 11, 0.05)
-        );
-        transition: width 0.3s ease;
-        z-index: -1;
-      }
-
-      .toc-link:hover {
-        color: #d97706;
-        background: rgba(217, 119, 6, 0.04);
-        padding-left: 20px;
-      }
-
-      .toc-link:hover::before {
-        width: 100%;
-      }
-    }
-  }
-
-  /* 移动端适配 */
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    padding: 24px 16px;
+  
+  .receipt-meta {
+    font-family: "claude_font", sans-serif;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.8;
+    display: flex;
     gap: 24px;
-
-    .left-pannel {
-      width: 100%;
-      position: relative;
-      top: 0;
+    flex-wrap: wrap;
+    
+    .receipt-date {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #f8f9fa;
+      border-radius: 20px;
+      border: 1px solid #e9ecef;
+      
+      .label {
+        color: #868e96;
+        font-weight: 500;
+        font-size: 12px;
+      }
+      
+      .value {
+        color: #495057;
+        font-weight: 500;
+        font-size: 12px;
+      }
     }
+  }
+  
+  .receipt-divider {
+    margin-top: 28px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      #dee2e6 20%,
+      #adb5bd 50%,
+      #dee2e6 80%,
+      transparent 100%
+    );
+    border: none;
+    position: relative;
+    
+  }
+}
 
-    .article-content {
-      padding: 32px 24px;
+// 文章目录 - 简约设计
+.receipt-toc {
+  padding: 24px 56px 32px;
+  border-bottom: 1px solid #f1f3f5;
+  
+  .toc-title {
+    font-family: "claude_font", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #868e96;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  
+  .toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .toc-item {
+    font-family: "claude_font", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #6c757d;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-left: 2px solid transparent;
+    transition: all 0.15s ease;
+    display: block;
+    
+    &.toc-level-2 {
+      font-weight: 500;
+      color: #495057;
+    }
+    
+    &.toc-level-3 {
+      padding-left: 24px;
+      font-size: 13px;
+      color: #6c757d;
+    }
+    
+    &:hover {
+      color: #212529;
+      border-left-color: #dee2e6;
+    }
+    
+    &.active {
+      color: #191919;
+      border-left-color: #495057;
+      font-weight: 500;
+    }
+  }
+}
 
-      .content-wrapper {
-        max-width: 100%;
+// 内容区域 - 精致排版
+.receipt-content {
+  padding: 32px 56px 48px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  
+  :deep(.post-content) {
+    font-family: "claude_font", sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #2c2c2c;
+    letter-spacing: 0.01em;
+    text-align: left; // 左对齐
+    max-width: 100%;
+    
+    p {
+      margin: 1.3em 0;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 2.2em;
+      margin-bottom: 0.9em;
+      color: #191919;
+      font-weight: 600;
+    }
+    
+    h2 {
+      font-size: 1.4em;
+      letter-spacing: -0.02em;
+    }
+    
+    h3 {
+      font-size: 1.2em;
+      color: #343a40;
+    }
+    
+    h4, h5, h6 {
+      font-size: 1.05em;
+      color: #495057;
+    }
+    
+    ul, ol {
+      padding-left: 1.6em;
+      margin: 1.3em 0;
+    }
+    
+    li {
+      margin: 0.5em 0;
+      line-height: 1.8;
+      
+      &::marker {
+        color: #868e96;
+      }
+    }
+    
+    blockquote {
+      margin: 1.8em 0;
+      padding: 1em 1.4em;
+      border-left: 3px solid #adb5bd;
+      background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+      border-radius: 4px;
+      color: #495057;
+      font-style: normal;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      
+      p {
+        margin: 0.6em 0;
+      }
+    }
+    
+    code {
+      font-size: 0.92em;
+      font-family: "SF Mono", "Fira Code", monospace;
+    }
+    
+    :not(pre) > code {
+      padding: 0.25em 0.5em;
+      background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+      border: 1px solid #e9ecef;
+      border-radius: 4px;
+      color: #495057;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+    
+    pre {
+      margin: 1.8em 0;
+      padding: 1.2em 1.4em;
+      background: #f8f9fa;
+      border-radius: 6px;
+      overflow-x: auto;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      
+      code {
+        background: transparent;
+        border: none;
+        padding: 0;
+        color: #2c2c2c;
+        font-size: 0.9em;
+      }
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin: 1.8em 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e9ecef;
+    }
+    
+    a {
+      color: #495057;
+      text-decoration: underline;
+      text-decoration-color: #adb5bd;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1.5px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        color: #212529;
+        text-decoration-color: #495057;
+      }
+    }
+    
+    strong {
+      font-weight: 600;
+      color: #191919;
+    }
+    
+    em {
+      color: #495057;
+    }
+    
+    hr {
+      margin: 2.5em 0;
+      border: none;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #dee2e6 50%,
+        transparent 100%
+      );
+    }
+    
+    table {
+      width: 100%;
+      margin: 1.8em 0;
+      border-collapse: collapse;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      
+      th, td {
+        padding: 0.8em 1em;
+        border: 1px solid #e9ecef;
+        text-align: left;
+      }
+      
+      th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #343a40;
+      }
+      
+      tr:hover {
+        background: #f8f9fa;
+      }
+    }
+  }
+}
+
+// 底部 - 优雅收尾
+.receipt-footer {
+  padding: 32px 56px 48px;
+  text-align: center;
+  position: relative;
+  
+  .receipt-divider {
+    margin-bottom: 28px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      #dee2e6 20%,
+      #adb5bd 50%,
+      #dee2e6 80%,
+      transparent 100%
+    );
+    border: none;
+    position: relative;
+    
+    &::before {
+      content: '❦';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #adb5bd;
+      font-size: 18px;
+    }
+  }
+  
+  .footer-text {
+    font-family: "claude_font", sans-serif;
+    font-size: 11px;
+    color: #adb5bd;
+    letter-spacing: 0.15em;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}
+
+// 移动端适配
+@media (max-width: 1024px) {
+  .side-nav-card {
+    display: none;
+  }
+  
+  .article-page {
+    padding: 60px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .article-page {
+    padding: 40px 12px;
+  }
+  
+  .receipt-container {
+    border-radius: 6px;
+    
+    .receipt-header,
+    .receipt-content,
+    .receipt-footer {
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+    
+    .receipt-title {
+      font-size: 22px;
+    }
+    
+    .receipt-meta {
+      flex-direction: column;
+      gap: 8px;
+      
+      .receipt-date {
+        width: fit-content;
+      }
+    }
+    
+    .receipt-nav {
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+    
+    .receipt-toc {
+      padding-left: 28px;
+      padding-right: 28px;
+      
+      .toc-item {
+        font-size: 13px;
+        
+        &.toc-level-3 {
+          padding-left: 24px;
+        }
+      }
+    }
+    
+    .receipt-content {
+      :deep(.post-content) {
+        font-size: 14px;
       }
     }
   }
