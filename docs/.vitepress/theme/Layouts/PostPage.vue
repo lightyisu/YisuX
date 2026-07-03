@@ -1,20 +1,16 @@
 <template>
   <div class="app-container">
-    <HeaderView class="app-header" />
-
-    <div v-if="frontmatter.layout === 'home'" class="app-content">
+    <div v-if="frontmatter.layout === 'home'" class="app-content app-content--home">
       <MyHome />
     </div>
 
     <!--文章页面-->
     <div v-else class="article-page app-content">
-      <!-- 左侧导航卡片 -->
-      <aside v-if="menuOptions.length > 0" class="side-nav-card">
-        <n-menu :options="menuOptions" />
-      </aside>
-
-      <!-- 主内容卡片 -->
       <article class="receipt-container">
+        <span class="receipt-watermark" aria-hidden="true">{{
+          titleWatermark
+        }}</span>
+        <a href="/" class="back-home">← 首页</a>
         <!-- 头部信息 -->
         <header class="receipt-header">
           <h1 class="receipt-title">{{ page_titile }}</h1>
@@ -59,23 +55,18 @@
      
       </article>
     </div>
-    <FooterView class="app-footer" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useSidebar } from "vitepress/theme";
-import { NMenu, type MenuOption } from "naive-ui";
-import { h, ref, onMounted, onUnmounted, computed } from "vue";
-import { setMenuOptions } from "../composables/useSidebar";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import MyHome from "../components/MyHome.vue";
-import HeaderView from "../components/HeaderView.vue";
-import FooterView from "../components/FooterView.vue";
 import { useData } from "vitepress";
 import { useForJob } from "../composables/useForJob";
 const { page, frontmatter } = useData();
 import { onContentUpdated } from "vitepress";
-const shouldHide = ref(false); //找工作隐藏日常 for:jobs.yisux.com
+const shouldHide = ref(false);
+const page_titile = ref("");
 const page_date = ref<{
   created_at: string;
   updated_at: string;
@@ -93,19 +84,19 @@ const page_updated_beauty = computed(() => {
   if (page_date.value.updated_at === "") {
     return "未记录";
   }
-  return page_date.value.updated_at;
+  return page_date.value.updated_at.slice(0, 10);
 });
-const { sidebar } = useSidebar();
-const page_titile = ref("");
-const menuOptions = ref<MenuOption[]>([]);
-onContentUpdated(() => {
-  /**when url changed */
 
+const titleWatermark = computed(() => {
+  const title = page_titile.value || page.value.title || "";
+  return [...title].slice(0, 5).join("");
+});
+
+onContentUpdated(() => {
   page_date.value.created_at = page.value.frontmatter.date || "";
   page_date.value.updated_at = page.value.frontmatter.updated || "";
   tocItems.value = [];
   page_titile.value = page.value.title;
-  setMenuOptions(sidebar, menuOptions);
   extractToc();
   updateActiveId();
   useForJob(shouldHide);
@@ -115,8 +106,7 @@ onMounted(() => {
   page_date.value.created_at = page.value.frontmatter.date || "";
   page_date.value.updated_at = page.value.frontmatter.updated || "";
   page_titile.value = page.value.title;
-  setMenuOptions(sidebar, menuOptions);
-
+  extractToc();
   useForJob(shouldHide);
 });
 
@@ -521,21 +511,7 @@ const scrollToHeading = (id: string) => {
     word-wrap: break-word;
   }
   .lang {
-    font-family: "claude_font";
-    display: block;
-    background: black;
-    position: absolute;
-    border-radius: 2px;
-    right: 0;
-    padding: 0 10px;
-    top: 10px;
-    color: #fff;
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-  div:has(.lang) {
-    position: relative;
+    display: none !important;
   }
   /* 移动端优化 */
   @media (max-width: 768px) {
@@ -596,227 +572,172 @@ const scrollToHeading = (id: string) => {
   background: var(--gray-background);
 }
 
-// Footer 固定高度 200px
-.app-footer {
-  flex-shrink: 0;
-  height: 200px;
-  background: #fff;
+.app-content--home {
+  background: #ededed;
 }
 
-// 文章页面 - 居中小票样式
 .article-page {
   display: flex;
   justify-content: center;
-  align-items: flex-start; // 顶部对齐
-  gap: 24px;
-  padding: 80px 20px;
-  min-height: calc(100vh - 200px - 64px);
+  align-items: flex-start;
+  padding: 40px 20px;
+  min-height: 100vh;
   background: 
     linear-gradient(180deg, #f5f5f5 0%, var(--gray-background) 50%, #f5f5f5 100%);
 }
 
-// 左侧导航卡片 - 简约设计
-.side-nav-card {
-  position: sticky;
-  top: 80px;
-  width: 220px;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  flex-shrink: 0;
-  margin-top: 0;
-  
-  :deep(.n-menu) {
-    font-family: "claude_font", sans-serif;
-    
-    .n-menu-item {
-      margin: 0;
-    }
-    
-    .n-menu-item-content {
-      border-radius: 0;
-      transition: all 0.15s ease;
-      padding: 10px 16px;
-      border-left: 2px solid transparent;
-      
-      &:hover {
-        background: transparent;
-        border-left-color: #dee2e6;
-      }
-      
-      &::before {
-        border-radius: 0;
-      }
-    }
-    
-    .n-menu-item-content--selected {
-      background: transparent;
-      border-left-color: #495057;
-      
-      .n-menu-item-content__link {
-        color: #191919;
-        font-weight: 500;
-      }
-    }
-    
-    .n-menu-item-content__link {
-      color: #6c757d;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-  }
-}
-
-// 小票容器 - 精致卡片设计
 .receipt-container {
   max-width: 720px;
   width: 100%;
   background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    0 8px 32px rgba(0, 0, 0, 0.06),
-    0 0 0 1px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--vp-c-divider, #e9ecef);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
   position: relative;
+  overflow: hidden;
 }
 
-// 头部信息 - 优雅排版
-.receipt-header {
-  padding: 48px 56px 32px;
+.receipt-watermark {
+  position: absolute;
+  right: -8px;
+  bottom: -24px;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--naver-green);
+  opacity: 0.07;
+  transform: rotate(-8deg);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+.back-home {
   position: relative;
-  
-  .receipt-title {
-    font-family: "claude_font", sans-serif;
-    font-size: 28px;
-    font-weight: 600;
-    color: #0a0a0a;
-    margin: 0 0 24px 0;
-    line-height: 1.35;
-    letter-spacing: -0.025em;
-    background: linear-gradient(135deg, #191919 0%, #2c2c2c 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  z-index: 1;
+  display: inline-block;
+  margin: 20px 0 0 24px;
+  font-size: 13px;
+  color: #6c757d;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #111;
   }
-  
+}
+
+.receipt-header {
+  position: relative;
+  z-index: 1;
+  padding: 8px 40px 28px;
+
+  .receipt-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #111;
+    margin: 0 0 16px;
+    line-height: 1.3;
+    letter-spacing: -0.03em;
+  }
+
   .receipt-meta {
-    font-family: "claude_font", sans-serif;
     font-size: 13px;
-    color: #666;
-    line-height: 1.8;
+    color: #868e96;
+    line-height: 1.6;
     display: flex;
-    gap: 24px;
+    gap: 16px;
     flex-wrap: wrap;
-    
+
     .receipt-date {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 12px;
-      background: #f8f9fa;
-      border-radius: 20px;
-      border: 1px solid #e9ecef;
-      
+
       .label {
-        color: #868e96;
+        color: #adb5bd;
         font-weight: 500;
-        font-size: 12px;
       }
-      
+
       .value {
         color: #495057;
         font-weight: 500;
-        font-size: 12px;
       }
     }
   }
-  
+
   .receipt-divider {
-    margin-top: 28px;
+    margin-top: 24px;
     height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      #dee2e6 20%,
-      #adb5bd 50%,
-      #dee2e6 80%,
-      transparent 100%
-    );
+    background: var(--vp-c-divider, #e9ecef);
     border: none;
-    position: relative;
-    
   }
 }
 
-// 文章目录 - 简约设计
 .receipt-toc {
-  padding: 24px 56px 32px;
-  border-bottom: 1px solid #f1f3f5;
-  
+  position: relative;
+  z-index: 1;
+  padding: 0 40px 24px;
+  border-bottom: 1px solid var(--vp-c-divider, #e9ecef);
+
   .toc-title {
-    font-family: "claude_font", sans-serif;
     font-size: 12px;
     font-weight: 600;
-    color: #868e96;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 12px;
+    color: #adb5bd;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
   }
-  
+
   .toc-list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
-  
+
   .toc-item {
-    font-family: "claude_font", sans-serif;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.5;
     color: #6c757d;
     text-decoration: none;
-    padding: 6px 12px;
+    padding: 4px 0 4px 12px;
     border-left: 2px solid transparent;
     transition: all 0.15s ease;
     display: block;
-    
+
     &.toc-level-2 {
       font-weight: 500;
       color: #495057;
     }
-    
+
     &.toc-level-3 {
       padding-left: 24px;
       font-size: 13px;
-      color: #6c757d;
     }
-    
+
     &:hover {
-      color: #212529;
+      color: #111;
       border-left-color: #dee2e6;
     }
-    
+
     &.active {
-      color: #191919;
-      border-left-color: #495057;
-      font-weight: 500;
+      color: #111;
+      border-left-color: #111;
+      font-weight: 600;
     }
   }
 }
 
-// 内容区域 - 精致排版
 .receipt-content {
-  padding: 32px 56px 48px;
   position: relative;
-  display: flex;
-  justify-content: center;
-  
+  z-index: 1;
+  padding: 28px 40px 64px;
+
   :deep(.post-content) {
-    font-family: "claude_font", sans-serif;
-    font-size: 15px;
-    line-height: 1.8;
+    font-size: 16px;
+    line-height: 1.85;
     color: #2c2c2c;
     letter-spacing: 0.01em;
-    text-align: left; // 左对齐
     max-width: 100%;
     
     p {
@@ -860,14 +781,12 @@ const scrollToHeading = (id: string) => {
     }
     
     blockquote {
-      margin: 1.8em 0;
-      padding: 1em 1.4em;
-      border-left: 3px solid #adb5bd;
-      background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
-      border-radius: 4px;
+      margin: 1.6em 0;
+      padding: 0.8em 1.2em;
+      border-left: 3px solid #dee2e6;
+      background: #f8f9fa;
       color: #495057;
       font-style: normal;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
       
       p {
         margin: 0.6em 0;
@@ -880,22 +799,18 @@ const scrollToHeading = (id: string) => {
     }
     
     :not(pre) > code {
-      padding: 0.25em 0.5em;
-      background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+      padding: 0.2em 0.45em;
+      background: #f4f4f5;
       border: 1px solid #e9ecef;
-      border-radius: 4px;
       color: #495057;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
-    
+
     pre {
-      margin: 1.8em 0;
-      padding: 1.2em 1.4em;
+      margin: 1.6em 0;
+      padding: 1em 1.2em;
       background: #f8f9fa;
-      border-radius: 6px;
       overflow-x: auto;
       border: 1px solid #e9ecef;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
       
       code {
         background: transparent;
@@ -909,23 +824,20 @@ const scrollToHeading = (id: string) => {
     img {
       max-width: 100%;
       height: auto;
-      border-radius: 6px;
-      margin: 1.8em 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      margin: 1.6em 0;
       border: 1px solid #e9ecef;
     }
-    
+
     a {
-      color: #495057;
+      color: #111;
       text-decoration: underline;
-      text-decoration-color: #adb5bd;
+      text-decoration-color: #ced4da;
       text-underline-offset: 3px;
-      text-decoration-thickness: 1.5px;
-      transition: all 0.2s ease;
-      
+      transition: color 0.15s ease;
+
       &:hover {
-        color: #212529;
-        text-decoration-color: #495057;
+        color: var(--naver-green);
+        text-decoration-color: var(--naver-green);
       }
     }
     
@@ -939,24 +851,17 @@ const scrollToHeading = (id: string) => {
     }
     
     hr {
-      margin: 2.5em 0;
+      margin: 2em 0;
       border: none;
       height: 1px;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        #dee2e6 50%,
-        transparent 100%
-      );
+      background: var(--vp-c-divider, #e9ecef);
     }
-    
+
     table {
       width: 100%;
-      margin: 1.8em 0;
+      margin: 1.6em 0;
       border-collapse: collapse;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e9ecef;
       
       th, td {
         padding: 0.8em 1em;
@@ -1027,64 +932,53 @@ const scrollToHeading = (id: string) => {
 
 // 移动端适配
 @media (max-width: 1024px) {
-  .side-nav-card {
-    display: none;
-  }
-  
   .article-page {
-    padding: 60px 16px;
+    padding: 32px 16px;
   }
 }
 
 @media (max-width: 768px) {
   .article-page {
-    padding: 40px 12px;
+    padding: 24px 12px;
   }
-  
+
+  .receipt-watermark {
+    font-size: 72px;
+    bottom: -18px;
+  }
+
   .receipt-container {
-    border-radius: 6px;
-    
     .receipt-header,
     .receipt-content,
-    .receipt-footer {
-      padding-left: 28px;
-      padding-right: 28px;
+    .receipt-toc {
+      padding-left: 24px;
+      padding-right: 24px;
     }
-    
+
     .receipt-title {
-      font-size: 22px;
+      font-size: 24px;
     }
-    
+
     .receipt-meta {
       flex-direction: column;
-      gap: 8px;
-      
-      .receipt-date {
-        width: fit-content;
-      }
+      gap: 6px;
     }
-    
-    .receipt-nav {
-      padding-left: 28px;
-      padding-right: 28px;
-    }
-    
+
     .receipt-toc {
-      padding-left: 28px;
-      padding-right: 28px;
-      
       .toc-item {
         font-size: 13px;
-        
+
         &.toc-level-3 {
-          padding-left: 24px;
+          padding-left: 20px;
         }
       }
     }
-    
+
     .receipt-content {
+      padding-bottom: 56px;
+
       :deep(.post-content) {
-        font-size: 14px;
+        font-size: 15px;
       }
     }
   }

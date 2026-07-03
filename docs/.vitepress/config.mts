@@ -1,8 +1,5 @@
 import { defineConfig } from "vitepress";
-import { set_sidebar } from "./set_sidebar.mjs";
-// import {set_nav} from './set_nav.mjs'
 import AutoImport from "unplugin-auto-import/vite";
-import { fileURLToPath, URL } from "node:url";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -11,7 +8,6 @@ export default defineConfig({
 
   vite: {
     ssr: {
-      // 将 naive-ui 添加到 noExternal 列表
       noExternal: ["naive-ui"],
     },
     resolve: {
@@ -20,28 +16,15 @@ export default defineConfig({
   },
 
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: "首页", link: "/" },
-      { text: "技术", link: "/jishu/" },
-      { text: "日常", link: "/介绍页" },
-      { text: "导航", link: "/nav2web" },
-    ],
-
-    siteTitle: "YisuX",
-    sidebar: {
-      "/jishu": set_sidebar(1),
-      "/": set_sidebar(0),
-      "/介绍页.html": set_sidebar(0),
-    },
-
+    nav: [],
+    sidebar: {},
+    siteTitle: false,
     socialLinks: [
       { icon: "github", link: "https://github.com/lightyisu/yisupower" },
     ],
   },
   markdown: {
     image: {
-      // 默认禁用；设置为 true 可为所有图片启用懒加载。
       lazyLoading: true,
     },
     codeTransformers: [],

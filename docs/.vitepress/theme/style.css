@@ -152,17 +152,12 @@ pre{
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-.VPNavBarTitle span{
-  background-image: url('/logo.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  min-width: 100px;
-  text-indent: -9999px; /* 将文字移出可视区域 */
-  display: inline-block;
-  height: 32px;
+
+[class*='language-'] > span.lang,
+.post-content .lang,
+.vp-doc [class*='language-'] > span.lang {
+  display: none !important;
 }
-
-
 
 .VPContent{
   display: flex;
@@ -196,15 +191,6 @@ pre{
   display: block !important;
 }
 
-@font-face {
-  font-family: "pixelfont";
-  src:
-    url("/PixelifySans-Regular.ttf") format("truetype");
-  
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 @font-face {
   font-family: "claude_font";
   src:

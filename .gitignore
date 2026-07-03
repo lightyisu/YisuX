@@ -1,5 +1,6 @@
 docs/.vitepress/dist
 docs/.vitepress/cache
+docs/.vitepress/.temp
 .elog.env
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
