@@ -159,6 +159,26 @@ pre{
   display: none !important;
 }
 
+/* 自定义布局没有 .vp-doc，复制按钮会落到文档流里占出顶部空白 */
+.post-content [class*='language-'] {
+  position: relative;
+}
+
+.post-content [class*='language-'] > button.copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+}
+
+.post-content [class*='language-'] > pre {
+  margin-top: 0;
+}
+
+.post-content [class*='language-'] > pre > code {
+  display: block;
+}
+
 .VPContent{
   display: flex;
  

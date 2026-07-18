@@ -359,6 +359,10 @@ const scrollToHeading = (id: string) => {
     line-height: 1.5;
   }
 
+  [class*='language-'] > pre {
+    margin-top: 0;
+  }
+
   pre code {
     background: transparent;
     color: #2c2c2c;
@@ -728,6 +732,11 @@ const scrollToHeading = (id: string) => {
         color: #333;
         font-size: 0.88em;
       }
+    }
+
+    [class*='language-'] > pre {
+      margin-top: 0;
+      margin-bottom: 1.4em;
     }
 
     img {
