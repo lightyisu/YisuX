@@ -1,100 +1,69 @@
 <template>
   <div class="home-container">
     <div class="home-header">
-      <div class="title-row">
-        <svg
-          class="wheel-icon"
-          viewBox="0 0 48 48"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" />
-          <circle cx="24" cy="24" r="14" stroke="currentColor" stroke-width="2" opacity="0.5" />
-          <circle cx="24" cy="24" r="4" fill="currentColor" />
-          <path
-            d="M24 10v28M10 24h28M14.1 14.1l19.8 19.8M33.9 14.1 14.1 33.9"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            opacity="0.45"
-          />
-        </svg>
-        <h1>Blog on MCL39</h1>
-      </div>
+      <h1>Blog on MCL39</h1>
       <p class="tagline">Every Story Needs a BLog !</p>
     </div>
 
     <div class="category-tabs">
-      <div class="category-track">
-        <div class="category-slider" :class="activeCategory" />
-        <button
-          type="button"
-          class="category-btn"
-          :class="{ active: activeCategory === 'jishu' }"
-          @click="activeCategory = 'jishu'"
-        >
-          技术
-        </button>
-        <button
-          type="button"
-          class="category-btn"
-          :class="{ active: activeCategory === 'richang' }"
-          @click="activeCategory = 'richang'"
-        >
-          日常
-        </button>
-        <button
-          type="button"
-          class="category-btn"
-          :class="{ active: activeCategory === 'nav' }"
-          @click="activeCategory = 'nav'"
-        >
-          导航
-        </button>
-      </div>
+      <button
+        type="button"
+        class="category-link"
+        :class="{ active: activeCategory === 'jishu' }"
+        @click="setCategory('jishu')"
+      >
+        技术
+      </button>
+      <span class="tab-sep">|</span>
+      <button
+        type="button"
+        class="category-link"
+        :class="{ active: activeCategory === 'richang' }"
+        @click="setCategory('richang')"
+      >
+        日常
+      </button>
+      <span class="tab-sep">|</span>
+      <button
+        type="button"
+        class="category-link"
+        :class="{ active: activeCategory === 'nav' }"
+        @click="setCategory('nav')"
+      >
+        导航
+      </button>
     </div>
 
     <Transition name="post-switch" mode="out-in">
-      <ul v-if="activeCategory === 'nav'" key="nav" class="post-list">
-        <li v-for="site in navSites" :key="site.url" class="post-item">
+      <div v-if="activeCategory === 'nav'" key="nav" class="post-list">
+        <div v-for="site in navSites" :key="site.url" class="post-entry nav-entry">
           <a
             :href="site.url"
-            class="post-card nav-card"
+            class="nav-row"
             target="_blank"
             rel="noopener noreferrer"
           >
             <img :src="site.logo" :alt="site.title" class="nav-logo" />
-            <div class="nav-info">
-              <p class="nav-title">{{ site.title }}</p>
-              <p class="nav-desc">{{ site.desc }}</p>
-              <p class="nav-url">{{ site.host }}</p>
-            </div>
+            <span class="nav-body">
+              <span class="post-title-link">{{ site.title }}</span>
+              <span class="post-excerpt">{{ site.desc }}</span>
+              <span class="post-meta">{{ site.host }}</span>
+            </span>
           </a>
-        </li>
-      </ul>
-      <ul v-else :key="activeCategory" class="post-list">
-        <li v-for="post in filteredPosts" :key="post.url" class="post-item">
-          <a :href="post.url" class="post-card">
-            <span class="post-watermark" aria-hidden="true">{{
-              titleWatermark(post.title)
+        </div>
+      </div>
+      <div v-else :key="activeCategory" class="post-list">
+        <div v-for="post in filteredPosts" :key="post.url" class="post-entry">
+          <a :href="post.url" class="post-title-link">{{ post.title }}</a>
+          <p class="post-meta">
+            posted @ {{ formatDate(post.date) }}
+            <span class="meta-cat">{{
+              activeCategory === "jishu" ? "技术" : "日常"
             }}</span>
-            <p class="post-title">{{ post.title }}</p>
-            <div v-if="post.images.length" class="post-thumbs">
-              <img
-                v-for="(img, index) in post.images.slice(0, 3)"
-                :key="index"
-                :src="img"
-                :alt="post.title"
-                class="thumb-image"
-                loading="lazy"
-              />
-            </div>
-            <time class="post-date">{{ formatDate(post.date) }}</time>
-          </a>
-        </li>
-        <li v-if="filteredPosts.length === 0" class="post-empty">暂无文章</li>
-      </ul>
+          </p>
+        </div>
+        <p v-if="filteredPosts.length === 0" class="post-empty">暂无文章</p>
+      </div>
     </Transition>
   </div>
 </template>
@@ -108,7 +77,24 @@ import {
 
 type HomeCategory = PostCategory | "nav";
 
-const activeCategory = ref<HomeCategory>("jishu");
+const CATEGORY_KEY = "yisux-home-category";
+const VALID_CATEGORIES: HomeCategory[] = ["jishu", "richang", "nav"];
+
+function readStoredCategory(): HomeCategory {
+  if (typeof sessionStorage === "undefined") return "jishu";
+  const stored = sessionStorage.getItem(CATEGORY_KEY);
+  if (stored && VALID_CATEGORIES.includes(stored as HomeCategory)) {
+    return stored as HomeCategory;
+  }
+  return "jishu";
+}
+
+const activeCategory = ref<HomeCategory>(readStoredCategory());
+
+function setCategory(category: HomeCategory) {
+  activeCategory.value = category;
+  sessionStorage.setItem(CATEGORY_KEY, category);
+}
 
 const navSites = [
   {
@@ -129,7 +115,7 @@ const navSites = [
     title: "Zeabur",
     url: "https://zeabur.com/zh-CN/",
     host: "zeabur.com",
-    logo: "https://zeabur.com/logo.svg",
+    logo: "https://zeabur.com/favicon.ico",
     desc: "AI DevOps 工程师，一键部署与运维",
   },
   {
@@ -146,302 +132,208 @@ const filteredPosts = computed(() =>
 );
 
 function formatDate(date: string) {
-  if (!date) return "";
+  if (!date) return "未记录";
   return date.slice(0, 10);
-}
-
-function titleWatermark(title: string) {
-  return [...title].slice(0, 5).join("");
 }
 </script>
 
 <style scoped lang="scss">
 .home-container {
   width: 100%;
-  max-width: 920px;
+  max-width: 780px;
   margin: 0 auto;
   min-height: 100%;
-  padding: 28px 24px 48px;
+  padding: 36px 28px 64px;
+  background: #fff;
 }
 
 .home-header {
-  margin-bottom: 24px;
-  padding: 0 8px;
-
-  .title-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
-  }
-
-  .wheel-icon {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    color: #111;
-  }
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e8e8e8;
 
   h1 {
-    font-size: 40px;
-    font-weight: 800;
-    line-height: 1.15;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.3;
     margin: 0;
-    color: #111;
-    letter-spacing: -0.03em;
+    color: #2b2b2b;
   }
 
   .tagline {
-    margin: 6px 0 0;
-    font-size: 16px;
-    color: #888;
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: #999;
   }
 }
 
 .category-tabs {
   display: flex;
-  justify-content: flex-start;
-  margin-bottom: 16px;
-  padding: 0 8px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 4px 0 12px;
+  border-bottom: 1px dashed #ddd;
 }
 
-.category-track {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border: 1px solid #e5e5e5;
-  background: #fff;
-}
-
-.category-slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(100% / 3);
-  height: 100%;
-  background: #111;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &.richang {
-    transform: translateX(100%);
-  }
-
-  &.nav {
-    transform: translateX(200%);
-  }
-}
-
-.category-btn {
-  position: relative;
-  z-index: 1;
-  min-width: 80px;
-  padding: 8px 24px;
+.category-link {
   border: none;
-  border-radius: 0;
   background: transparent;
+  padding: 0;
   font-size: 14px;
-  font-weight: 600;
-  color: #888;
+  color: #555;
   cursor: pointer;
-  transition: color 0.25s ease;
   font-family: inherit;
+  line-height: 1.4;
 
   &:hover {
-    color: #333;
+    color: #2e6da4;
+    text-decoration: underline;
   }
 
   &.active {
-    color: #fff;
+    color: #2e6da4;
+    font-weight: 700;
   }
+}
+
+.tab-sep {
+  color: #ccc;
+  font-size: 12px;
+  user-select: none;
 }
 
 .post-switch-enter-active,
 .post-switch-leave-active {
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  transition: opacity 0.2s ease;
 }
 
-.post-switch-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
+.post-switch-enter-from,
 .post-switch-leave-to {
   opacity: 0;
-  transform: translateY(-6px);
 }
 
 .post-list {
-  list-style: none;
   margin: 0;
   padding: 0;
-  background: #fff;
 }
 
-.post-item {
-  border-bottom: 1px solid #ededed;
+.post-entry {
+  padding: 18px 0 14px;
+  border-bottom: 1px dashed #e0e0e0;
 
   &:last-child {
     border-bottom: none;
   }
 }
 
-.post-card {
-  position: relative;
-  display: block;
-  padding: 20px 24px;
+.post-title-link {
+  display: inline;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #2e6da4;
   text-decoration: none;
-  color: inherit;
-  background: #fff;
-  overflow: hidden;
-  transition: background 0.15s ease;
+  word-break: break-word;
 
   &:hover {
-    background: #fafafa;
-
-    .post-watermark {
-      opacity: 0.12;
-      transform: translate(4px, 4px) rotate(-6deg) scale(1.04);
-    }
+    color: #1a5278;
+    text-decoration: underline;
   }
 
-  &:active {
-    background: #f3f3f3;
+  &:visited {
+    color: #5a7ea0;
   }
 }
 
-.post-watermark {
-  position: absolute;
-  right: -6px;
-  bottom: -20px;
-  font-size: 88px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--naver-green);
-  opacity: 0.08;
-  transform: rotate(-8deg);
-  pointer-events: none;
-  user-select: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  white-space: nowrap;
-  z-index: 0;
-}
-
-.post-title {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  font-size: 17px;
-  font-weight: 700;
+.post-excerpt {
+  margin: 8px 0 0;
+  font-size: 14px;
   line-height: 1.7;
-  color: #191919;
-  word-break: break-word;
-}
-
-.post-thumbs {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 14px;
-}
-
-.thumb-image {
-  width: 96px;
-  height: 96px;
-  flex-shrink: 0;
-  object-fit: cover;
-  display: block;
-  background: #f2f2f2;
-}
-
-.post-date {
-  position: relative;
-  z-index: 1;
-  display: block;
-  margin-top: 14px;
-  font-size: 13px;
-  color: #b2b2b2;
-}
-
-.post-empty {
-  padding: 40px 16px;
-  text-align: center;
-  color: #b2b2b2;
-  font-size: 14px;
-}
-
-.nav-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.nav-logo {
-  width: 56px;
-  height: 56px;
-  flex-shrink: 0;
-  object-fit: contain;
-  background: #f2f2f2;
-  padding: 8px;
-}
-
-.nav-info {
-  position: relative;
-  z-index: 1;
-  min-width: 0;
-}
-
-.nav-title {
-  margin: 0;
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.4;
-  color: #191919;
-}
-
-.nav-desc {
-  margin: 6px 0 0;
-  font-size: 14px;
-  line-height: 1.5;
   color: #666;
 }
 
-.nav-url {
-  margin: 6px 0 0;
-  font-size: 13px;
-  color: #b2b2b2;
+.post-meta {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #999;
+  line-height: 1.5;
+}
+
+.meta-cat {
+  margin-left: 10px;
+  color: #bbb;
+}
+
+.meta-link {
+  color: #999;
+  text-decoration: none;
+
+  &:hover {
+    color: #2e6da4;
+    text-decoration: underline;
+  }
+}
+
+.post-empty {
+  padding: 48px 0;
+  text-align: center;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.nav-entry {
+  padding: 14px 0;
+}
+
+.nav-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .post-title-link {
+    color: #1a5278;
+    text-decoration: underline;
+  }
+}
+
+.nav-logo {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  object-fit: contain;
+  background: #f5f5f5;
+}
+
+.nav-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  .post-title-link {
+    display: inline;
+  }
+
+  .post-excerpt,
+  .post-meta {
+    display: block;
+  }
 }
 
 @media (max-width: 640px) {
-  .home-header {
-    .wheel-icon {
-      width: 30px;
-      height: 30px;
-    }
-
-    h1 {
-      font-size: 28px;
-    }
+  .home-container {
+    padding: 24px 18px 48px;
   }
 
-  .thumb-image {
-    width: 80px;
-    height: 80px;
+  .home-header h1 {
+    font-size: 22px;
   }
 
-  .post-card {
-    padding: 18px 20px;
-  }
-
-  .post-title {
+  .post-title-link {
     font-size: 16px;
-  }
-
-  .post-watermark {
-    font-size: 64px;
-    bottom: -14px;
   }
 }
 </style>

@@ -6,29 +6,18 @@
 
     <!--文章页面-->
     <div v-else class="article-page app-content">
-      <article class="receipt-container">
-        <span class="receipt-watermark" aria-hidden="true">{{
-          titleWatermark
-        }}</span>
+      <article class="article-body">
         <a href="/" class="back-home">← 首页</a>
-        <!-- 头部信息 -->
-        <header class="receipt-header">
-          <h1 class="receipt-title">{{ page_titile }}</h1>
-          <div class="receipt-meta">
-            <div class="receipt-date">
-              <span class="label">创建于:</span>
-              <span class="value">{{ page_created_beauty }}</span>
-            </div>
-            <div class="receipt-date">
-              <span class="label">更新于:</span>
-              <span class="value">{{ page_updated_beauty }}</span>
-            </div>
-          </div>
-          <div class="receipt-divider"></div>
+        <header class="article-header">
+          <h1 class="article-title">{{ page_titile }}</h1>
+          <p class="article-meta">
+            posted @ {{ page_created_beauty }}
+            <span class="meta-sep">·</span>
+            更新于 {{ page_updated_beauty }}
+          </p>
         </header>
 
-        <!-- 文章目录 -->
-        <div v-if="tocItems.length > 0" class="receipt-toc">
+        <div v-if="tocItems.length > 0" class="article-toc">
           <div class="toc-title">目录</div>
           <nav class="toc-list">
             <a
@@ -47,12 +36,9 @@
           </nav>
         </div>
 
-        <!-- 文章内容 -->
-        <div class="receipt-content">
+        <div class="article-content">
           <Content class="post-content" />
         </div>
-
-     
       </article>
     </div>
   </div>
@@ -85,11 +71,6 @@ const page_updated_beauty = computed(() => {
     return "未记录";
   }
   return page_date.value.updated_at.slice(0, 10);
-});
-
-const titleWatermark = computed(() => {
-  const title = page_titile.value || page.value.title || "";
-  return [...title].slice(0, 5).join("");
 });
 
 onContentUpdated(() => {
@@ -350,13 +331,6 @@ const scrollToHeading = (id: string) => {
     color: #525252;
     margin-top: 1.5em;
   }
-  h2::before,
-  h3::before {
-    content: "# "; /* 在前面添加的内容，# 后面加个空格更美观 */
-    color: #d97757; /* 可以给 # 设一个主题色，比如蓝色 */
-    margin-right: 8px; /* 设置 # 与文字之间的距离 */
-    font-weight: bold; /* 让它看起来更有力 */
-  }
   /* 代码块 - Claude风格的代码展示 */
   code {
     font-family: "claude_font";
@@ -416,17 +390,14 @@ const scrollToHeading = (id: string) => {
     margin-bottom: 0;
   }
 
-  /* 链接 - Claude风格的链接 */
+  /* 链接 */
   a {
-    color: #2c2c2c;
-    text-decoration: underline;
-    text-decoration-color: #d4d4d4;
-    text-underline-offset: 2px;
-    transition: text-decoration-color 0.15s ease;
+    color: #2e6da4;
+    text-decoration: none;
   }
 
   a:hover {
-    text-decoration-color: #2c2c2c;
+    text-decoration: underline;
   }
 
   /* 表格 - 更现代的表格样式 */
@@ -565,422 +536,258 @@ const scrollToHeading = (id: string) => {
   background: #fff;
 }
 
-// 内容区域自适应 - 灰色背景
 .app-content {
   flex: 1;
   overflow: auto;
-  background: var(--gray-background);
+  background: #fff;
 }
 
 .app-content--home {
-  background: #ededed;
+  background: #fff;
 }
 
 .article-page {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px 20px;
+  padding: 28px 20px 64px;
   min-height: 100vh;
-  background: 
-    linear-gradient(180deg, #f5f5f5 0%, var(--gray-background) 50%, #f5f5f5 100%);
+  background: #fff;
 }
 
-.receipt-container {
-  max-width: 720px;
+.article-body {
+  max-width: 780px;
   width: 100%;
-  background: #ffffff;
-  border: 1px solid var(--vp-c-divider, #e9ecef);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-  position: relative;
-  overflow: hidden;
-}
-
-.receipt-watermark {
-  position: absolute;
-  right: -8px;
-  bottom: -24px;
-  font-size: 96px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--naver-green);
-  opacity: 0.07;
-  transform: rotate(-8deg);
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  z-index: 0;
 }
 
 .back-home {
-  position: relative;
-  z-index: 1;
   display: inline-block;
-  margin: 20px 0 0 24px;
+  margin-bottom: 18px;
   font-size: 13px;
-  color: #6c757d;
+  color: #999;
   text-decoration: none;
-  transition: color 0.15s ease;
 
   &:hover {
-    color: #111;
+    color: #2e6da4;
+    text-decoration: underline;
   }
 }
 
-.receipt-header {
-  position: relative;
-  z-index: 1;
-  padding: 8px 40px 28px;
+.article-header {
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e8e8e8;
 
-  .receipt-title {
-    font-size: 32px;
-    font-weight: 800;
-    color: #111;
-    margin: 0 0 16px;
-    line-height: 1.3;
-    letter-spacing: -0.03em;
+  .article-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin: 0 0 10px;
+    line-height: 1.4;
   }
 
-  .receipt-meta {
-    font-size: 13px;
-    color: #868e96;
+  .article-meta {
+    margin: 0;
+    font-size: 12px;
+    color: #999;
     line-height: 1.6;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-
-    .receipt-date {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-
-      .label {
-        color: #adb5bd;
-        font-weight: 500;
-      }
-
-      .value {
-        color: #495057;
-        font-weight: 500;
-      }
-    }
   }
 
-  .receipt-divider {
-    margin-top: 24px;
-    height: 1px;
-    background: var(--vp-c-divider, #e9ecef);
-    border: none;
+  .meta-sep {
+    margin: 0 6px;
+    color: #ccc;
   }
 }
 
-.receipt-toc {
-  position: relative;
-  z-index: 1;
-  padding: 0 40px 24px;
-  border-bottom: 1px solid var(--vp-c-divider, #e9ecef);
+.article-toc {
+  margin-bottom: 28px;
+  padding: 12px 16px;
+  border: 1px dashed #ddd;
+  background: #fafafa;
 
   .toc-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: #adb5bd;
-    letter-spacing: 0.06em;
-    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 8px;
   }
 
   .toc-list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
   }
 
   .toc-item {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #6c757d;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #555;
     text-decoration: none;
-    padding: 4px 0 4px 12px;
+    padding: 2px 0 2px 8px;
     border-left: 2px solid transparent;
-    transition: all 0.15s ease;
     display: block;
 
     &.toc-level-2 {
       font-weight: 500;
-      color: #495057;
     }
 
     &.toc-level-3 {
-      padding-left: 24px;
-      font-size: 13px;
+      padding-left: 20px;
+      font-size: 12px;
+      color: #777;
     }
 
     &:hover {
-      color: #111;
-      border-left-color: #dee2e6;
+      color: #2e6da4;
+      text-decoration: underline;
     }
 
     &.active {
-      color: #111;
-      border-left-color: #111;
+      color: #2e6da4;
+      border-left-color: #2e6da4;
       font-weight: 600;
     }
   }
 }
 
-.receipt-content {
-  position: relative;
-  z-index: 1;
-  padding: 28px 40px 64px;
-
+.article-content {
   :deep(.post-content) {
-    font-size: 16px;
-    line-height: 1.85;
-    color: #2c2c2c;
-    letter-spacing: 0.01em;
+    font-size: 15px;
+    line-height: 1.9;
+    color: #333;
     max-width: 100%;
-    
+
     p {
-      margin: 1.3em 0;
+      margin: 1.1em 0;
     }
-    
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 2.2em;
-      margin-bottom: 0.9em;
-      color: #191919;
-      font-weight: 600;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: 1.8em;
+      margin-bottom: 0.7em;
+      color: #2b2b2b;
+      font-weight: 700;
     }
-    
+
     h2 {
-      font-size: 1.4em;
-      letter-spacing: -0.02em;
+      font-size: 1.35em;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.35em;
     }
-    
+
     h3 {
-      font-size: 1.2em;
-      color: #343a40;
+      font-size: 1.15em;
     }
-    
-    h4, h5, h6 {
-      font-size: 1.05em;
-      color: #495057;
-    }
-    
-    ul, ol {
+
+    ul,
+    ol {
       padding-left: 1.6em;
-      margin: 1.3em 0;
+      margin: 1.1em 0;
     }
-    
+
     li {
-      margin: 0.5em 0;
+      margin: 0.35em 0;
       line-height: 1.8;
-      
-      &::marker {
-        color: #868e96;
-      }
     }
-    
+
     blockquote {
-      margin: 1.6em 0;
-      padding: 0.8em 1.2em;
-      border-left: 3px solid #dee2e6;
-      background: #f8f9fa;
-      color: #495057;
-      font-style: normal;
-      
-      p {
-        margin: 0.6em 0;
-      }
+      margin: 1.4em 0;
+      padding: 0.6em 1em;
+      border-left: 3px solid #2e6da4;
+      background: #f7f9fc;
+      color: #555;
     }
-    
+
     code {
-      font-size: 0.92em;
-      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 0.9em;
+      font-family: "SF Mono", "Fira Code", Consolas, monospace;
     }
-    
+
     :not(pre) > code {
-      padding: 0.2em 0.45em;
-      background: #f4f4f5;
-      border: 1px solid #e9ecef;
-      color: #495057;
+      padding: 0.12em 0.35em;
+      background: #f4f4f4;
+      border: 1px solid #e8e8e8;
+      color: #c7254e;
     }
 
     pre {
-      margin: 1.6em 0;
-      padding: 1em 1.2em;
-      background: #f8f9fa;
+      margin: 1.4em 0;
+      padding: 1em 1.1em;
+      background: #f6f8fa;
       overflow-x: auto;
-      border: 1px solid #e9ecef;
-      
+      border: 1px solid #e8e8e8;
+
       code {
         background: transparent;
         border: none;
         padding: 0;
-        color: #2c2c2c;
-        font-size: 0.9em;
+        color: #333;
+        font-size: 0.88em;
       }
     }
-    
+
     img {
       max-width: 100%;
       height: auto;
-      margin: 1.6em 0;
-      border: 1px solid #e9ecef;
+      margin: 1.2em 0;
     }
 
     a {
-      color: #111;
-      text-decoration: underline;
-      text-decoration-color: #ced4da;
-      text-underline-offset: 3px;
-      transition: color 0.15s ease;
+      color: #2e6da4;
+      text-decoration: none;
 
       &:hover {
-        color: var(--naver-green);
-        text-decoration-color: var(--naver-green);
+        text-decoration: underline;
       }
     }
-    
+
     strong {
-      font-weight: 600;
-      color: #191919;
+      font-weight: 700;
+      color: #2b2b2b;
     }
-    
-    em {
-      color: #495057;
-    }
-    
+
     hr {
       margin: 2em 0;
       border: none;
-      height: 1px;
-      background: var(--vp-c-divider, #e9ecef);
+      border-top: 1px dashed #ddd;
     }
 
     table {
       width: 100%;
-      margin: 1.6em 0;
+      margin: 1.4em 0;
       border-collapse: collapse;
-      border: 1px solid #e9ecef;
-      
-      th, td {
-        padding: 0.8em 1em;
-        border: 1px solid #e9ecef;
+      border: 1px solid #e8e8e8;
+
+      th,
+      td {
+        padding: 0.6em 0.8em;
+        border: 1px solid #e8e8e8;
         text-align: left;
       }
-      
+
       th {
-        background: #f8f9fa;
+        background: #f6f8fa;
         font-weight: 600;
-        color: #343a40;
-      }
-      
-      tr:hover {
-        background: #f8f9fa;
       }
     }
-  }
-}
-
-// 底部 - 优雅收尾
-.receipt-footer {
-  padding: 32px 56px 48px;
-  text-align: center;
-  position: relative;
-  
-  .receipt-divider {
-    margin-bottom: 28px;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      #dee2e6 20%,
-      #adb5bd 50%,
-      #dee2e6 80%,
-      transparent 100%
-    );
-    border: none;
-    position: relative;
-    
-    &::before {
-      content: '❦';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 32px;
-      height: 32px;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #adb5bd;
-      font-size: 18px;
-    }
-  }
-  
-  .footer-text {
-    font-family: "claude_font", sans-serif;
-    font-size: 11px;
-    color: #adb5bd;
-    letter-spacing: 0.15em;
-    margin: 0;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-}
-
-// 移动端适配
-@media (max-width: 1024px) {
-  .article-page {
-    padding: 32px 16px;
   }
 }
 
 @media (max-width: 768px) {
   .article-page {
-    padding: 24px 12px;
+    padding: 20px 16px 48px;
   }
 
-  .receipt-watermark {
-    font-size: 72px;
-    bottom: -18px;
+  .article-header .article-title {
+    font-size: 22px;
   }
 
-  .receipt-container {
-    .receipt-header,
-    .receipt-content,
-    .receipt-toc {
-      padding-left: 24px;
-      padding-right: 24px;
-    }
-
-    .receipt-title {
-      font-size: 24px;
-    }
-
-    .receipt-meta {
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .receipt-toc {
-      .toc-item {
-        font-size: 13px;
-
-        &.toc-level-3 {
-          padding-left: 20px;
-        }
-      }
-    }
-
-    .receipt-content {
-      padding-bottom: 56px;
-
-      :deep(.post-content) {
-        font-size: 15px;
-      }
-    }
+  .article-content :deep(.post-content) {
+    font-size: 14px;
   }
 }
 </style>
