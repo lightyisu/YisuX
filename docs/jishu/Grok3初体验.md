@@ -7,7 +7,7 @@ slug: '20252'
 title: Grok3初体验
 status: 已发布
 urlname: 1a3e9dc9-c245-80a4-8af0-c0a55e848c20
-updated: '2026-07-23 10:40:00'
+updated: '2026-07-27 10:37:00'
 ---
 
 自从GPT发布以来好像每2个月就有一个新LLM模型，国外的gemini,llama,claude,国内的文心一言，智谱清言，豆包，deepseek。但是除了ds-R1这个创新思考模式其实差距都不大，在这周末我初次体验了Grok3我感觉这是一个基于deepseek之后的目前最好的LLM。
@@ -29,7 +29,4 @@ updated: '2026-07-23 10:40:00'
 
 
 最后吐槽一下 grok3 这个新 logo 真的一般，不能说不好看吧。原本用的Xai的logo我觉得很好看，那种文字完美融合的感觉我觉得真是很有感觉。
-
-
-[embed](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROcXRdeEoeB-Kl449XzrchCvGwxDaTRltKSg&s)
 
