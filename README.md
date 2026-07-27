@@ -22,7 +22,7 @@
 
 
 ### 线上地址
-目前存放在 Vercel上进行持续部署
+目前存放在 Vercel上进行持续部署。
 
 ![](https://vercel.com/vc-ap-vercel-marketing/_next/static/media/vercel-logotype-light.700a8d26.svg)
 
