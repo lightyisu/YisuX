@@ -4,10 +4,10 @@ catalog:
 date: '2025-08-27 08:00:00'
 type: Post
 slug: pnpm1
-title: pnpm | 硬链接与软链接
+title: pnpm 的硬链接与软链接
 status: 已发布
 urlname: 25ce9dc9-c245-8072-aab2-ea8df93773da
-updated: '2025-09-05 18:28:00'
+updated: '2026-07-27 10:22:00'
 ---
 
 

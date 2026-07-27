@@ -4,10 +4,10 @@ catalog:
 date: '2023-08-23 08:00:00'
 type: Post
 slug: relofTLSandSSL
-title: HTML | SSL和TLS的关系
+title: ' SSL和TLS的关系'
 status: 已发布
 urlname: 77da3939-fdb4-465f-9abb-c8ef1b8779f3
-updated: '2025-10-04 11:43:00'
+updated: '2026-07-23 10:39:00'
 ---
 
 ### 引言：

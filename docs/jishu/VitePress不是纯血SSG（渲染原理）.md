@@ -4,10 +4,10 @@ catalog:
 date: '2026-01-26 08:00:00'
 type: Post
 slug: addwad
-title: 渲染原理 |VitePress不是纯血SSG?
+title: VitePress不是纯血SSG（渲染原理）?
 status: 已发布
 urlname: 2f4e9dc9-c245-802e-ad07-f8b582477c58
-updated: '2026-01-26 23:26:00'
+updated: '2026-07-23 10:39:00'
 ---
 
 因为最近在复习前端，而且接触到Astro发现有一个好的渲染理念和原理还是挺巧妙的。而且我一直没发现VitePress其实不是纯血的SSG，天真的以为Vitepress和Hexo/Hugo无差不过是用Vue写的不同实现方式而已。

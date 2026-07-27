@@ -4,10 +4,10 @@ catalog:
 date: '2023-08-16 08:00:00'
 type: Post
 slug: opera_1
-title: HTML | Opera浏览器关闭代理不能上网的问题
+title: Opera浏览器关闭代理不能上网的问题
 status: 已发布
 urlname: 041350c8-c2c1-4805-8389-e426d0bcda1b
-updated: '2025-10-04 11:43:00'
+updated: '2026-07-23 10:39:00'
 ---
 
 今天下载了Opera浏览器 ，发现界面确实让我很喜欢。于是我就使用，发现速度还行，基本和我现在用的 CentBrowser 差不多。但是也出现了不少问题。

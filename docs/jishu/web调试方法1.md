@@ -4,10 +4,10 @@ catalog:
 date: '2025-08-11 08:00:00'
 type: Post
 slug: tiaoshi
-title: HTML | web调试方法
+title: web调试方法1
 status: 已发布
 urlname: 24ce9dc9-c245-809e-b930-e13b64a9c9ee
-updated: '2025-10-04 11:42:00'
+updated: '2026-07-23 10:40:00'
 ---
 
 ### 1.当元素不能直接点击审查时候的调试 

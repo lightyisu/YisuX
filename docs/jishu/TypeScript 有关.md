@@ -4,10 +4,10 @@ catalog:
 date: '2025-08-05 08:00:00'
 type: Post
 slug: ts
-title: TS | TypeScript Collection
+title: TypeScript 有关
 status: 已发布
 urlname: 23ce9dc9-c245-80d3-b76a-fb29346179a7
-updated: '2025-10-04 11:42:00'
+updated: '2026-07-23 10:40:00'
 ---
 
 # Tips For TS.

@@ -4,10 +4,10 @@ catalog:
 date: '2026-01-21 08:00:00'
 type: Post
 slug: afwaf
-title: Astro | 群岛架构
+title: Astro的群岛架构
 status: 已发布
 urlname: 2e7e9dc9-c245-80a8-a4fa-d8b3f087a57c
-updated: '2026-01-26 17:09:00'
+updated: '2026-07-23 10:39:00'
 ---
 
 最近想做模仿官网的练习，既能够练习布局也能够对动画做一点学习(方便找工作:=，于是找到Astro这个内容驱动的框架感觉比较适合。

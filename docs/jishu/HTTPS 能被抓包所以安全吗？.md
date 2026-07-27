@@ -4,10 +4,10 @@ catalog:
 date: '2023-08-07 08:00:00'
 type: Post
 slug: https_securityif
-title: HTML | HTTPS 能被抓包所以安全吗？
+title: HTTPS 能被抓包所以安全吗？
 status: 已发布
 urlname: 62fc2ac3-897d-4be5-bbb9-3c7f60ef5e1d
-updated: '2025-10-04 11:42:00'
+updated: '2026-07-23 10:39:00'
 ---
 
      今天学习 Scrapy 的时候，抓取了豆瓣的登录信息用于模拟登录。意外的发现豆瓣的登录竟然把 username 和 password 写进了 Url。
