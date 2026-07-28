@@ -98,11 +98,11 @@ function setCategory(category: HomeCategory) {
 
 const navSites = [
   {
-    title: "Claude Code",
+    title: "claude code docs文档",
     url: "https://code.claude.com/docs/zh-CN/overview",
     host: "code.claude.com",
     logo: "/claude-logo.svg",
-    desc: "Claude Code 官方中文文档",
+    desc: "claude code详细的指导和内部工具链",
   },
   {
     title: "Dribbble",
