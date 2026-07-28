@@ -98,6 +98,13 @@ function setCategory(category: HomeCategory) {
 
 const navSites = [
   {
+    title: "Claude Code",
+    url: "https://code.claude.com/docs/zh-CN/overview",
+    host: "code.claude.com",
+    logo: "/claude-logo.svg",
+    desc: "Claude Code 官方中文文档",
+  },
+  {
     title: "Dribbble",
     url: "https://dribbble.com/",
     host: "dribbble.com",
