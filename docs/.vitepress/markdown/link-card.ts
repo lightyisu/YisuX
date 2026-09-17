@@ -87,7 +87,7 @@ function render(href, m, label) {
         <div class="vlc-title">${esc(title)}</div>
         ${m.description ? `<div class="vlc-desc">${esc(m.description)}</div>` : ''}
       </div>${m.cover ? `
-      <div class="vlc-cover"><img src="${esc(m.cover)}" alt="" loading="lazy" decoding="async"></div>` : ''}`
+      <div class="vlc-cover"><img class="vlc-cover-img" src="${esc(m.cover)}" alt="" loading="lazy" decoding="async"></div>` : ''}`
 
   return `<div class="${cls}">${label ? `<div class="vlc-label">${esc(label)}</div>` : ''}<a class="vlc" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${inner}
     </a>

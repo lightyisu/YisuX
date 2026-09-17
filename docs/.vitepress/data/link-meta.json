@@ -353,11 +353,19 @@
     "fetchedAt": "2026-09-17T09:34:17.969Z"
   },
   "https://trends.builtwith.com/websitelist/Astro": {
-    "ok": false,
-    "error": "microlink: Your daily rate limit has been reached. Upgrade to a PRO plan.",
     "hostname": "trends.builtwith.com",
-    "publisher": "trends.builtwith.com",
-    "title": null
+    "description": "Select the image that matches",
+    "publisher": "builtwith.com",
+    "logoUrl": "https://trends.builtwith.com/favicon.ico",
+    "finalUrl": "https://trends.builtwith.com/websitelist/Astro",
+    "ok": true,
+    "level": "screenshot",
+    "coverUrl": "https://iad.microlink.io/gIlyPCqN3zvy08IttHvv-hKYp5lq1KTU3i-UKCVd2UlAJyht9ulPlXm70P4Zqd_z5MJI-eoiAisVYT9dy4aOlw.png",
+    "title": "BuiltWith verification",
+    "coverNote": "blank screenshot",
+    "cover": null,
+    "favicon": "/link-covers/fav/6eb10c7e00b60906.webp",
+    "fetchedAt": "2026-09-17T11:26:19.737Z"
   },
   "https://tylk.cc/": {
     "hostname": "tylk.cc",
@@ -550,10 +558,17 @@
     "title": null
   },
   "https://zeabur.com/zh-CN/": {
-    "ok": false,
-    "error": "microlink: Your daily rate limit has been reached. Upgrade to a PRO plan.",
     "hostname": "zeabur.com",
-    "publisher": "zeabur.com",
-    "title": null
+    "description": "通过与 AI 对话，轻松将任何项目部署到云端",
+    "publisher": "Zeabur",
+    "logoUrl": "https://zeabur.com/android-chrome-192x192.png",
+    "finalUrl": "https://zeabur.com/zh-CN/",
+    "ok": true,
+    "level": "cover",
+    "coverUrl": "https://cdn.zeabur.com/og/zh-CN.png?version=20250731",
+    "title": "Zeabur - 你的 AI DevOps 工程师",
+    "cover": "/link-covers/cover-bc2f6559e2d7033d.webp",
+    "favicon": "/link-covers/fav/208e6e51ffcc8074.webp",
+    "fetchedAt": "2026-09-17T11:26:19.096Z"
   }
 }
