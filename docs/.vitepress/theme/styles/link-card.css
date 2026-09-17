@@ -1,0 +1,128 @@
+/* 网页名片：由 markdown/link-card.mts 生成的静态结构 */
+
+.vp-link-card {
+  margin: 22px 0;
+}
+
+.vlc-label {
+  margin: 0 0 6px 2px;
+  font-size: 0.8rem;
+  color: var(--vp-c-text-3);
+}
+
+.vlc {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  text-decoration: none !important;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vlc:hover {
+  border-color: var(--vp-c-brand-1);
+  background: var(--vp-c-bg-elv);
+  transform: translateY(-1px);
+}
+
+.vlc-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  flex: 1 1 auto;
+  padding: 13px 16px;
+}
+
+.vlc-site {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 0.76rem;
+  line-height: 1.2;
+  color: var(--vp-c-text-3);
+}
+
+.vlc-fav {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  border-radius: 3px;
+  object-fit: contain;
+}
+
+.vlc-site-name,
+.vlc-path {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vlc-path {
+  max-width: 46%;
+  opacity: 0.7;
+}
+
+.vlc-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--vp-c-text-1);
+}
+
+.vlc-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--vp-c-text-2);
+}
+
+.vlc-cover {
+  position: relative;
+  flex: 0 0 36%;
+  max-width: 210px;
+  min-height: 112px;
+  border-left: 1px solid var(--vp-c-divider);
+}
+
+.vlc-cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .vp-link-card {
+    margin: 18px 0;
+  }
+
+  .vlc {
+    flex-direction: column;
+  }
+
+  .vlc-cover {
+    max-width: none;
+    flex: none;
+    height: 148px;
+    border-left: none;
+    border-top: 1px solid var(--vp-c-divider);
+    order: -1;
+  }
+}

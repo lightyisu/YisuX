@@ -1,5 +1,17 @@
 import { defineConfig } from "vitepress";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import AutoImport from "unplugin-auto-import/vite";
+import { linkCard } from "./markdown/link-card";
+
+function linkMeta() {
+  try {
+    const file = fileURLToPath(new URL("./data/link-meta.json", import.meta.url));
+    return JSON.parse(readFileSync(file, "utf-8"));
+  } catch {
+    return {};
+  }
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -28,5 +40,8 @@ export default defineConfig({
       lazyLoading: true,
     },
     codeTransformers: [],
+    config(md) {
+      linkCard(md, linkMeta());
+    },
   },
 });
