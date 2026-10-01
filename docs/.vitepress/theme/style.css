@@ -141,6 +141,122 @@
 }
 
 /**
+ * YisuX 极简索引列表（博客首页 / 文章页通用）
+ * 与 /pages 收藏页同一套设计语言：白底、近黑字、细线分隔、无封面
+ * -------------------------------------------------------------------------- */
+
+/* 全站统一的黑色胶囊按钮：导航 Logo 与「返回博客」共用，保证尺寸一致 */
+.pill-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 17px;
+  border-radius: 999px;
+  background: #050505;
+  color: #ffffff;
+  font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 150ms ease;
+}
+
+.pill-dark:hover {
+  opacity: 0.82;
+}
+
+.idx-list {
+  border-top: 1px solid #dedede;
+}
+
+.idx-row {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 24px;
+  padding: 26px 0;
+  border-bottom: 1px solid #dedede;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 200ms ease;
+}
+
+.idx-row:hover {
+  border-bottom-color: #050505;
+}
+
+.idx-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.idx-cat {
+  color: #050505;
+}
+
+.idx-date {
+  color: #777777;
+}
+
+.idx-body {
+  min-width: 0;
+}
+
+.idx-title {
+  margin: 0;
+  color: #050505;
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+}
+
+.idx-row:hover .idx-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.idx-excerpt {
+  margin: 10px 0 0;
+  max-width: 660px;
+  color: #777777;
+  font-size: 15px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.idx-empty {
+  margin: 0;
+  padding: 56px 0;
+  border-bottom: 1px solid #dedede;
+  color: #777777;
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .idx-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    padding: 22px 0;
+  }
+
+  .idx-meta {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
+/**
  * Component: Algolia
  * -------------------------------------------------------------------------- */
 

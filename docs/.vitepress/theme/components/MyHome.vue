@@ -1,92 +1,82 @@
 <template>
-  <div class="home-container">
-    <div class="home-header">
-      <h1>Blog on MCL39</h1>
-      <p class="tagline">Every Story Needs a BLog !</p>
-    </div>
+  <div class="home">
+    <SiteNav active="home" />
 
-    <div class="category-tabs">
-      <button
-        type="button"
-        class="category-link"
-        :class="{ active: activeCategory === 'jishu' }"
-        @click="setCategory('jishu')"
-      >
-        技术
-      </button>
-      <span class="tab-sep">|</span>
-      <button
-        type="button"
-        class="category-link"
-        :class="{ active: activeCategory === 'richang' }"
-        @click="setCategory('richang')"
-      >
-        日常
-      </button>
-      <span class="tab-sep">|</span>
-      <button
-        type="button"
-        class="category-link"
-        :class="{ active: activeCategory === 'nav' }"
-        @click="setCategory('nav')"
-      >
-        导航
-      </button>
-    </div>
+    <main class="home-main">
+      <h1 class="page-title">博客</h1>
 
-    <Transition name="post-switch" mode="out-in">
-      <div v-if="activeCategory === 'nav'" key="nav" class="post-list">
-        <div v-for="site in navSites" :key="site.url" class="post-entry nav-entry">
+      <div class="filters" role="tablist" aria-label="文章分类">
+        <button
+          v-for="tab in tabs"
+          :key="tab.key"
+          type="button"
+          role="tab"
+          class="filter"
+          :class="{ active: activeCategory === tab.key }"
+          :aria-selected="activeCategory === tab.key"
+          @click="setCategory(tab.key)"
+        >
+          {{ tab.label }}
+        </button>
+        <span class="filters-count">{{ filteredCount }} 篇</span>
+      </div>
+
+      <Transition name="feed-switch" mode="out-in">
+        <div v-if="filteredList.length" :key="activeCategory" class="idx-list">
           <a
-            :href="site.url"
-            class="nav-row"
-            target="_blank"
-            rel="noopener noreferrer"
+            v-for="item in filteredList"
+            :key="item.url"
+            :href="item.href"
+            :target="item.external ? '_blank' : undefined"
+            :rel="item.external ? 'noopener noreferrer' : undefined"
+            class="idx-row"
           >
-            <img :src="site.logo" :alt="site.title" class="nav-logo" />
-            <span class="nav-body">
-              <span class="post-title-link">{{ site.title }}</span>
-              <span class="post-excerpt">{{ site.desc }}</span>
-              <span class="post-meta">{{ site.host }}</span>
-            </span>
+            <div class="idx-meta">
+              <span class="idx-cat">{{ item.category }}</span>
+              <time class="idx-date">{{ item.date }}</time>
+            </div>
+            <div class="idx-body">
+              <h2 class="idx-title">{{ item.title }}</h2>
+              <p v-if="item.excerpt" class="idx-excerpt">{{ item.excerpt }}</p>
+            </div>
           </a>
         </div>
-      </div>
-      <div v-else :key="activeCategory" class="post-list">
-        <div v-for="post in filteredPosts" :key="post.url" class="post-entry">
-          <a :href="post.url" class="post-title-link">{{ post.title }}</a>
-          <p class="post-meta">
-            posted @ {{ formatDate(post.date) }}
-            <span class="meta-cat">{{
-              activeCategory === "jishu" ? "技术" : "日常"
-            }}</span>
-          </p>
-        </div>
-        <p v-if="filteredPosts.length === 0" class="post-empty">暂无文章</p>
-      </div>
-    </Transition>
+        <p v-else :key="'empty'" class="idx-empty">该分类下暂无文章</p>
+      </Transition>
+    </main>
+
+    <SiteFooter />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import {
-  data as posts,
-  type PostCategory,
-} from "../utils/posts.data.mts";
+import SiteNav from "./SiteNav.vue";
+import SiteFooter from "./SiteFooter.vue";
+import { data as posts, type PostCategory } from "../utils/posts.data.mts";
 
-type HomeCategory = PostCategory | "nav";
+type HomeCategory = PostCategory | "nav" | "all";
+
+interface IndexItem {
+  url: string;
+  href: string;
+  title: string;
+  category: string;
+  date: string;
+  excerpt: string;
+  external?: boolean;
+}
 
 const CATEGORY_KEY = "yisux-home-category";
-const VALID_CATEGORIES: HomeCategory[] = ["jishu", "richang", "nav"];
+const VALID_CATEGORIES: HomeCategory[] = ["all", "jishu", "richang", "nav"];
 
 function readStoredCategory(): HomeCategory {
-  if (typeof sessionStorage === "undefined") return "jishu";
+  if (typeof sessionStorage === "undefined") return "all";
   const stored = sessionStorage.getItem(CATEGORY_KEY);
   if (stored && VALID_CATEGORIES.includes(stored as HomeCategory)) {
     return stored as HomeCategory;
   }
-  return "jishu";
+  return "all";
 }
 
 const activeCategory = ref<HomeCategory>(readStoredCategory());
@@ -96,251 +86,207 @@ function setCategory(category: HomeCategory) {
   sessionStorage.setItem(CATEGORY_KEY, category);
 }
 
-const navSites = [
+const tabs: { key: HomeCategory; label: string }[] = [
+  { key: "all", label: "全部" },
+  { key: "jishu", label: "技术" },
+  { key: "richang", label: "日常" },
+  { key: "nav", label: "导航" },
+];
+
+function categoryLabel(category: PostCategory) {
+  return category === "jishu" ? "技术" : "日常";
+}
+
+// content loader 的 url 带 .html 后缀且中文被 percent-encode，输出干净语义化链接
+function decodeUrl(url: string) {
+  let result = url;
+  try {
+    result = decodeURIComponent(result);
+  } catch {
+    /* keep original */
+  }
+  return result.replace(/\.html$/, "");
+}
+
+function formatDateCN(date: string) {
+  if (!date) return "";
+  const d = new Date(date.replace(" ", "T"));
+  if (Number.isNaN(d.getTime())) return date.slice(0, 10);
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+}
+
+function toIndexItem(post: (typeof posts)[number]): IndexItem {
+  return {
+    url: post.url,
+    href: decodeUrl(post.url),
+    title: post.title,
+    category: categoryLabel(post.category),
+    date: formatDateCN(post.date),
+    excerpt: post.excerpt.replace(/…$/, ""),
+  };
+}
+
+const postItems = computed<IndexItem[]>(() => posts.map(toIndexItem));
+
+const navSites: IndexItem[] = [
   {
-    title: "claude code docs文档",
     url: "https://code.claude.com/docs/zh-CN/overview",
-    host: "code.claude.com",
-    logo: "/claude-logo.svg",
-    desc: "claude code详细的指导和内部工具链",
+    href: "https://code.claude.com/docs/zh-CN/overview",
+    title: "Claude Code Docs",
+    category: "收藏",
+    date: "code.claude.com",
+    excerpt: "Claude Code 指南与工具链",
+    external: true,
   },
   {
-    title: "Dribbble",
     url: "https://dribbble.com/",
-    host: "dribbble.com",
-    logo: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/dribbble.svg",
-    desc: "全球设计师作品与灵感社区",
+    href: "https://dribbble.com/",
+    title: "Dribbble",
+    category: "收藏",
+    date: "dribbble.com",
+    excerpt: "全球设计师作品与灵感社区",
+    external: true,
   },
   {
-    title: "Open Design",
     url: "https://open-design.ai/zh/",
-    host: "open-design.ai",
-    logo: "https://open-design.ai/apple-touch-icon.png",
-    desc: "AI 设计工作台，Claude Design 开源替代",
+    href: "https://open-design.ai/zh/",
+    title: "Open Design",
+    category: "收藏",
+    date: "open-design.ai",
+    excerpt: "AI 设计工作台",
+    external: true,
   },
   {
-    title: "Zeabur",
     url: "https://zeabur.com/zh-CN/",
-    host: "zeabur.com",
-    logo: "https://zeabur.com/favicon.ico",
-    desc: "AI DevOps 工程师，一键部署与运维",
+    href: "https://zeabur.com/zh-CN/",
+    title: "Zeabur",
+    category: "收藏",
+    date: "zeabur.com",
+    excerpt: "部署与运维平台",
+    external: true,
   },
   {
-    title: "Meshy",
     url: "https://www.meshy.ai/zh/?noRedirect=true",
-    host: "meshy.ai",
-    logo: "https://www.meshy.ai/favicon.ico",
-    desc: "AI 3D 模型与纹理生成平台",
+    href: "https://www.meshy.ai/zh/?noRedirect=true",
+    title: "Meshy",
+    category: "收藏",
+    date: "meshy.ai",
+    excerpt: "AI 3D 模型与纹理生成平台",
+    external: true,
   },
 ];
 
-const filteredPosts = computed(() =>
-  posts.filter((post) => post.category === activeCategory.value)
-);
+const filteredList = computed<IndexItem[]>(() => {
+  if (activeCategory.value === "nav") return navSites;
+  if (activeCategory.value === "all") return postItems.value;
+  return postItems.value.filter(
+    (item) => item.category === categoryLabel(activeCategory.value as PostCategory),
+  );
+});
 
-function formatDate(date: string) {
-  if (!date) return "未记录";
-  return date.slice(0, 10);
-}
+const filteredCount = computed(() => filteredList.value.length);
 </script>
 
 <style scoped lang="scss">
-.home-container {
-  width: 100%;
-  max-width: 780px;
+.home {
+  --ink: #050505;
+  --paper: #fff;
+  --line: #dedede;
+  --muted: #777777;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.home-main {
+  flex: 1;
+  width: min(1120px, calc(100% - 64px));
   margin: 0 auto;
-  min-height: 100%;
-  padding: 36px 28px 64px;
-  background: #fff;
+  padding: 82px 0 120px;
 }
 
-.home-header {
-  margin-bottom: 20px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #e8e8e8;
-
-  h1 {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.3;
-    margin: 0;
-    color: #2b2b2b;
-  }
-
-  .tagline {
-    margin: 8px 0 0;
-    font-size: 13px;
-    color: #999;
-  }
+.page-title {
+  margin: 0 0 52px;
+  font-size: clamp(26px, 2.5vw, 34px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
 }
 
-.category-tabs {
+/* ---------- 分类筛选 ---------- */
+.filters {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-  padding: 4px 0 12px;
-  border-bottom: 1px dashed #ddd;
+  gap: 26px;
+  margin-bottom: 34px;
 }
 
-.category-link {
-  border: none;
-  background: transparent;
+.filter {
   padding: 0;
-  font-size: 14px;
-  color: #555;
-  cursor: pointer;
+  border: 0;
+  background: none;
+  color: var(--muted);
   font-family: inherit;
-  line-height: 1.4;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 150ms ease;
 
   &:hover {
-    color: #2e6da4;
-    text-decoration: underline;
+    color: var(--ink);
   }
 
   &.active {
-    color: #2e6da4;
-    font-weight: 700;
+    color: var(--ink);
+    font-weight: 600;
   }
 }
 
-.tab-sep {
-  color: #ccc;
-  font-size: 12px;
-  user-select: none;
+.filters-count {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 13px;
 }
 
-.post-switch-enter-active,
-.post-switch-leave-active {
-  transition: opacity 0.2s ease;
+/* ---------- 切换动效 ---------- */
+.feed-switch-enter-active,
+.feed-switch-leave-active {
+  transition: opacity 160ms ease;
 }
 
-.post-switch-enter-from,
-.post-switch-leave-to {
+.feed-switch-enter-from,
+.feed-switch-leave-to {
   opacity: 0;
 }
 
-.post-list {
-  margin: 0;
-  padding: 0;
-}
+@media (max-width: 720px) {
+  .home-main {
+    width: calc(100% - 36px);
+    padding: 58px 0 80px;
+  }
 
-.post-entry {
-  padding: 18px 0 14px;
-  border-bottom: 1px dashed #e0e0e0;
+  .page-title {
+    margin-bottom: 34px;
+    font-size: 28px;
+  }
 
-  &:last-child {
-    border-bottom: none;
+  .filters {
+    gap: 20px;
+    overflow-x: auto;
+    margin-bottom: 26px;
   }
 }
 
-.post-title-link {
-  display: inline;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: #2e6da4;
-  text-decoration: none;
-  word-break: break-word;
-
-  &:hover {
-    color: #1a5278;
-    text-decoration: underline;
-  }
-
-  &:visited {
-    color: #5a7ea0;
-  }
-}
-
-.post-excerpt {
-  margin: 8px 0 0;
-  font-size: 14px;
-  line-height: 1.7;
-  color: #666;
-}
-
-.post-meta {
-  margin: 8px 0 0;
-  font-size: 12px;
-  color: #999;
-  line-height: 1.5;
-}
-
-.meta-cat {
-  margin-left: 10px;
-  color: #bbb;
-}
-
-.meta-link {
-  color: #999;
-  text-decoration: none;
-
-  &:hover {
-    color: #2e6da4;
-    text-decoration: underline;
-  }
-}
-
-.post-empty {
-  padding: 48px 0;
-  text-align: center;
-  color: #bbb;
-  font-size: 14px;
-}
-
-.nav-entry {
-  padding: 14px 0;
-}
-
-.nav-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  text-decoration: none;
-  color: inherit;
-
-  &:hover .post-title-link {
-    color: #1a5278;
-    text-decoration: underline;
-  }
-}
-
-.nav-logo {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  margin-top: 2px;
-  object-fit: contain;
-  background: #f5f5f5;
-}
-
-.nav-body {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-
-  .post-title-link {
-    display: inline;
-  }
-
-  .post-excerpt,
-  .post-meta {
-    display: block;
-  }
-}
-
-@media (max-width: 640px) {
-  .home-container {
-    padding: 24px 18px 48px;
-  }
-
-  .home-header h1 {
-    font-size: 22px;
-  }
-
-  .post-title-link {
-    font-size: 16px;
+@media (prefers-reduced-motion: reduce) {
+  .filter,
+  .feed-switch-enter-active,
+  .feed-switch-leave-active {
+    transition: none;
   }
 }
 </style>

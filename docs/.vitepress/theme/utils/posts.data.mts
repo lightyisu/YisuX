@@ -8,6 +8,7 @@ export interface Post {
   date: string;
   category: PostCategory;
   images: string[];
+  excerpt: string;
 }
 
 declare const data: Post[];
@@ -75,6 +76,35 @@ function extractImages(src: string | undefined, limit = 3): string[] {
   return images;
 }
 
+function extractExcerpt(
+  src: string | undefined,
+  title: string,
+  limit = 140
+): string {
+  if (!src) return "";
+  // 去掉 frontmatter
+  const body = src.replace(/^---[\s\S]*?---\s*/, "");
+  // 去掉图片、链接、代码块、标题标记等 markdown 语法
+  const text = body
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/[>*_`~|]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  // 正文常以标题开头，剥离避免摘要重复标题
+  let excerpt = text;
+  if (title && excerpt.startsWith(title)) {
+    excerpt = excerpt.slice(title.length).replace(/^[\s:：、,，.。-]+/, "");
+  }
+  if (!excerpt) return "";
+  return excerpt.length > limit ? excerpt.slice(0, limit).trimEnd() + "…" : excerpt;
+}
+
 export default createContentLoader("**/*.md", {
   includeSrc: true,
   transform(raw): Post[] {
@@ -94,6 +124,7 @@ export default createContentLoader("**/*.md", {
           date,
           category,
           images: extractImages(src),
+          excerpt: extractExcerpt(src, String(frontmatter.title || "")),
         };
       })
       .filter((post): post is Post => post !== null)

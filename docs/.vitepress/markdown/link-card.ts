@@ -81,15 +81,13 @@ function render(href, m, label) {
           ${dupSite ? '' : `<span class="vlc-site-name">${esc(site)}</span>`}
           ${path ? `<span class="vlc-path">${esc(path)}</span>` : ''}
         </div>` : ''
-  const cls = ['vp-link-card', m.cover ? '' : 'is-compact'].join(' ').trim()
   const inner = `
       <div class="vlc-body">${siteLine}
         <div class="vlc-title">${esc(title)}</div>
         ${m.description ? `<div class="vlc-desc">${esc(m.description)}</div>` : ''}
-      </div>${m.cover ? `
-      <div class="vlc-cover"><img class="vlc-cover-img" src="${esc(m.cover)}" alt="" loading="lazy" decoding="async"></div>` : ''}`
+      </div>`
 
-  return `<div class="${cls}">${label ? `<div class="vlc-label">${esc(label)}</div>` : ''}<a class="vlc" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${inner}
+  return `<div class="vp-link-card">${label ? `<div class="vlc-label">${esc(label)}</div>` : ''}<a class="vlc" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${inner}
     </a>
   </div>`
 }
