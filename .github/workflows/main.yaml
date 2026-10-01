@@ -5,9 +5,13 @@ on:
     branches:
       - main
   
+  # 外部 API 触发：POST /repos/{owner}/{repo}/dispatches {"event_type":"deploy"}
   repository_dispatch:
     types:
       - deploy
+
+  # GitHub 网页端手动触发：Actions → 本工作流 → Run workflow
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,7 +24,7 @@ jobs:
       - name: 安装node环境
         uses: actions/setup-node@master
         with:
-          node-version: "20.x"
+          node-version: "24.x"
 
       - name: 安装依赖
         run: |

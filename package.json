@@ -21,7 +21,8 @@
     "elog:init": "elog init",
     "sync:local": "node ./delcache.js && elog sync -e .elog.env",
     "sync": "node ./delcache.js && elog sync",
-    "clean": "elog clean"
+    "clean": "elog clean",
+    "deploy": "node scripts/trigger-deploy.mjs"
   },
   "dependencies": {
     "@elog/cli": "^0.13.3",

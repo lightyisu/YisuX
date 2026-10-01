@@ -14,6 +14,46 @@
 ![Static Badge](https://img.shields.io/badge/VercelEnhanced-black?style=flat)
 
 
+### 更新文章并部署
+
+在 Notion 写好后，有两种方式触发更新：
+
+**一、本地同步（推荐）**
+
+```bash
+npm run sync          # elog 从 Notion 拉取文章到 docs/
+git add . && git commit -m "更新文档" && git push
+```
+
+推送到 main 后，GitHub Actions 会自动跑一遍，同时 Vercel 的 Git 集成会自动部署。
+
+**二、远程触发 API**
+
+不推代码，直接让 GitHub Actions 去拉文章并部署。需要先在
+[GitHub Settings → Developer settings → Tokens](https://github.com/settings/tokens)
+申请一个 token（classic 勾 `repo`，或 fine-grained 给 `Contents` 写权限）：
+
+```bash
+GITHUB_TOKEN=ghp_xxx npm run deploy
+```
+
+等价于手动调用 repository_dispatch API：
+
+```bash
+curl -X POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer <GITHUB_TOKEN>" \
+  https://api.github.com/repos/lightyisu/YisuX/dispatches \
+  -d '{"event_type":"deploy"}'
+```
+
+也可以直接在网页触发：仓库 → Actions → Deplo To Github Pages → Run workflow。
+
+> Vercel 那边另有一个 [Deploy Hook](https://vercel.com/docs/deploy-hooks)（Settings → Git → Deploy Hooks），
+> POST 它只会用**当前 main 的代码**重新构建，不会去 Notion 拉新文章，所以更新文章要用上面的方式。
+
+---
+
 # YisuX Blog from 2024
 
 ### 介绍 Intro
