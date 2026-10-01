@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "24.x"
+  },
   "devDependencies": {
     "@css-render/vue3-ssr": "^0.15.14",
     "@vueuse/core": "^14.1.0",
