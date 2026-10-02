@@ -65,7 +65,7 @@ function normalizeUrl(url: string): string {
 
 const page_titile = computed(() => page.value.title);
 
-const pageDate = computed(() => String(page.value.frontmatter.date || ""));
+const pageDate = computed(() => currentPost.value?.date || String(page.value.frontmatter.created || page.value.frontmatter.date || ""));
 
 const categoryLabel = computed(() =>
   page.value.frontmatter.catalog?.[0] === "jishu" ||

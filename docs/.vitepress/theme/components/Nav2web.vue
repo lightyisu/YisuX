@@ -39,18 +39,15 @@ let websites = ref([
 
 // 图片加载状态
 const loadingStates = ref<Record<string, boolean>>({});
-const errorStates = ref<Record<string, boolean>>({});
 
 // 初始化所有图片为 loading 状态
 websites.value.forEach((item) => {
   loadingStates.value[item.img] = true;
-  errorStates.value[item.img] = false;
 });
 
 // 图片加载成功
 const onImageLoad = (src: string) => {
   loadingStates.value[src] = false;
-  errorStates.value[src] = false;
 };
 </script>
 

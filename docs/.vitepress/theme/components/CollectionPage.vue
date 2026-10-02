@@ -229,7 +229,6 @@ function useFaviconFallback(event: Event, domain: string) {
 .collection-page {
   --ink: #050505;
   --paper: #fff;
-  --line: #dedede;
   min-height: 100vh;
   color: var(--ink);
   background: var(--paper);

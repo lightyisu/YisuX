@@ -27,8 +27,6 @@
             v-for="item in filteredList"
             :key="item.url"
             :href="item.href"
-            :target="item.external ? '_blank' : undefined"
-            :rel="item.external ? 'noopener noreferrer' : undefined"
             class="idx-row"
           >
             <div class="idx-meta">
@@ -55,7 +53,7 @@ import SiteNav from "./SiteNav.vue";
 import SiteFooter from "./SiteFooter.vue";
 import { data as posts, type PostCategory } from "../utils/posts.data.mts";
 
-type HomeCategory = PostCategory | "nav" | "all";
+type HomeCategory = PostCategory | "all";
 
 interface IndexItem {
   url: string;
@@ -64,11 +62,10 @@ interface IndexItem {
   category: string;
   date: string;
   excerpt: string;
-  external?: boolean;
 }
 
 const CATEGORY_KEY = "yisux-home-category";
-const VALID_CATEGORIES: HomeCategory[] = ["all", "jishu", "richang", "nav"];
+const VALID_CATEGORIES: HomeCategory[] = ["all", "jishu", "richang"];
 
 function readStoredCategory(): HomeCategory {
   if (typeof sessionStorage === "undefined") return "all";
@@ -90,7 +87,6 @@ const tabs: { key: HomeCategory; label: string }[] = [
   { key: "all", label: "全部" },
   { key: "jishu", label: "技术" },
   { key: "richang", label: "日常" },
-  { key: "nav", label: "导航" },
 ];
 
 function categoryLabel(category: PostCategory) {
@@ -128,59 +124,11 @@ function toIndexItem(post: (typeof posts)[number]): IndexItem {
 
 const postItems = computed<IndexItem[]>(() => posts.map(toIndexItem));
 
-const navSites: IndexItem[] = [
-  {
-    url: "https://code.claude.com/docs/zh-CN/overview",
-    href: "https://code.claude.com/docs/zh-CN/overview",
-    title: "Claude Code Docs",
-    category: "收藏",
-    date: "code.claude.com",
-    excerpt: "Claude Code 指南与工具链",
-    external: true,
-  },
-  {
-    url: "https://dribbble.com/",
-    href: "https://dribbble.com/",
-    title: "Dribbble",
-    category: "收藏",
-    date: "dribbble.com",
-    excerpt: "全球设计师作品与灵感社区",
-    external: true,
-  },
-  {
-    url: "https://open-design.ai/zh/",
-    href: "https://open-design.ai/zh/",
-    title: "Open Design",
-    category: "收藏",
-    date: "open-design.ai",
-    excerpt: "AI 设计工作台",
-    external: true,
-  },
-  {
-    url: "https://zeabur.com/zh-CN/",
-    href: "https://zeabur.com/zh-CN/",
-    title: "Zeabur",
-    category: "收藏",
-    date: "zeabur.com",
-    excerpt: "部署与运维平台",
-    external: true,
-  },
-  {
-    url: "https://www.meshy.ai/zh/?noRedirect=true",
-    href: "https://www.meshy.ai/zh/?noRedirect=true",
-    title: "Meshy",
-    category: "收藏",
-    date: "meshy.ai",
-    excerpt: "AI 3D 模型与纹理生成平台",
-    external: true,
-  },
-];
-
 const filteredList = computed<IndexItem[]>(() => {
-  if (activeCategory.value === "nav") return navSites;
-  if (activeCategory.value === "all") return postItems.value;
+  const category = activeCategory.value;
+  if (category === "all") return postItems.value;
   return postItems.value.filter(
-    (item) => item.category === categoryLabel(activeCategory.value as PostCategory),
+    (item) => item.category === categoryLabel(category),
   );
 });
 
@@ -191,7 +139,6 @@ const filteredCount = computed(() => filteredList.value.length);
 .home {
   --ink: #050505;
   --paper: #fff;
-  --line: #dedede;
   --muted: #777777;
 
   min-height: 100vh;

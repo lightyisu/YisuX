@@ -8,7 +8,7 @@ module.exports = {
       databaseId: process.env.NOTION_DATABASE_ID,
       filter: false, // {property: 'status', select: {equals: '已发布'}}
       catalog:true,
-      sorts:'dateDesc'
+      sorts:'createTimeDesc'
     },
  
   },

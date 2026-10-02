@@ -1,64 +1,51 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
+const matter = require("gray-matter");
 
-// 定义要删除的文件夹和文件路径
-const foldersToDelete = [
-  "./docs/2023",
-  "./docs/2024",
-  "./docs/2025",
-  "./docs/2026",
-  "./docs/zhoukan",
-  "./docs/timeline",
-  "./docs/jishu",
-];
-const filesToDelete = ["elog.cache.json"];
+// Elog 默认用 Notion 页面 ID 作为 urlname，文章改名后此 ID 保持不变。
+const NOTION_ID = /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i;
 
-// 检查并删除文件夹
-foldersToDelete.forEach((folder) => {
-  if (fs.existsSync(folder)) {
-    const files = fs.readdirSync(folder);
-    if (files.length > 0) {
-      console.log(`文件夹 ${folder} 不为空，正在删除其内容...`);
-      files.forEach((file) => {
-        const curPath = path.join(folder, file);
-        if (fs.statSync(curPath).isDirectory()) {
-          deleteFolderRecursive(curPath);
-        } else {
-          fs.unlinkSync(curPath);
+function cleanDocuments(root = __dirname, { dryRun = false } = {}) {
+  const docsDir = path.join(root, "docs");
+  const cachePath = path.join(root, "elog.cache.json");
+  const cache = fs.existsSync(cachePath)
+    ? JSON.parse(fs.readFileSync(cachePath, "utf8"))
+    : { docs: [] };
+  const knownIds = new Set(
+    cache.docs.map((doc) => doc.properties?.urlname).filter(Boolean)
+  );
+  const files = [];
+
+  function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      // 保留 VitePress 配置、构建缓存和静态资源，不跟随符号链接。
+      if (entry.name.startsWith(".") || entry.name === "public") continue;
+      const file = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(file);
+      } else if (entry.isFile() && entry.name.endsWith(".md")) {
+        const { data } = matter(fs.readFileSync(file, "utf8"));
+        if (data.urlname && (NOTION_ID.test(data.urlname) || knownIds.has(data.urlname))) {
+          files.push(file);
         }
-      });
-    }
-    fs.rmdirSync(folder);
-    console.log(`文件夹 ${folder} 已被删除`);
-  } else {
-    console.log(`文件夹 ${folder} 不存在`);
-  }
-});
-
-// 检查并删除文件
-filesToDelete.forEach((file) => {
-  if (fs.existsSync(file)) {
-    fs.unlinkSync(file);
-    console.log(`文件 ${file} 已被删除`);
-  } else {
-    console.log(`文件 ${file} 不存在`);
-  }
-});
-
-// 递归删除文件夹
-function deleteFolderRecursive(folderPath) {
-  if (fs.existsSync(folderPath)) {
-    const files = fs.readdirSync(folderPath);
-    files.forEach((file) => {
-      const curPath = path.join(folderPath, file);
-      if (fs.statSync(curPath).isDirectory()) {
-        deleteFolderRecursive(curPath);
-      } else {
-        fs.unlinkSync(curPath);
       }
-    });
-    fs.rmdirSync(folderPath);
+    }
   }
+
+  // 先完成扫描，避免解析错误导致只清理了一部分文章。
+  if (fs.existsSync(docsDir)) walk(docsDir);
+  for (const file of files) {
+    if (!dryRun) fs.unlinkSync(file);
+    console.log(`${dryRun ? "待删除" : "已删除"} ${path.relative(root, file)}`);
+  }
+  // 清除缓存，让下一次同步重新拉取所有文章。
+  if (!dryRun) fs.rmSync(cachePath, { force: true });
+  console.log(`${dryRun ? "预计清理" : "清理完成"} ${files.length} 篇同步文章`);
+  return files;
 }
 
-console.log("清理完成");
+if (require.main === module) {
+  cleanDocuments(__dirname, { dryRun: process.argv.includes("--dry-run") });
+}
+
+module.exports = { cleanDocuments };

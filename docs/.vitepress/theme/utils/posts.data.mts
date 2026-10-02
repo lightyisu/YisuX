@@ -1,4 +1,5 @@
 import { createContentLoader } from "vitepress";
+import { readFileSync } from "node:fs";
 
 export type PostCategory = "jishu" | "richang";
 
@@ -7,7 +8,6 @@ export interface Post {
   url: string;
   date: string;
   category: PostCategory;
-  images: string[];
   excerpt: string;
 }
 
@@ -15,6 +15,21 @@ declare const data: Post[];
 export { data };
 
 const EXCLUDED_URLS = ["/介绍页", "/nav2web"];
+
+function getCreatedTimes(): Map<string, string> {
+  try {
+    const cache = JSON.parse(readFileSync(
+      new URL("../../../../elog.cache.json", import.meta.url), "utf8"
+    ));
+    return new Map((cache.catalog || []).map((page: {
+      id: string;
+      created_time: string;
+      properties?: { urlname?: string };
+    }) => [page.properties?.urlname || page.id, page.created_time]));
+  } catch {
+    return new Map();
+  }
+}
 
 function getCategory(
   frontmatter: Record<string, unknown>,
@@ -53,29 +68,6 @@ function isPublished(frontmatter: Record<string, unknown>): boolean {
   return status === "已发布";
 }
 
-function extractImages(src: string | undefined, limit = 3): string[] {
-  if (!src) return [];
-
-  const images: string[] = [];
-  const seen = new Set<string>();
-  const patterns = [
-    /!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g,
-    /<img[^>]+src=["']([^"']+)["']/gi,
-  ];
-
-  for (const pattern of patterns) {
-    for (const match of src.matchAll(pattern)) {
-      const url = match[1]?.trim();
-      if (!url || seen.has(url)) continue;
-      seen.add(url);
-      images.push(url);
-      if (images.length >= limit) return images;
-    }
-  }
-
-  return images;
-}
-
 function extractExcerpt(
   src: string | undefined,
   title: string,
@@ -105,9 +97,10 @@ function extractExcerpt(
   return excerpt.length > limit ? excerpt.slice(0, limit).trimEnd() + "…" : excerpt;
 }
 
-export default createContentLoader("**/*.md", {
+export default createContentLoader(["**/*.md", "../elog.cache.json"], {
   includeSrc: true,
   transform(raw): Post[] {
+    const createdTimes = getCreatedTimes();
     return raw
       .filter(({ url }) => url !== "/")
       .filter(({ frontmatter }) => isPublished(frontmatter))
@@ -116,18 +109,19 @@ export default createContentLoader("**/*.md", {
         if (!category) return null;
 
         const date =
-          String(frontmatter.updated || frontmatter.date || "");
+          String(frontmatter.created || createdTimes.get(String(frontmatter.urlname || "")) || frontmatter.date || "");
 
         return {
           title: String(frontmatter.title || "无题"),
           url,
           date,
           category,
-          images: extractImages(src),
           excerpt: extractExcerpt(src, String(frontmatter.title || "")),
         };
       })
       .filter((post): post is Post => post !== null)
-      .sort((a, b) => b.date.localeCompare(a.date));
+      .sort((a, b) =>
+        (new Date(b.date).getTime() || 0) - (new Date(a.date).getTime() || 0)
+      );
   },
 });
