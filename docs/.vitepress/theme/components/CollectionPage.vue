@@ -18,10 +18,11 @@
           >
             <img
               class="site-cover site-cover--claude"
-              :src="claudeScreenshot"
-              alt="claude.dev 网站首页截图"
+              :src="claudeCover"
+              alt="claude.dev 网站封面"
               decoding="async"
-              @error="useFallback($event, '/site-covers/claude-dev.png')"
+              @load="ensureCoverQuality($event, claudeScreenshot, '/site-covers/claude-dev.png')"
+              @error="useCoverFallback($event, claudeScreenshot, '/site-covers/claude-dev.png')"
             />
             <div class="site-title">
               <img :src="claudeFavicon" alt="" aria-hidden="true" />
@@ -40,10 +41,11 @@
           >
             <img
               class="site-cover site-cover--qwen"
-              :src="qwenScreenshot"
-              alt="Qwen Research 网站首页截图"
+              :src="qwenCover"
+              alt="Qwen Research 网站封面"
               decoding="async"
-              @error="useFallback($event, '/site-covers/qwen-research.png')"
+              @load="ensureCoverQuality($event, qwenScreenshot, '/site-covers/qwen-research.png')"
+              @error="useCoverFallback($event, qwenScreenshot, '/site-covers/qwen-research.png')"
             />
             <div class="site-title">
               <img :src="qwenFavicon" alt="" aria-hidden="true" />
@@ -68,9 +70,11 @@
             >
               <img
                 class="site-cover"
-                :src="freeEggScreenshot"
-                alt="FreeEgg 网站首页截图"
+                :src="freeEggCover"
+                alt="FreeEgg 网站封面"
                 decoding="async"
+                @load="ensureCoverQuality($event, freeEggScreenshot)"
+                @error="useCoverFallback($event, freeEggScreenshot)"
               />
               <div class="site-title">
                 <img :src="freeEggFavicon" alt="" aria-hidden="true" />
@@ -95,9 +99,11 @@
             >
               <img
                 class="site-cover"
-                :src="designingWaitScreenshot"
-                alt="Designing the Wait 文章页面截图"
+                :src="designingWaitCover"
+                alt="Designing the Wait 文章封面"
                 decoding="async"
+                @load="ensureCoverQuality($event, designingWaitScreenshot)"
+                @error="useCoverFallback($event, designingWaitScreenshot)"
               />
               <div class="site-title">
                 <img
@@ -121,9 +127,11 @@
             >
               <img
                 class="site-cover"
-                :src="motionScreenshot"
-                alt="Motion 网站首页截图"
+                :src="motionCover"
+                alt="Motion 网站封面"
                 decoding="async"
+                @load="ensureCoverQuality($event, motionScreenshot)"
+                @error="useCoverFallback($event, motionScreenshot)"
               />
               <div class="site-title">
                 <img
@@ -147,9 +155,11 @@
             >
               <img
                 class="site-cover"
-                :src="recentScreenshot"
-                alt="Recent Design 网站首页截图"
+                :src="recentCover"
+                alt="Recent Design 网站封面"
                 decoding="async"
+                @load="ensureCoverQuality($event, recentScreenshot)"
+                @error="useCoverFallback($event, recentScreenshot)"
               />
               <div class="site-title">
                 <img
@@ -161,6 +171,90 @@
                 <h2>Recent</h2>
               </div>
               <p class="site-meta">recent.design</p>
+            </a>
+          </article>
+
+          <article class="site-card">
+            <a
+              href="https://toolcraft.sh/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="打开 Toolcraft（新窗口）"
+            >
+              <img
+                class="site-cover"
+                :src="toolcraftCover"
+                alt="Toolcraft 网站封面"
+                decoding="async"
+                @load="ensureCoverQuality($event, toolcraftScreenshot)"
+                @error="useCoverFallback($event, toolcraftScreenshot)"
+              />
+              <div class="site-title">
+                <img
+                  :src="toolcraftFavicon"
+                  alt=""
+                  aria-hidden="true"
+                  @error="useFaviconFallback($event, 'toolcraft.sh')"
+                />
+                <h2>Toolcraft</h2>
+              </div>
+              <p class="site-meta">toolcraft.sh</p>
+            </a>
+          </article>
+
+          <article class="site-card">
+            <a
+              href="https://www.pinui.xyz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="打开 Pin UI（新窗口）"
+            >
+              <img
+                class="site-cover"
+                :src="pinUiCover"
+                alt="Pin UI 网站封面"
+                decoding="async"
+                @load="ensureCoverQuality($event, pinUiScreenshot)"
+                @error="useCoverFallback($event, pinUiScreenshot)"
+              />
+              <div class="site-title">
+                <img
+                  :src="pinUiFavicon"
+                  alt=""
+                  aria-hidden="true"
+                  @error="useFaviconFallback($event, 'pinui.xyz')"
+                />
+                <h2>Pin UI</h2>
+              </div>
+              <p class="site-meta">pinui.xyz</p>
+            </a>
+          </article>
+
+          <article class="site-card">
+            <a
+              href="https://bencho.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="打开 Bencho（新窗口）"
+            >
+              <img
+                class="site-cover"
+                :src="benchoCover"
+                alt="Bencho 网站封面"
+                decoding="async"
+                @load="ensureCoverQuality($event, benchoScreenshot)"
+                @error="useCoverFallback($event, benchoScreenshot)"
+              />
+              <div class="site-title">
+                <img
+                  :src="benchoFavicon"
+                  alt=""
+                  aria-hidden="true"
+                  @error="useFaviconFallback($event, 'bencho.dev')"
+                />
+                <h2>Bencho</h2>
+              </div>
+              <p class="site-meta">bencho.dev</p>
             </a>
           </article>
         </div>
@@ -187,6 +281,21 @@ const screenshotUrl = (url: string) => {
   return `https://api.microlink.io/?${params.toString()}`;
 };
 
+const coverUrl = (url: string) =>
+  `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url`;
+
+const claudeCover = coverUrl("https://claude.dev/");
+const qwenCover = coverUrl("https://qwen.ai/research");
+const freeEggCover = coverUrl("https://freeegg.top/");
+const designingWaitCover = coverUrl(
+  "https://chloemaillot.fr/writing/designing-the-wait",
+);
+const motionCover = coverUrl("https://motion.dev/");
+const recentCover = coverUrl("https://recent.design/");
+const toolcraftCover = coverUrl("https://toolcraft.sh/");
+const pinUiCover = coverUrl("https://www.pinui.xyz/");
+const benchoCover = coverUrl("https://bencho.dev/");
+
 const claudeScreenshot = screenshotUrl("https://claude.dev/");
 const qwenScreenshot = screenshotUrl("https://qwen.ai/research");
 const freeEggScreenshot = screenshotUrl("https://freeegg.top/");
@@ -195,6 +304,9 @@ const designingWaitScreenshot = screenshotUrl(
 );
 const motionScreenshot = screenshotUrl("https://motion.dev/");
 const recentScreenshot = screenshotUrl("https://recent.design/");
+const toolcraftScreenshot = screenshotUrl("https://toolcraft.sh/");
+const pinUiScreenshot = screenshotUrl("https://www.pinui.xyz/");
+const benchoScreenshot = screenshotUrl("https://bencho.dev/");
 
 const faviconUrl = (url: string) =>
   `https://deck.mcl39.com/favicon?url=${encodeURIComponent(url)}`;
@@ -207,11 +319,30 @@ const designingWaitFavicon = faviconUrl(
 );
 const motionFavicon = faviconUrl("https://motion.dev/");
 const recentFavicon = faviconUrl("https://recent.design/");
+const toolcraftFavicon = faviconUrl("https://toolcraft.sh/");
+const pinUiFavicon = faviconUrl("https://www.pinui.xyz/");
+const benchoFavicon = faviconUrl("https://bencho.dev/");
 
-function useFallback(event: Event, fallback: string) {
+function useCoverFallback(event: Event, screenshot: string, local?: string) {
   const image = event.currentTarget as HTMLImageElement;
-  if (image.src.endsWith(fallback)) return;
-  image.src = fallback;
+  if (image.dataset.fallback === "screenshot") {
+    if (local) {
+      image.dataset.fallback = "local";
+      image.src = local;
+    }
+    return;
+  }
+  if (image.dataset.fallback === "local") return;
+  image.dataset.fallback = "screenshot";
+  image.src = screenshot;
+}
+
+function ensureCoverQuality(event: Event, screenshot: string, local?: string) {
+  const image = event.currentTarget as HTMLImageElement;
+  if (image.dataset.fallback) return;
+  if (image.naturalWidth < 600 || image.naturalHeight < 300) {
+    useCoverFallback(event, screenshot, local);
+  }
 }
 
 function useFaviconFallback(event: Event, domain: string) {
@@ -309,7 +440,7 @@ function useFaviconFallback(event: Event, domain: string) {
 .site-cover {
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1200 / 630;
   object-fit: cover;
   object-position: center top;
   border-radius: 8px;
