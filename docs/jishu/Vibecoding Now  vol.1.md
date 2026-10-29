@@ -7,13 +7,13 @@ slug: ''
 title: Vibecoding Now  vol.1
 status: 已发布
 urlname: 407e9dc9-c245-807c-a1d3-dd3c6cf3d32d
-updated: '2026-10-28 14:10:00'
+updated: '2026-10-30 00:11:00'
 ---
 
 记录 Vibe Coding 遇到的，这里是 Vol1。
 
 
-WorkTree
+### WorkTree
 
 
 从 Git 延伸过来的开发概念，比较适合 Vibe Coding 应该是。之前没有接触过 worktree 更多的是分支。但是 Vibe Coding 工作效率提高随之带来需要并行开发的需求，worktree 便是非常适合的选择。**本质是复制多个目录同时工作且互不覆盖写入打扰。**
