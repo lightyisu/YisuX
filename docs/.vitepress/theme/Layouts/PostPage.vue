@@ -2,6 +2,10 @@
   <div class="app-container">
     <CollectionPage v-if="frontmatter.layout === 'collection'" />
 
+    <VibexPage v-else-if="frontmatter.layout === 'vibex'" />
+
+    <IconsPage v-else-if="IconsPage && frontmatter.layout === 'icons'" />
+
     <div v-else-if="frontmatter.layout === 'home'">
       <MyHome />
     </div>
@@ -43,15 +47,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import MyHome from "../components/MyHome.vue";
 import CollectionPage from "../components/CollectionPage.vue";
+import VibexPage from "../components/VibexPage.vue";
 import SiteNav from "../components/SiteNav.vue";
 import SiteFooter from "../components/SiteFooter.vue";
 import { useData } from "vitepress";
 import { data as posts, type Post } from "../utils/posts.data.mts";
 
 const { page, frontmatter } = useData();
+
+// Icons 页只在开发模式下加载，生产包不含该组件与图标清单
+const IconsPage = import.meta.env.DEV
+  ? defineAsyncComponent(() => import("../components/IconsPage.vue"))
+  : null;
 
 function normalizeUrl(url: string): string {
   let result = url;

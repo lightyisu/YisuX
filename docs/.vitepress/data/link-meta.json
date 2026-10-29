@@ -56,20 +56,6 @@
     "favicon": "/link-covers/fav/a4ad909254b6ac1f.webp",
     "fetchedAt": "2026-09-17T09:34:22.704Z"
   },
-  "https://cn.vuejs.org/guide/typescript/composition-api.html#typing-component-props": {
-    "hostname": "cn.vuejs.org",
-    "description": "Vue.js - 渐进式的 JavaScript 框架",
-    "publisher": "vuejs.org",
-    "logoUrl": "https://cn.vuejs.org/logo.svg",
-    "finalUrl": "https://vuejs.org/",
-    "ok": true,
-    "level": "cover",
-    "coverUrl": "https://vuejs.org/images/logo.png",
-    "title": "Vue.js",
-    "cover": "/link-covers/cover-be0d3144db1720b8.webp",
-    "favicon": "/link-covers/fav/8239187c3f3c742a.webp",
-    "fetchedAt": "2026-09-17T09:29:57.529Z"
-  },
   "https://demo.heyluck.xyz/": {
     "hostname": "demo.heyluck.xyz",
     "description": null,

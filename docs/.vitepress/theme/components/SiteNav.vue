@@ -5,6 +5,8 @@
       <nav class="site-nav-links" aria-label="主导航">
         <a href="/" :class="{ active: active === 'home' }">首页</a>
         <a href="/page" :class="{ active: active === 'page' }">Dev.</a>
+        <a href="/vibex" :class="{ active: active === 'vibex' }">VibeX</a>
+        <a v-if="isDev" href="/icons" :class="{ active: active === 'icons' }">Icons</a>
         <a
           href="https://github.com/lightyisu/yisupower"
           target="_blank"
@@ -18,8 +20,11 @@
 
 <script setup lang="ts">
 defineProps<{
-  active?: "home" | "page";
+  active?: "home" | "page" | "vibex" | "icons";
 }>();
+
+// Icons 页只在开发模式下提供
+const isDev = import.meta.env.DEV;
 </script>
 
 <style scoped lang="scss">

@@ -1,0 +1,37 @@
+/* 正文关键词图标，由 markdown/keyword-icon.ts 生成 */
+/* 胶囊：图标 + 关键词，浅底细边，不打断正文行高 */
+.kw {
+  display: inline-block;
+  padding: 0 0.55em 0 0.42em;
+  border: 1px solid #e6e6e6;
+  border-radius: 999px;
+  background: #f5f5f5;
+  font-size: 0.92em;
+  line-height: 1.55;
+  white-space: nowrap;
+  vertical-align: 0.04em;
+}
+
+.kw-icon {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.3em;
+  vertical-align: -0.16em;
+  object-fit: contain;
+}
+
+/* 盖过正文 .post-content img 的块级外边距、圆角与 height: auto */
+.kw img.kw-icon {
+  height: 1.05em;
+  max-width: none;
+  margin: 0 0.3em 0 0;
+  border-radius: 0;
+}
+
+/* 单色 SVG 以 mask 方式绘制，颜色跟随文字 */
+.kw-icon--mono {
+  background-color: currentColor;
+  -webkit-mask: var(--kw-icon) center / contain no-repeat;
+  mask: var(--kw-icon) center / contain no-repeat;
+}

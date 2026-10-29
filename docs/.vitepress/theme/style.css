@@ -159,12 +159,6 @@
   letter-spacing: -0.035em;
 }
 
-.idx-row:hover .idx-title {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-}
-
 .idx-excerpt {
   margin: 10px 0 0;
   max-width: 660px;

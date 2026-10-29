@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从零搭建强化学习：五步写出 Q-learning</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #0d0d0d;
+    --muted: #5d5d5d;
+    --faint: #8f8f8f;
+    --line: #ececec;
+    --chip: #f4f4f4;
+    --code-bg: #f9f9f9;
+    --blue: #2964aa;
+    --blue-soft: #e8f1fc;
+    --kw: #a8590b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #212121;
+      --fg: #ececec;
+      --muted: #b4b4b4;
+      --faint: #8f8f8f;
+      --line: #3a3a3a;
+      --chip: #2f2f2f;
+      --code-bg: #171717;
+      --blue: #7ab7ff;
+      --blue-soft: #1f2d3f;
+      --kw: #e5a764;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.75 ui-sans-serif, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 680px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .ask { display: flex; justify-content: flex-end; margin-bottom: 28px; }
+  .ask span { background: var(--chip); border-radius: 18px; padding: 8px 16px; max-width: 80%; }
+
+  p { margin: 0 0 14px; }
+  strong { font-weight: 600; }
+  h2 { font-size: 18px; font-weight: 600; margin: 40px 0 14px; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+  code {
+    font: 0.86em ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: var(--chip); border-radius: 4px; padding: 2px 5px;
+  }
+  p code, li code, td code { white-space: nowrap; }
+
+  /* 图 */
+  .diagram { border: 1px solid var(--line); border-radius: 14px; padding: 18px 16px 12px; margin: 4px 0 16px; }
+  .diagram svg { width: 100%; height: auto; display: block; }
+  .d-node { fill: var(--bg); stroke: var(--line); }
+  .d-main { fill: var(--chip); stroke: var(--line); }
+  .d-label { fill: var(--fg); font-size: 14px; font-weight: 600; }
+  .d-sub { fill: var(--faint); font-size: 11.5px; font-family: ui-monospace, Menlo, monospace; }
+  .d-line { stroke: var(--faint); stroke-width: 1.2; fill: none; }
+  .d-line.dash { stroke-dasharray: 4 4; }
+  .d-tip { fill: var(--faint); }
+  .d-step { fill: var(--muted); font-size: 12px; }
+  .diagram .cap { text-align: center; color: var(--faint); font-size: 13px; margin-top: 6px; }
+
+  /* 表格 */
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 0 0 14px; }
+  th { text-align: left; font-weight: 600; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); }
+  td { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td:first-child { color: var(--muted); white-space: nowrap; }
+  td.hi { color: var(--blue); font-weight: 600; }
+
+  /* 卡片组 */
+  .cards { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 4px 0 18px; }
+  .card { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .card:last-child { border-bottom: 0; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .card-title { font-weight: 600; }
+  .badge { font-size: 12px; border-radius: 6px; padding: 1px 8px; background: var(--blue-soft); color: var(--blue); white-space: nowrap; }
+  .badge.gray { background: var(--chip); color: var(--muted); }
+  .card-meta { font: 13px ui-monospace, Menlo, monospace; color: var(--muted); margin: 2px 0 0; }
+
+  /* 代码块 */
+  .code { background: var(--code-bg); border-radius: 14px; margin: 6px 0 16px; overflow: hidden; }
+  .code-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 16px 0; font-size: 13px; color: var(--muted);
+  }
+  .code-head .lang { display: flex; align-items: center; gap: 6px; }
+  .code-head svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .copy { background: none; border: 0; color: var(--muted); cursor: pointer; padding: 2px; display: flex; align-items: center; gap: 4px; font: inherit; }
+  .copy:hover { color: var(--fg); }
+  pre { margin: 0; padding: 10px 16px 14px; overflow-x: auto; font: 13.5px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  pre .k { color: var(--kw); }
+  pre .c { color: var(--faint); }
+  pre .hl { color: var(--blue); font-weight: 600; }
+
+  /* 步骤 */
+  .step { margin: 0; }
+  .where { color: var(--faint); font-size: 13.5px; margin: -8px 0 12px; }
+  h3 { font-size: 16px; font-weight: 600; margin: 24px 0 8px; }
+  table.grid td, table.grid th { font-family: ui-monospace, Menlo, monospace; font-size: 13.5px; }
+  table.grid td:first-child, table.grid th:first-child { font-family: inherit; font-size: 14.5px; }
+  .lane { display: flex; gap: 6px; margin: 6px 0 16px; }
+  .lane > div { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .lane .cell { width: 48px; height: 40px; border: 1px solid var(--line); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .lane .cell.on { background: var(--chip); font-weight: 600; }
+  .lane small { color: var(--faint); font: 12px ui-monospace, Menlo, monospace; }
+
+  ul.tight { margin: 0 0 14px; padding-left: 20px; }
+  ul.tight li { margin-bottom: 6px; }
+
+  blockquote {
+    margin: 20px 0 0; padding: 2px 0 2px 16px; border-left: 3px solid var(--line);
+    font-weight: 600;
+  }
+  .tag { display: inline-block; font-size: 12px; line-height: 1.6; color: var(--muted); background: var(--chip); border-radius: 6px; padding: 0 7px; margin-right: 8px; }
+
+  /* 语法高亮 */
+  :root { --t-kw: #a626a4; --t-str: #50a14f; --t-num: #986801; --t-fn: #4078f2; --t-bi: #0184bc; }
+  @media (prefers-color-scheme: dark) {
+    :root { --t-kw: #c678dd; --t-str: #98c379; --t-num: #d19a66; --t-fn: #61afef; --t-bi: #56b6c2; }
+  }
+  .t-kw { color: var(--t-kw); }
+  .t-str { color: var(--t-str); }
+  .t-num { color: var(--t-num); }
+  .t-fn { color: var(--t-fn); }
+  .t-bi { color: var(--t-bi); }
+  .t-com { color: var(--faint); }
+
+  /* 步骤里的跳转链接 */
+  .jump { margin-top: -4px; }
+  .jump a { color: var(--blue); text-decoration: none; font-size: 14.5px; }
+  .jump a:hover { text-decoration: underline; }
+
+  /* 完整代码：步骤筛选 + 行标注 */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 10px; }
+  .chip { font: inherit; font-size: 13px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 2px 10px; cursor: pointer; }
+  .chip:hover { color: var(--fg); }
+  .chip.on { color: var(--blue); background: var(--blue-soft); border-color: transparent; }
+  pre.annot { padding-left: 0; }
+  pre.annot .ln { display: flex; transition: opacity .15s; }
+  pre.annot .gut { flex: none; width: 34px; padding-right: 12px; text-align: right; user-select: none; }
+  pre.annot .gut a { color: var(--blue); text-decoration: none; font-size: 12px; }
+  pre.annot .gut a:hover { text-decoration: underline; }
+  pre.annot .src { white-space: pre; min-height: 1.65em; }
+  pre.annot.focus .ln { opacity: .28; }
+  pre.annot.focus .ln.on { opacity: 1; }
+  pre.annot.focus .ln.on { background: var(--blue-soft); }
+</style>
+
+</head>
+<body>
+<main>
+
+  <p>从零搭一个强化学习：不用任何现成的环境和库，只用 Python，从<strong>一条 5 格的走廊</strong>开始，每一步只加一小块东西，跑通了再走下一步。五步走完，就亲手搭出了一个完整的 Q-learning。</p>
+
+  <p>每一步都按同一个节奏走：<strong>加一点东西 → 跑一下看结果 → 发现问题 → 下一步解决它</strong>。</p>
+
+  <div class="cards">
+    <div class="card"><div class="card-head"><span class="card-title">1　搭环境，让它乱走</span><span class="badge gray">环境</span></div></div>
+    <div class="card"><div class="card-head"><span class="card-title">2　加一张记分表</span><span class="badge gray">Q 表</span></div></div>
+    <div class="card"><div class="card-head"><span class="card-title">3　每走一步，更新记分表</span><span class="badge">核心</span></div></div>
+    <div class="card"><div class="card-head"><span class="card-title">4　偶尔乱试</span><span class="badge gray">ε-greedy</span></div></div>
+    <div class="card"><div class="card-head"><span class="card-title">5　每次只改一点</span><span class="badge gray">学习率 α</span></div></div>
+  </div>
+
+  <!-- ============ 第 1 步 ============ -->
+  <div class="step">
+    <h2 id="step-1">第 1 步　搭一个环境，让智能体乱走</h2>
+    <p>环境是一条 5 格的走廊，“人”从位置 0 出发，宝藏在位置 4：</p>
+    <div class="lane"><div><span class="cell on">人</span><small>0</small></div><div><span class="cell"></span><small>1</small></div><div><span class="cell"></span><small>2</small></div><div><span class="cell"></span><small>3</small></div><div><span class="cell on">宝</span><small>4</small></div></div>
+    <p>规则只有三条：</p>
+    <ul class="tight">
+      <li>每次只能<strong>往左</strong>或<strong>往右</strong>走一格；</li>
+      <li>最左边是墙，往左撞墙就原地不动；</li>
+      <li>走到宝藏奖励 1，这一局结束；其他情况奖励 0。</li>
+    </ul>
+    <p>代码里要写的就是一个函数 <code>next_step(位置, 动作)</code>，告诉智能体“你走到了哪、拿到多少奖励、结束没有”。智能体这时什么都不会，每一步都抛硬币：</p>
+    <div class="code">
+      <div class="code-head"><span class="lang"><svg viewBox="0 0 24 24"><path d="m8 9-3 3 3 3M16 9l3 3-3 3"/></svg>Python</span><button class="copy">复制</button></div>
+<pre>action = <span class="t-bi">random</span>.choice([<span class="t-num">0</span>, <span class="t-num">1</span>])    <span class="t-com"># 0 往左，1 往右，纯乱走</span>
+state, reward, done = next_step(state, action)</pre>
+    </div>
+    <p>明明 4 步就够，它每局都要走二十几步，次数每次都不一样。</p>
+    <p>环境 = <code>next_step</code>，状态 = 位置 0～4，动作 = 左/右，奖励 = 0 或 1，策略 = “抛硬币”。强化学习要做的，就是把“抛硬币”换成“聪明地走”，后面四步都在做这件事。</p>
+
+    <p class="jump"><a href="#full-code" data-focus="1">在完整代码里看这一步 →</a></p>
+  </div>
+
+  <!-- ============ 第 2 步 ============ -->
+  <div class="step">
+    <h2 id="step-2">第 2 步　加一张记分表（Q 表），先只看不学</h2>
+    <p>要变聪明，它得记住东西。5 个位置 × 2 个动作，就是一张 5 行 2 列的表，叫 <strong>Q 表</strong>。一开始什么都不知道，全是 0：</p>
+    <table class="grid">
+      <thead><tr><th>位置</th><th>往左</th><th>往右</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td>0.00</td><td>0.00</td></tr>
+        <tr><td>1</td><td>0.00</td><td>0.00</td></tr>
+        <tr><td>…</td><td>…</td><td>…</td></tr>
+      </tbody>
+    </table>
+    <p>然后把策略从“抛硬币”改成<strong>“查表，哪个分高走哪个，一样高才抛硬币”</strong>。</p>
+    <p>还是乱走，跑完表也还是全 0。</p>
+    <p>这是故意的：表里全是 0，左右永远一样高，每次都落到“抛硬币”；而且没有任何代码在改这张表。智能体有了记事本，但还没往上写东西。</p>
+    <p class="jump"><a href="#full-code" data-focus="2">在完整代码里看这一步 →</a></p>
+  </div>
+
+  <!-- ============ 第 3 步 ============ -->
+  <div class="step">
+    <h2 id="step-3">第 3 步　每走一步，更新记分表</h2>
+
+    <h3>先试最直接的想法：拿到多少分就记多少分</h3>
+    <p>每走一步，把这一步的奖励记到“刚才的位置、刚才的动作”那一格；连续玩 6 局，每局后看一眼表。</p>
+    <div class="code">
+      <div class="code-head"><span class="lang"><svg viewBox="0 0 24 24"><path d="m8 9-3 3 3 3M16 9l3 3-3 3"/></svg>Python</span><button class="copy">复制</button></div>
+<pre>Q[state][action] = reward</pre>
+    </div>
+    <p>6 局下来只有“位置 3 往右”变成了 1，其他全是 0，步数忽多忽少，没有变好。</p>
+    <p>只有位置 3 往右能直接拿到奖励。位置 2 往右奖励是 0，就被记成 0，可它其实是好的，因为它走到了离宝藏只差一步的地方。<strong>只看眼前奖励，就看不到“走到一个好位置”本身的价值。</strong></p>
+
+
+    <h3>加上“走到的位置有多好”</h3>
+    <p>改成：这一步的分数 = 这一步的奖励 + 新位置里最好的那个分数，再打个 9 折。游戏结束了就没有“以后”，后半截记 0。</p>
+    <div class="code">
+      <div class="code-head"><span class="lang"><svg viewBox="0 0 24 24"><path d="m8 9-3 3 3 3M16 9l3 3-3 3"/></svg>Python</span><button class="copy">复制</button></div>
+<pre>Q[state][action] = reward + gamma * <span class="t-bi">max</span>(Q[next_state])   <span class="t-com"># gamma = 0.9</span></pre>
+    </div>
+    <p>“往右”那一列每局往回传一格：</p>
+    <table class="grid">
+      <thead><tr><th>往右的分</th><th>位置 0</th><th>位置 1</th><th>位置 2</th><th>位置 3</th></tr></thead>
+      <tbody>
+        <tr><td>第 1 局后</td><td>0.00</td><td>0.00</td><td>0.00</td><td class="hi">1.00</td></tr>
+        <tr><td>第 2 局后</td><td>0.00</td><td>0.00</td><td class="hi">0.90</td><td>1.00</td></tr>
+        <tr><td>第 3 局后</td><td>0.00</td><td class="hi">0.81</td><td>0.90</td><td>1.00</td></tr>
+        <tr><td>第 4 局后</td><td class="hi">0.73</td><td>0.81</td><td>0.90</td><td>1.00</td></tr>
+      </tbody>
+    </table>
+    <p>位置 2 往右会到位置 3，位置 3 最好能拿 1，打 9 折记 0.9；位置 1 再打 9 折记 0.81……从第 5 局起，每个位置都是往右分高，智能体每局直接走 4 步到宝藏。<strong>它学会了。</strong></p>
+    <p>“奖励 + 打折后的未来最好分”就是<strong>新估计</strong>，也就是贝尔曼方程的思想；那个 0.9 就是<strong>折扣因子 γ</strong>，越远的奖励越不值钱。把 γ 改成 0，就又退回到只记眼前奖励的版本。</p>
+    <p>“往左”那一列一直是 0。它一发现往右好，就再也不往左走了。</p>
+    <p class="jump"><a href="#full-code" data-focus="3">在完整代码里看这一步 →</a></p>
+  </div>
+
+  <!-- ============ 第 4 步 ============ -->
+  <div class="step">
+    <h2 id="step-4">第 4 步　偶尔乱试一下（ε-greedy）</h2>
+
+    <h3>改地图，让它“上当”</h3>
+    <p>原来的走廊只有一条路，看不出问题。现在在最左边放一个<strong>小宝藏（0.1 分）</strong>，人改从位置 1 出发：</p>
+    <div class="lane"><div><span class="cell on">小宝</span><small>0</small></div><div><span class="cell on">人</span><small>1</small></div><div><span class="cell"></span><small>2</small></div><div><span class="cell"></span><small>3</small></div><div><span class="cell on">大宝</span><small>4</small></div></div>
+    <p>往左 1 步就能拿小宝藏；往右 3 步拿大宝藏，打折后仍值 0.81 分，正确答案是往右。学习方法不变，玩 100 局，记下每局拿到的是哪个。</p>
+    <p>很可能 100 局全是“小”。</p>
+    <p>第 1 局碰巧往左拿到小宝藏，位置 1 往左就记成 0.1，往右还是 0。从此它每次都往左，永远不知道右边还有大宝藏。（如果第一局碰巧往右走到了大宝藏，结果会不一样，多跑几次就能看到。）这就是<strong>只利用、不探索</strong>：吃过一家还行的餐厅，就再也不试别家了。</p>
+
+    <h3>一半时间随便走</h3>
+    <p>选动作时先掷个骰子：有 ε 的概率不看表、随便走（探索），其他时候照表走（利用）。</p>
+    <div class="code">
+      <div class="code-head"><span class="lang"><svg viewBox="0 0 24 24"><path d="m8 9-3 3 3 3M16 9l3 3-3 3"/></svg>Python</span><button class="copy">复制</button></div>
+<pre><span class="t-kw">if</span> <span class="t-bi">random</span>.<span class="t-bi">random</span>() &lt; epsilon:         <span class="t-com"># epsilon = 0.5</span>
+    <span class="t-kw">return</span> <span class="t-bi">random</span>.choice([<span class="t-num">0</span>, <span class="t-num">1</span>])</pre>
+    </div>
+    <p>某次运行，每 20 局里拿到大宝藏的次数：</p>
+    <table class="grid">
+      <thead><tr><th>局数</th><th>1–20</th><th>21–40</th><th>41–60</th><th>61–80</th><th>81–100</th></tr></thead>
+      <tbody><tr><td>大宝藏</td><td>1</td><td>0</td><td>3</td><td class="hi">13</td><td class="hi">13</td></tr></tbody>
+    </table>
+    <p>最后位置 1 往右（0.81）超过了往左（0.10），它终于发现了大宝藏。训练时还会偶尔拿小宝藏，是因为一半时间在乱走；所以<strong>训练完把 ε 设成 0 再测试</strong>，路线就是直接往右 <code>[1, 2, 3, 4]</code>。</p>
+    <p>ε 控制试新路的比例。改成 0.1，乱试太少，很难碰巧连走 3 步到大宝藏；改成 1，一直乱走，成绩很差。<strong>试得太少找不到好路，试得太多浪费时间。</strong></p>
+    <p class="jump"><a href="#full-code" data-focus="4">在完整代码里看这一步 →</a></p>
+  </div>
+
+  <!-- ============ 第 5 步 ============ -->
+  <div class="step">
+    <h2 id="step-5">第 5 步　每次只改一点点（学习率 α）</h2>
+
+    <h3>让大宝藏“看运气”</h3>
+    <p>到目前为止，每次更新都把旧分数整个覆盖掉。现在把大宝藏改成<strong>一半概率 2 分、一半概率 0 分</strong>，平均还是 1 分，往右仍然是对的。训练 300 局。</p>
+    <p>“位置 3 往右”的分数在 2 和 0 之间来回跳。最后一次刚好开出 0，它就认定往右是 0 分；测试时在位置 2 和 3 之间来回打转，永远走不到宝藏（所以测试要加步数上限）。</p>
+    <p>整个覆盖，就只记得最近一次的运气，以前的经验全忘了。就像一家餐厅吃了 10 次都不错，最近一次踩雷，就再也不去了。</p>
+
+    <h3>只往新结果挪 10%</h3>
+    <p>算出新估计后不直接替换，而是先算“和旧分数差多少”，再只挪一小部分：</p>
+    <div class="code">
+      <div class="code-head"><span class="lang"><svg viewBox="0 0 24 24"><path d="m8 9-3 3 3 3M16 9l3 3-3 3"/></svg>Python</span><button class="copy">复制</button></div>
+<pre>new_estimate = reward + gamma * <span class="t-bi">max</span>(Q[next_state])
+td_error = new_estimate - Q[state][action]
+Q[state][action] += alpha * td_error   <span class="t-com"># alpha = 0.1</span></pre>
+    </div>
+    <p>比如旧分数 1.0：开出 2 分，差 +1，挪 10% 变 1.1；下次开出 0 分，差 −1.1，挪 10% 变 0.99。分数在 1 附近小幅波动，相当于对很多次结果取平均。</p>
+    <p>“位置 3 往右”稳定在 1 左右，每个位置都是往右更高，测试路线回到 <code>[1, 2, 3, 4]</code>。</p>
+    <p>“新估计和旧分数差多少”就是 <strong>TD 误差</strong>，挪多少就是<strong>学习率 α</strong>。这三行合起来，就是完整的 Q-learning 公式：</p>
+    <div class="code">
+      <div class="code-head"><span class="lang">公式</span></div>
+<pre>Q(s, a) ← Q(s, a) + α × [ r + γ × max Q(s′) − Q(s, a) ]</pre>
+    </div>
+    <ul class="tight">
+      <li><code>r + γ × max Q(s′)</code>：新估计，第 3 步加的</li>
+      <li>方括号整体：TD 误差，新估计减旧分数</li>
+      <li><code>α</code>：学习率，第 5 步加的</li>
+    </ul>
+    <p class="jump"><a href="#full-code" data-focus="5">在完整代码里看这一步 →</a></p>
+  </div>
+
+  <h2 id="full-code">完整代码</h2>
+  <p>把五步合在一起，就是下面这份代码。每行左边的数字表示这一行是第几步加的，点数字可以跳回那一步；点上面的按钮，只高亮那一步写的代码。</p>
+  <div class="chips"><button class="chip on" data-focus="0">全部</button><button class="chip" data-focus="1">第 1 步　环境</button><button class="chip" data-focus="2">第 2 步　Q 表</button><button class="chip" data-focus="3">第 3 步　更新</button><button class="chip" data-focus="4">第 4 步　探索 ε</button><button class="chip" data-focus="5">第 5 步　学习率 α</button></div>
+  <div class="code">
+    <div class="code-head"><span class="lang"><svg viewBox="0 0 24 24"><path d="m8 9-3 3 3 3M16 9l3 3-3 3"/></svg>Python</span><button class="copy">复制</button></div>
+<pre class="annot"><span class="ln"><span class="gut"></span><span class="src"><span class="t-kw">from</span> dis <span class="t-kw">import</span> stack_effect</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src"><span class="t-kw">import</span> <span class="t-bi">random</span></span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">Q=[[<span class="t-num">0.0</span>,<span class="t-num">0.0</span>] <span class="t-kw">for</span> _ <span class="t-kw">in</span> <span class="t-bi">range</span>(<span class="t-num">5</span>)]</span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src"><span class="t-kw">def</span> <span class="t-fn">printQ</span>():</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">    <span class="t-bi">print</span>(<span class="t-str">"位置   往左    往右"</span>)</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">    <span class="t-kw">for</span> s <span class="t-kw">in</span> <span class="t-bi">range</span>(<span class="t-num">5</span>):</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">        <span class="t-bi">print</span>(<span class="t-str">f"  {s}   {Q[s][0]:5.2f}   {Q[s][1]:5.2f}"</span>)</span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src"><span class="t-kw">def</span> <span class="t-fn">chooseAction</span>(state,epsilon):</span></span><span class="ln" data-step="4"><span class="gut"><a href="#step-4" title="第 4 步：探索 ε">4</a></span><span class="src">    <span class="t-kw">if</span> <span class="t-bi">random</span>.<span class="t-bi">random</span>()&lt;epsilon:</span></span><span class="ln" data-step="4"><span class="gut"><a href="#step-4" title="第 4 步：探索 ε">4</a></span><span class="src">        <span class="t-kw">return</span> <span class="t-bi">random</span>.choice([<span class="t-num">0</span>,<span class="t-num">1</span>])</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">    left,right=Q[state]</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">    <span class="t-kw">if</span> left&gt;right:</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">        <span class="t-kw">return</span> <span class="t-num">0</span></span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">    <span class="t-kw">elif</span> right&gt;left:</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">        <span class="t-kw">return</span> <span class="t-num">1</span></span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">    <span class="t-kw">else</span>:</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">        <span class="t-kw">return</span> <span class="t-bi">random</span>.choice([<span class="t-num">0</span>,<span class="t-num">1</span>])</span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src"><span class="t-kw">def</span> <span class="t-fn">show</span>(state):</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    cells=[<span class="t-str">'_'</span>]*<span class="t-num">5</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    cells[<span class="t-num">4</span>]=<span class="t-str">'treasure'</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    cells[state]=<span class="t-str">'me'</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    <span class="t-kw">return</span> <span class="t-str">""</span>.join(cells)</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src"><span class="t-kw">def</span> <span class="t-fn">next_step</span>(state,action):</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    <span class="t-kw">if</span> action==<span class="t-num">1</span>:</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">        next_state=state+<span class="t-num">1</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    <span class="t-kw">else</span>:</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">        next_state=<span class="t-bi">max</span>(state-<span class="t-num">1</span>,<span class="t-num">0</span>)</span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    <span class="t-kw">if</span> next_state==<span class="t-num">4</span>:</span></span><span class="ln" data-step="5"><span class="gut"><a href="#step-5" title="第 5 步：学习率 α">5</a></span><span class="src">        <span class="t-kw">return</span> next_state,<span class="t-bi">random</span>.choice([<span class="t-num">0</span>,<span class="t-num">2</span>]),<span class="t-kw">True</span></span></span><span class="ln" data-step="4"><span class="gut"><a href="#step-4" title="第 4 步：探索 ε">4</a></span><span class="src">    <span class="t-kw">elif</span> next_state==<span class="t-num">0</span>:</span></span><span class="ln" data-step="4"><span class="gut"><a href="#step-4" title="第 4 步：探索 ε">4</a></span><span class="src">        <span class="t-kw">return</span> next_state,<span class="t-num">0.1</span>,<span class="t-kw">True</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    <span class="t-kw">else</span>:</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">        <span class="t-kw">return</span> next_state,<span class="t-num">0</span>,<span class="t-kw">False</span></span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="3"><span class="gut"><a href="#step-3" title="第 3 步：更新">3</a></span><span class="src"><span class="t-kw">for</span> episode <span class="t-kw">in</span> <span class="t-bi">range</span>(<span class="t-num">1</span>,<span class="t-num">101</span>):</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    <span class="t-com">#initial state</span></span></span><span class="ln" data-step="4"><span class="gut"><a href="#step-4" title="第 4 步：探索 ε">4</a></span><span class="src">    state=<span class="t-num">1</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    done=<span class="t-kw">False</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    steps=<span class="t-num">0</span></span></span><span class="ln" data-step="3"><span class="gut"><a href="#step-3" title="第 3 步：更新">3</a></span><span class="src">    gamma=<span class="t-num">0.9</span></span></span><span class="ln" data-step="4"><span class="gut"><a href="#step-4" title="第 4 步：探索 ε">4</a></span><span class="src">    epsilon=<span class="t-num">0.5</span></span></span><span class="ln" data-step="5"><span class="gut"><a href="#step-5" title="第 5 步：学习率 α">5</a></span><span class="src">    alpha=<span class="t-num">0.1</span></span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    <span class="t-kw">while</span> <span class="t-kw">not</span> done <span class="t-kw">and</span> steps&lt;<span class="t-num">20</span>:</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">        action=chooseAction(state,epsilon)</span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">        next_state,reward,done=next_step(state,action)</span></span><span class="ln" data-step="3"><span class="gut"><a href="#step-3" title="第 3 步：更新">3</a></span><span class="src">        <span class="t-kw">if</span> done:</span></span><span class="ln" data-step="3"><span class="gut"><a href="#step-3" title="第 3 步：更新">3</a></span><span class="src">            future=<span class="t-num">0</span></span></span><span class="ln" data-step="3"><span class="gut"><a href="#step-3" title="第 3 步：更新">3</a></span><span class="src">        <span class="t-kw">else</span>:</span></span><span class="ln" data-step="3"><span class="gut"><a href="#step-3" title="第 3 步：更新">3</a></span><span class="src">            future=<span class="t-bi">max</span>(Q[next_state])</span></span><span class="ln" data-step="3"><span class="gut"><a href="#step-3" title="第 3 步：更新">3</a></span><span class="src">        new_estimate=reward+gamma*future</span></span><span class="ln" data-step="5"><span class="gut"><a href="#step-5" title="第 5 步：学习率 α">5</a></span><span class="src">        td_error=new_estimate-Q[state][action]</span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="5"><span class="gut"><a href="#step-5" title="第 5 步：学习率 α">5</a></span><span class="src">        Q[state][action]=Q[state][action] + alpha * td_error   <span class="t-com"># 只往新估计挪 10%</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">        <span class="t-com"># print(show(next_state),f" 往{'右' if action == 1 else '左'}，奖励 {reward}")</span></span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">        state=next_state</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">        steps+=<span class="t-num">1</span></span></span><span class="ln"><span class="gut"></span><span class="src"></span></span><span class="ln" data-step="4"><span class="gut"><a href="#step-4" title="第 4 步：探索 ε">4</a></span><span class="src">    results=<span class="t-str">'big'</span> <span class="t-kw">if</span> state==<span class="t-num">4</span> <span class="t-kw">else</span> <span class="t-str">'small'</span></span></span><span class="ln" data-step="4"><span class="gut"><a href="#step-4" title="第 4 步：探索 ε">4</a></span><span class="src">    <span class="t-bi">print</span>(results)</span></span><span class="ln" data-step="1"><span class="gut"><a href="#step-1" title="第 1 步：环境">1</a></span><span class="src">    <span class="t-bi">print</span>(<span class="t-str">f'use steps{steps}'</span>)</span></span><span class="ln" data-step="2"><span class="gut"><a href="#step-2" title="第 2 步：Q 表">2</a></span><span class="src">    printQ()</span></span></pre>
+  </div>
+
+
+  <h2>回顾：五步各解决了什么</h2>
+  <table>
+    <thead><tr><th>步骤</th><th>加了什么</th><th>解决了什么</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>环境和规则</td><td>有了状态、动作、奖励，但只会乱走</td></tr>
+      <tr><td>2</td><td>Q 表 + 按表选动作</td><td>有地方记分了，但还不会往里写</td></tr>
+      <tr><td>3</td><td>奖励 + γ × 未来最好分</td><td>学会了，分数一格一格往回传</td></tr>
+      <tr><td>4</td><td>ε-greedy</td><td>不只走老路，能发现更好的路线</td></tr>
+      <tr><td>5</td><td>学习率 α</td><td>结果有运气成分时也能学得稳</td></tr>
+    </tbody>
+  </table>
+
+  <h2>这就是一个完整的强化学习过程</h2>
+  <p>最基础的东西都在里面了：环境、状态、动作、奖励、回合、策略、价值函数 Q、折扣 γ、探索与利用、新估计 → TD 误差 → 用 α 更新、先训练再测试，全都在这几十行里。几乎所有强化学习算法都是这个流程，区别只在“怎么记分”和“怎么更新”。</p>
+  <p>它覆盖的是基础，还没涉及的扩展方向：</p>
+  <ul class="tight">
+    <li><strong>泛化（DQN）：</strong>Q 表只能记有限个状态。把表换成神经网络，用 TD 误差当损失来训练，核心逻辑不变。</li>
+    <li><strong>直接学策略（策略梯度、PPO）：</strong>直接学“每个动作选的概率”，适合机械臂转角这类连续动作。</li>
+    <li><strong>先学环境再规划（AlphaZero 一类）：</strong>利用或学习环境规则，在“脑子里”推演。</li>
+  </ul>
+
+  <hr>
+
+  <p>记住这句话就够了：</p>
+  <blockquote>和环境交互 → 拿到奖励 → 用“奖励 + 对未来的估计”修正自己 → 重复。</blockquote>
+
+</main>
+<script>
+  document.querySelectorAll('.copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pre = btn.closest('.code').querySelector('pre');
+      const srcs = pre.querySelectorAll('.src');
+      const text = srcs.length ? [...srcs].map(s => s.textContent).join('\n') : pre.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '已复制';
+        setTimeout(() => (btn.textContent = '复制'), 1200);
+      });
+    });
+  });
+
+  const annot = document.querySelector('pre.annot');
+  function focusStep(n) {
+    n = String(n);
+    annot.classList.toggle('focus', n !== '0');
+    annot.querySelectorAll('.ln').forEach(l => l.classList.toggle('on', l.dataset.step === n));
+    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c.dataset.focus === n));
+  }
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => focusStep(c.dataset.focus)));
+  document.querySelectorAll('.jump a').forEach(a => a.addEventListener('click', () => focusStep(a.dataset.focus)));
+</script>
+</body>
+</html>

@@ -14,7 +14,7 @@ export interface Post {
 declare const data: Post[];
 export { data };
 
-const EXCLUDED_URLS = ["/介绍页", "/nav2web"];
+const EXCLUDED_URLS = ["/介绍页", "/nav2web", "/icons", "/vibex"];
 
 function getCreatedTimes(): Map<string, string> {
   try {

@@ -16,6 +16,7 @@
     "meta": "node scripts/link-meta.mjs",
     "meta:refresh": "node scripts/link-meta.mjs --refresh",
     "meta:images": "node scripts/link-meta.mjs --images-only",
+    "covers": "node scripts/site-covers.mjs",
     "elog:init": "elog init",
     "sync:local": "node ./delcache.js && elog sync -e .elog.env",
     "sync": "node ./delcache.js && elog sync",

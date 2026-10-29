@@ -16,14 +16,7 @@
             rel="noopener noreferrer"
             aria-label="打开 claude.dev（新窗口）"
           >
-            <img
-              class="site-cover site-cover--claude"
-              :src="claudeCover"
-              alt="claude.dev 网站封面"
-              decoding="async"
-              @load="ensureCoverQuality($event, claudeScreenshot, '/site-covers/claude-dev.png')"
-              @error="useCoverFallback($event, claudeScreenshot, '/site-covers/claude-dev.png')"
-            />
+            <SiteCover slug="claude-dev" alt="claude.dev 网站封面" position="left" eager />
             <div class="site-title">
               <img :src="claudeFavicon" alt="" aria-hidden="true" />
               <h2>Claude Dev</h2>
@@ -39,14 +32,7 @@
             rel="noopener noreferrer"
             aria-label="打开 Qwen Research（新窗口）"
           >
-            <img
-              class="site-cover site-cover--qwen"
-              :src="qwenCover"
-              alt="Qwen Research 网站封面"
-              decoding="async"
-              @load="ensureCoverQuality($event, qwenScreenshot, '/site-covers/qwen-research.png')"
-              @error="useCoverFallback($event, qwenScreenshot, '/site-covers/qwen-research.png')"
-            />
+            <SiteCover slug="qwen-research" alt="Qwen Research 网站封面" eager />
             <div class="site-title">
               <img :src="qwenFavicon" alt="" aria-hidden="true" />
               <h2>Qwen Research</h2>
@@ -68,14 +54,7 @@
               rel="noopener noreferrer"
               aria-label="打开 FreeEgg（新窗口）"
             >
-              <img
-                class="site-cover"
-                :src="freeEggCover"
-                alt="FreeEgg 网站封面"
-                decoding="async"
-                @load="ensureCoverQuality($event, freeEggScreenshot)"
-                @error="useCoverFallback($event, freeEggScreenshot)"
-              />
+              <SiteCover slug="freeegg-top" alt="FreeEgg 网站封面" />
               <div class="site-title">
                 <img :src="freeEggFavicon" alt="" aria-hidden="true" />
                 <h2>FreeEgg 赛博鸡蛋</h2>
@@ -97,14 +76,7 @@
               rel="noopener noreferrer"
               aria-label="打开 Designing the Wait（新窗口）"
             >
-              <img
-                class="site-cover"
-                :src="designingWaitCover"
-                alt="Designing the Wait 文章封面"
-                decoding="async"
-                @load="ensureCoverQuality($event, designingWaitScreenshot)"
-                @error="useCoverFallback($event, designingWaitScreenshot)"
-              />
+              <SiteCover slug="designing-the-wait" alt="Designing the Wait 文章封面" />
               <div class="site-title">
                 <img
                   :src="designingWaitFavicon"
@@ -125,14 +97,7 @@
               rel="noopener noreferrer"
               aria-label="打开 Motion（新窗口）"
             >
-              <img
-                class="site-cover"
-                :src="motionCover"
-                alt="Motion 网站封面"
-                decoding="async"
-                @load="ensureCoverQuality($event, motionScreenshot)"
-                @error="useCoverFallback($event, motionScreenshot)"
-              />
+              <SiteCover slug="motion-dev" alt="Motion 网站封面" />
               <div class="site-title">
                 <img
                   :src="motionFavicon"
@@ -153,14 +118,7 @@
               rel="noopener noreferrer"
               aria-label="打开 Recent（新窗口）"
             >
-              <img
-                class="site-cover"
-                :src="recentCover"
-                alt="Recent Design 网站封面"
-                decoding="async"
-                @load="ensureCoverQuality($event, recentScreenshot)"
-                @error="useCoverFallback($event, recentScreenshot)"
-              />
+              <SiteCover slug="recent-design" alt="Recent Design 网站封面" />
               <div class="site-title">
                 <img
                   :src="recentFavicon"
@@ -181,14 +139,7 @@
               rel="noopener noreferrer"
               aria-label="打开 Toolcraft（新窗口）"
             >
-              <img
-                class="site-cover"
-                :src="toolcraftCover"
-                alt="Toolcraft 网站封面"
-                decoding="async"
-                @load="ensureCoverQuality($event, toolcraftScreenshot)"
-                @error="useCoverFallback($event, toolcraftScreenshot)"
-              />
+              <SiteCover slug="toolcraft-sh" alt="Toolcraft 网站封面" />
               <div class="site-title">
                 <img
                   :src="toolcraftFavicon"
@@ -209,14 +160,7 @@
               rel="noopener noreferrer"
               aria-label="打开 Pin UI（新窗口）"
             >
-              <img
-                class="site-cover"
-                :src="pinUiCover"
-                alt="Pin UI 网站封面"
-                decoding="async"
-                @load="ensureCoverQuality($event, pinUiScreenshot)"
-                @error="useCoverFallback($event, pinUiScreenshot)"
-              />
+              <SiteCover slug="pinui-xyz" alt="Pin UI 网站封面" />
               <div class="site-title">
                 <img
                   :src="pinUiFavicon"
@@ -237,14 +181,7 @@
               rel="noopener noreferrer"
               aria-label="打开 Bencho（新窗口）"
             >
-              <img
-                class="site-cover"
-                :src="benchoCover"
-                alt="Bencho 网站封面"
-                decoding="async"
-                @load="ensureCoverQuality($event, benchoScreenshot)"
-                @error="useCoverFallback($event, benchoScreenshot)"
-              />
+              <SiteCover slug="bencho-dev" alt="Bencho 网站封面" />
               <div class="site-title">
                 <img
                   :src="benchoFavicon"
@@ -257,6 +194,27 @@
               <p class="site-meta">bencho.dev</p>
             </a>
           </article>
+
+          <article class="site-card">
+            <a
+              href="https://vibrant.design/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="打开 Vibrant Design（新窗口）"
+            >
+              <SiteCover slug="vibrant-design" alt="Vibrant Design 网站封面" />
+              <div class="site-title">
+                <img
+                  :src="vibrantFavicon"
+                  alt=""
+                  aria-hidden="true"
+                  @error="useFaviconFallback($event, 'vibrant.design')"
+                />
+                <h2>Vibrant Design</h2>
+              </div>
+              <p class="site-meta">vibrant.design</p>
+            </a>
+          </article>
         </div>
       </section>
     </main>
@@ -265,48 +223,7 @@
 </template>
 
 <script setup lang="ts">
-const screenshotUrl = (url: string) => {
-  const params = new URLSearchParams({
-    url,
-    screenshot: "true",
-    meta: "false",
-    embed: "screenshot.url",
-    "viewport.width": "960",
-    "viewport.height": "600",
-    "viewport.deviceScaleFactor": "1",
-    "screenshot.type": "jpeg",
-    "screenshot.quality": "65",
-  });
-
-  return `https://api.microlink.io/?${params.toString()}`;
-};
-
-const coverUrl = (url: string) =>
-  `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url`;
-
-const claudeCover = coverUrl("https://claude.dev/");
-const qwenCover = coverUrl("https://qwen.ai/research");
-const freeEggCover = coverUrl("https://freeegg.top/");
-const designingWaitCover = coverUrl(
-  "https://chloemaillot.fr/writing/designing-the-wait",
-);
-const motionCover = coverUrl("https://motion.dev/");
-const recentCover = coverUrl("https://recent.design/");
-const toolcraftCover = coverUrl("https://toolcraft.sh/");
-const pinUiCover = coverUrl("https://www.pinui.xyz/");
-const benchoCover = coverUrl("https://bencho.dev/");
-
-const claudeScreenshot = screenshotUrl("https://claude.dev/");
-const qwenScreenshot = screenshotUrl("https://qwen.ai/research");
-const freeEggScreenshot = screenshotUrl("https://freeegg.top/");
-const designingWaitScreenshot = screenshotUrl(
-  "https://chloemaillot.fr/writing/designing-the-wait",
-);
-const motionScreenshot = screenshotUrl("https://motion.dev/");
-const recentScreenshot = screenshotUrl("https://recent.design/");
-const toolcraftScreenshot = screenshotUrl("https://toolcraft.sh/");
-const pinUiScreenshot = screenshotUrl("https://www.pinui.xyz/");
-const benchoScreenshot = screenshotUrl("https://bencho.dev/");
+import SiteCover from "./SiteCover.vue";
 
 const faviconUrl = (url: string) =>
   `https://deck.mcl39.com/favicon?url=${encodeURIComponent(url)}`;
@@ -322,28 +239,7 @@ const recentFavicon = faviconUrl("https://recent.design/");
 const toolcraftFavicon = faviconUrl("https://toolcraft.sh/");
 const pinUiFavicon = faviconUrl("https://www.pinui.xyz/");
 const benchoFavicon = faviconUrl("https://bencho.dev/");
-
-function useCoverFallback(event: Event, screenshot: string, local?: string) {
-  const image = event.currentTarget as HTMLImageElement;
-  if (image.dataset.fallback === "screenshot") {
-    if (local) {
-      image.dataset.fallback = "local";
-      image.src = local;
-    }
-    return;
-  }
-  if (image.dataset.fallback === "local") return;
-  image.dataset.fallback = "screenshot";
-  image.src = screenshot;
-}
-
-function ensureCoverQuality(event: Event, screenshot: string, local?: string) {
-  const image = event.currentTarget as HTMLImageElement;
-  if (image.dataset.fallback) return;
-  if (image.naturalWidth < 600 || image.naturalHeight < 300) {
-    useCoverFallback(event, screenshot, local);
-  }
-}
+const vibrantFavicon = faviconUrl("https://vibrant.design/");
 
 function useFaviconFallback(event: Event, domain: string) {
   const image = event.currentTarget as HTMLImageElement;
@@ -437,21 +333,7 @@ function useFaviconFallback(event: Event, domain: string) {
   line-height: 1.4;
 }
 
-.site-cover {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1200 / 630;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 8px;
-  transition: transform 260ms ease, opacity 260ms ease;
-}
-
-.site-cover--claude {
-  object-position: left top;
-}
-
-.site-card a:hover .site-cover {
+.site-card a:hover :deep(.cover-frame) {
   opacity: 0.9;
   transform: scale(0.99);
 }
@@ -495,7 +377,4 @@ function useFaviconFallback(event: Event, domain: string) {
 
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .site-cover { transition: none; }
-}
 </style>

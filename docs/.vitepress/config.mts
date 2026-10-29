@@ -2,6 +2,7 @@ import { defineConfig } from "vitepress";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { linkCard } from "./markdown/link-card";
+import { keywordIcon, readKeywordIcons } from "./markdown/keyword-icon";
 
 function linkMeta() {
   try {
@@ -16,6 +17,9 @@ function linkMeta() {
 export default defineConfig({
   title: "YisuX-lightyisu的个人博客",
   description: "blog",
+
+  // Icons 页只供开发时查看图标库，生产构建不生成
+  srcExclude: process.env.NODE_ENV === "production" ? ["icons.md"] : [],
 
   vite: {
     ssr: {
@@ -41,6 +45,7 @@ export default defineConfig({
     codeTransformers: [],
     config(md) {
       linkCard(md, linkMeta());
+      keywordIcon(md, readKeywordIcons());
     },
   },
 });
